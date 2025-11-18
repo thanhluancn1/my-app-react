@@ -1,17 +1,17 @@
-import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import Student from "./pages/Student";
+import Contact from "./pages/Contact";
 
 export default function App() {
-  const [page, setPage] = useState("home");
-
   return (
-    <MainLayout onNavigate={setPage}>
-      {page === "home" && <Home />}
-      {page === "about" && <About />}
-      {page === "student" && <Student />}
+    <MainLayout>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
     </MainLayout>
   );
 }

@@ -1,9 +1,9 @@
 // src/pages/About.jsx
 import { useEffect, useState } from "react";
-import { fetchAboutData } from "../api/sampleApi";
+import { fetchAboutData } from "../api/aboutData";
 
 export default function About() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -13,28 +13,25 @@ export default function About() {
     });
   }, []);
 
-  if (loading) {
-    return <p className="text-gray-500">Loading...</p>;
-  }
+  if (loading) return <p className="p-6">Loading...</p>;
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-4xl font-bold text-gray-800">About Page</h1>
-      <p className="text-gray-600 text-lg">
-        Dữ liệu được load từ mock API.
-      </p>
+    <div className="p-6 space-y-6">
+      <h1 className="text-3xl font-bold text-blue-600">{data.title}</h1>
+      <p className="text-gray-700">{data.description}</p>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        {data.map((item) => (
-          <div
-            key={item.id}
-            className="p-4 bg-white rounded-xl shadow border border-gray-200"
+      <h2 className="text-2xl font-semibold mt-4">Team Members</h2>
+      <ul className="space-y-2">
+        {data.team.map((member) => (
+          <li
+            key={member.id}
+            className="p-3 border rounded shadow hover:bg-gray-50 flex justify-between"
           >
-            <h2 className="text-2xl font-semibold text-gray-800">{item.title}</h2>
-            <p className="text-gray-600 mt-2">{item.description}</p>
-          </div>
+            <span className="font-medium">{member.name}</span>
+            <span className="text-gray-500">{member.role}</span>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }

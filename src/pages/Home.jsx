@@ -1,29 +1,26 @@
-export default function Home() {
-  return (
-    <div className="space-y-6">
-      <h1 className="text-4xl font-bold text-gray-800">
-        Welcome to the Home Page
-      </h1>
+// src/pages/Home.jsx
+import { useNavigate } from "react-router-dom";
 
-      <p className="text-gray-600 text-lg">
-        Đây là trang Home của Single Page Application.  
-        Nội dung chỉ thay đổi bên trong trang, không tải lại web.
+export default function Home() {
+  const navigate = useNavigate();
+
+  const goToAbout = () => {
+    navigate("/about"); // chuyển sang trang About
+  };
+
+  return (
+    <div className="p-6 space-y-4">
+      <h1 className="text-3xl font-bold text-blue-600">Home Page</h1>
+      <p className="text-gray-700">
+        Đây là trang Home. Bạn có thể chuyển sang trang About bằng nút dưới đây.
       </p>
 
-      <div className="p-6 bg-white rounded-xl shadow border border-gray-200">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-          Card Demo
-        </h2>
-
-        <p className="text-gray-600 mb-4">
-          Đây là một card demo được style bằng TailwindCSS.  
-          Bạn có thể thay đổi, mở rộng hoặc thêm component tùy ý.
-        </p>
-
-        <button className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-          Click me
-        </button>
-      </div>
+      <button
+        className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+        onClick={goToAbout}
+      >
+        Go to About
+      </button>
     </div>
   );
 }
