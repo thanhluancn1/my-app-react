@@ -1,12 +1,17 @@
-// src/layouts/MainLayout.jsx
-import Navbar from "../components/Navbar";
+import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
 
 export default function MainLayout({ children }) {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <main className="p-6">{children}</main>
-      <footer className="text-center py-4 text-gray-500">© 2025 My SPA</footer>
+    <div className="flex flex-col h-screen">
+      {/* Header full width */}
+      <Header /> {/* h-16 */}
+      
+      {/* Container chính: Sidebar + Main */}
+      <div className="flex flex-1">
+        <Sidebar /> {/* width cố định */}
+        <main className="flex-1 p-6 bg-bg-light">{children}</main>
+      </div>
     </div>
   );
 }
