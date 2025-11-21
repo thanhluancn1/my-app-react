@@ -8,6 +8,7 @@ import Student from "./pages/Student";
 import Schedule from "./pages/Schedule";
 import CreateExam from "./pages/CreateExam";
 import ExamSuggestionPage from "./pages/ExamSuggestionPage";
+import AssignmentDetailPage from "./pages/AssignmentDetailPage";
 
 
 
@@ -25,12 +26,7 @@ export default function App() {
         <Route path="/exam-suggestions" element={<ExamSuggestionPage />} />
         <Route 
           path="/assignment-detail/:batchId" 
-          element={
-            <div className="p-6">
-              <h1 className="text-xl font-bold">Trang chi tiết bài tập</h1>
-              <p>Chức năng đang phát triển...</p>
-            </div>
-          } 
+          element={<AssignmentDetailPage />} 
         />
       </Routes>
     </MainLayout>

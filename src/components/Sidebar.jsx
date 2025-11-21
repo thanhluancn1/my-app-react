@@ -25,8 +25,14 @@ export default function Sidebar() {
 
         <SidebarItem
           icon="https://unpkg.com/lucide-static/icons/folder.svg"
-          label="Quản lý lịch học"
+          label="Quản lý lịch dạy"
           href="/schedules"
+        />
+
+        <SidebarItem
+          icon="https://unpkg.com/lucide-static/icons/bar-chart-2.svg"
+          label="Tạo bài tập"
+          href="/exam-suggestions"
         />
 
         <SidebarItem
@@ -39,12 +45,6 @@ export default function Sidebar() {
           icon="https://unpkg.com/lucide-static/icons/users.svg"
           label="Quản lý kho nội dung"
           href="/content"
-        />
-
-        <SidebarItem
-          icon="https://unpkg.com/lucide-static/icons/bar-chart-2.svg"
-          label="Tạo đề thi"
-          href="/exam"
         />
 
         <SidebarItem
