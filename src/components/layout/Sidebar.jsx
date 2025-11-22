@@ -45,13 +45,13 @@ export default function Sidebar() {
         <SidebarItem
           icon="https://unpkg.com/lucide-static/icons/layout-grid.svg"
           label="Quản lý bài giảng"
-          href="/lessons"
+          href="/knowledge"
         />
 
         <SidebarItem
           icon="https://unpkg.com/lucide-static/icons/users.svg"
           label="Quản lý kho nội dung"
-          href="/content"
+          href="/knowledge"
         />
 
         <SidebarItem

@@ -1,0 +1,87 @@
+// src/components/knowledge/LessonEditor.jsx
+import KnowledgeUnitList from "./KnowledgeUnitList";
+
+export default function LessonEditor({ lessonData, onChange }) {
+  
+  if (!lessonData) {
+    return (
+      <div className="flex-1 flex flex-col items-center justify-center bg-gray-50 h-full text-text-secondary">
+        <img 
+          src="https://unpkg.com/lucide-static/icons/book-open.svg" 
+          className="w-16 h-16 mb-4 text-gray-300" 
+          alt="" 
+        />
+        <p className="text-lg font-medium">Vui lòng chọn một bài học để chỉnh sửa</p>
+        <p className="text-sm text-gray-400">Chọn từ cây thư mục bên trái</p>
+      </div>
+    );
+  }
+
+  // Xử lý thay đổi thông tin cơ bản (Tên, Mô tả)
+  const handleBasicChange = (e) => {
+    const { name, value } = e.target;
+    onChange(name, value);
+  };
+
+  // Xử lý thay đổi danh sách units (nhận từ con)
+  const handleUnitsChange = (newUnits) => {
+    onChange('knowledge_units', newUnits);
+  };
+
+  return (
+    <div className="flex-1 bg-gray-50 h-full overflow-y-auto p-8 custom-scrollbar">
+      <div className="max-w-4xl mx-auto space-y-6">
+        
+        {/* 1. Thông tin Node */}
+        <div className="bg-white rounded-xl border border-border-light shadow-sm p-6 animate-fade-in">
+          <div className="flex items-center justify-between mb-6 border-b border-border-light pb-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-blue-50 rounded-lg text-primary border border-blue-100">
+                <img src="https://unpkg.com/lucide-static/icons/file-text.svg" className="w-6 h-6" alt="" />
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-text-primary">Chỉnh sửa Bài học</h2>
+                <p className="text-xs text-text-secondary mt-0.5">ID: {lessonData.lesson_id}</p>
+              </div>
+            </div>
+            <span className="px-2 py-1 bg-green-50 text-green-700 border border-green-100 text-xs font-bold rounded uppercase">
+              Active
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 gap-5">
+            <div>
+              <label className="block text-sm font-semibold text-text-secondary mb-1.5">Tên bài học</label>
+              <input
+                type="text"
+                name="lesson_name"
+                value={lessonData.lesson_name || ""}
+                onChange={handleBasicChange}
+                className="w-full p-2.5 border border-border-medium rounded-lg focus:ring-2 focus:ring-primary outline-none transition-all font-medium text-text-primary"
+                placeholder="Nhập tên bài học..."
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-text-secondary mb-1.5">Mô tả (Tùy chọn)</label>
+              <textarea
+                name="description"
+                rows="3"
+                value={lessonData.description || ""}
+                onChange={handleBasicChange}
+                className="w-full p-2.5 border border-border-medium rounded-lg focus:ring-2 focus:ring-primary outline-none transition-all text-sm text-text-primary resize-none"
+                placeholder="Nhập mô tả ngắn về bài học..."
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* 2. Danh sách Đơn vị kiến thức */}
+        <KnowledgeUnitList 
+          units={lessonData.knowledge_units || []}
+          onUnitsChange={handleUnitsChange}
+        />
+
+      </div>
+    </div>
+  );
+}

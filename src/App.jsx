@@ -4,8 +4,6 @@ import MainLayout from "./layouts/MainLayout";
 
 // --- IMPORT MỚI (Đã đổi tên) ---
 import HomePage from "./pages/HomePage";
-import AboutPage from "./pages/AboutPage";
-import ContactPage from "./pages/ContactPage";
 import ClassPage from "./pages/ClassPage";
 import StudentPage from "./pages/StudentPage";
 import SchedulePage from "./pages/SchedulePage";
@@ -13,6 +11,8 @@ import ExamMatrixPage from "./pages/ExamMatrixPage";
 import ExamSuggestionPage from "./pages/ExamSuggestionPage";
 import AssignmentListPage from "./pages/AssignmentListPage";
 import AssignmentDetailPage from "./pages/AssignmentDetailPage";
+import KnowledgePage from "./pages/KnowledgePage";
+
 
 export default function App() {
   return (
@@ -20,8 +20,6 @@ export default function App() {
       <Routes>
         {/* Trang chung */}
         <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/contact" element={<ContactPage />} />
 
         {/* Quản lý danh mục */}
         <Route path="/classes" element={<ClassPage />} />
@@ -33,6 +31,9 @@ export default function App() {
         <Route path="/exam-suggestions" element={<ExamSuggestionPage />} />
         <Route path="/assignment-management" element={<AssignmentListPage />} />
         <Route path="/assignment-detail/:batchId" element={<AssignmentDetailPage />} />
+        
+        {/* Module Kiến thức */}
+        <Route path="/knowledge" element={<KnowledgePage />} />
       </Routes>
     </MainLayout>
   );
