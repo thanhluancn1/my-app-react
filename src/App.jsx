@@ -9,6 +9,7 @@ import Schedule from "./pages/Schedule";
 import CreateExam from "./pages/CreateExam";
 import ExamSuggestionPage from "./pages/ExamSuggestionPage";
 import AssignmentDetailPage from "./pages/AssignmentDetailPage";
+import AssignmentManagementPage from "./pages/AssignmentManagementPage";
 
 
 
@@ -27,6 +28,10 @@ export default function App() {
         <Route 
           path="/assignment-detail/:batchId" 
           element={<AssignmentDetailPage />} 
+        />
+        <Route 
+          path="/assignment-management" 
+          element={<AssignmentManagementPage />} 
         />
       </Routes>
     </MainLayout>

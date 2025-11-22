@@ -1,7 +1,7 @@
 // src/pages/Student.jsx
 import { useState, useEffect, useMemo } from "react";
 import { fetchClasses, saveStudent } from "../api/studentApi";
-import StudentModal from "../components/StudentModal";
+import StudentModal from "../components/student/StudentModal";
 
 export default function Student() {
   // --- 1. State Management ---

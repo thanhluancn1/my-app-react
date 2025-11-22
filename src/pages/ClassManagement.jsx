@@ -1,7 +1,7 @@
 // src/pages/ClassManagement.jsx
 import { useState, useEffect } from "react";
 import { fetchClasses, saveClass } from "../api/classApi";
-import ClassModal from "../components/ClassModal";
+import ClassModal from "../components/class/ClassModal";
 
 export default function ClassManagement() {
   const [classes, setClasses] = useState([]);

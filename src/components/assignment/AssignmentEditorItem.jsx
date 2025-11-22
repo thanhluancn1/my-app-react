@@ -28,7 +28,7 @@ export default function AssignmentEditorItem({ item, index, onUpdate, onDelete }
   };
 
   return (
-    <div className="bg-white rounded-lg border border-border-medium p-4 mb-4 shadow-sm animate-fade-in">
+    <div className="bg-white p-4 mb-4 animate-fade-in">
       {/* --- Toolbar (Giữ nguyên) --- */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4 border-b border-border-light pb-3">
         <div className="flex items-center gap-2">
@@ -55,7 +55,6 @@ export default function AssignmentEditorItem({ item, index, onUpdate, onDelete }
           >
             <option value="Trắc nghiệm">Trắc nghiệm</option>
             <option value="Tự luận">Tự luận</option>
-            <option value="Đúng/Sai">Đúng/Sai</option>
           </select>
         </div>
 

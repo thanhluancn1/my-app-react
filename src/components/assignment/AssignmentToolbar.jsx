@@ -9,7 +9,7 @@ export default function AssignmentToolbar({
   onSave 
 }) {
   return (
-    <div className="flex items-center gap-4 bg-white py-2 px-4 rounded-lg border border-border-light shadow-sm mx-6 my-2">
+    <div className="flex items-center gap-4 bg-white py-2 px-4 rounded-lg border border-border-light mx-6 my-2">
       
       {/* Breadcrumb rút gọn hoặc Title */}
       <div className="flex-1">
@@ -58,7 +58,7 @@ export default function AssignmentToolbar({
 
       <button 
         onClick={onSave}
-        className="flex items-center gap-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 text-sm font-medium transition-colors shadow-sm"
+        className="flex items-center gap-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 text-sm font-medium transition-colors"
       >
         <img src="https://unpkg.com/lucide-static/icons/save.svg" className="w-4 h-4" alt="" />
         Lưu đề

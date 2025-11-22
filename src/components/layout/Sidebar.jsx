@@ -35,6 +35,13 @@ export default function Sidebar() {
           href="/exam-suggestions"
         />
 
+
+        <SidebarItem
+          icon="https://unpkg.com/lucide-static/icons/file-text.svg" // Đổi icon cho phù hợp
+          label="Quản lý bài tập"
+          href="/assignment-management" // <--- Link tới trang mới
+        />
+
         <SidebarItem
           icon="https://unpkg.com/lucide-static/icons/layout-grid.svg"
           label="Quản lý bài giảng"

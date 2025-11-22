@@ -1,7 +1,7 @@
 // src/components/CropImageModal.jsx
 import { useState, useCallback } from "react";
 import Cropper from "react-easy-crop";
-import getCroppedImg from "../utils/cropImage"; // Import hàm tiện ích
+import getCroppedImg from "../../utils/cropImage"; // Import hàm tiện ích
 
 export default function CropImageModal({ isOpen, imageSrc, onCancel, onSave }) {
   const [crop, setCrop] = useState({ x: 0, y: 0 });

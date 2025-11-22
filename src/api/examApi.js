@@ -1,6 +1,6 @@
 // src/api/examApi.js
 
-// Dữ liệu Mock (Được mở rộng thêm phần 'assignments' chi tiết để test)
+// ... (Giữ nguyên EXAM_SUGGESTIONS_DATA cũ) ...
 const EXAM_SUGGESTIONS_DATA = [
   {
     "lesson_id": 1, 
@@ -86,7 +86,99 @@ const EXAM_SUGGESTIONS_DATA = [
   }
 ];
 
-// Hàm giả lập gọi API lấy danh sách gợi ý (đã có từ trước)
+// --- DỮ LIỆU MỚI: Danh sách Lớp học & Bài tập (Từ getAllClassExams) ---
+const CLASS_EXAM_DATA = [
+  {
+    "class_id": 1, 
+    "class_name": "Lớp 12A1",
+    "start_year": 2024,
+    "end_year": 2025,
+    "student_count": 40,
+    "assignment_batches": [
+      {
+        "batch_id": 1,
+        "batch_name": "Ôn tập Chương 1 (Cơ bản)",
+        "target_student": "học sinh cả lớp",
+        "total_questions": 10,
+        "total_points": 100,
+        "batch_status": "Đang diễn ra",
+        "start_date": "2025-10-25T10:00:00Z",
+        "due_date": "2025-10-25T10:30:00Z"
+      },
+      {
+        "batch_id": 2,
+        "batch_name": "Chuyên đề Hàm số và Vector (Nâng cao)",
+        "target_student": "học sinh giỏi",
+        "total_questions": 8,
+        "total_points": 100,
+        "batch_status": "Đang diễn ra",
+        "start_date": "2025-10-25T10:00:00Z",
+        "due_date": "2025-10-25T10:30:00Z"
+      },
+      {
+        "batch_id": 3,
+        "batch_name": "Tổng hợp Chuyên đề Hàm số và Vector (Nâng cao)",
+        "target_student": "học sinh giỏi",
+        "total_questions": 8,
+        "total_points": 100,
+        "batch_status": "Đang diễn ra",
+        "start_date": "2025-10-25T10:00:00Z",
+        "due_date": "2025-10-25T10:30:00Z"
+      },
+      {
+        "batch_id": 4,
+        "batch_name": "Chuyên đề Hàm số và Vector (Nâng cao)",
+        "target_student": "học sinh giỏi",
+        "total_questions": 8,
+        "total_points": 100,
+        "batch_status": "Đang diễn ra",
+        "start_date": "2025-10-25T10:00:00Z",
+        "due_date": "2025-10-25T10:30:00Z"
+      }
+    ]
+  },
+  {
+    "class_id": 2, 
+    "class_name": "Lớp 12A2",
+    "start_year": 2024,
+    "end_year": 2025,
+    "student_count": 40,
+    "assignment_batches": [
+      {
+        "batch_id": 1,
+        "batch_name": "Ôn tập Chương 1 (Cơ bản)",
+        "target_student": "học sinh cả lớp",
+        "total_questions": 10,
+        "total_points": 100,
+        "batch_status": "Đang diễn ra",
+        "start_date": "2025-10-25T10:00:00Z",
+        "due_date": "2025-10-25T10:30:00Z"
+      },
+      {
+        "batch_id": 2,
+        "batch_name": "Chuyên đề Hàm số và Vector (Nâng cao)",
+        "target_student": "học sinh giỏi",
+        "total_questions": 8,
+        "total_points": 100,
+        "batch_status": "Đang diễn ra",
+        "start_date": "2025-10-25T10:00:00Z",
+        "due_date": "2025-10-25T10:30:00Z"
+      },
+      {
+        "batch_id": 3,
+        "batch_name": "Tổng hợp Chuyên đề Hàm số và Vector (Nâng cao)",
+        "target_student": "học sinh giỏi",
+        "total_questions": 8,
+        "total_points": 100,
+        "batch_status": "Đang diễn ra",
+        "start_date": "2025-10-25T10:00:00Z",
+        "due_date": "2025-10-25T10:30:00Z"
+      }
+    ]
+  }
+];
+
+// ... (Giữ nguyên fetchExamSuggestions cũ) ...
 export const fetchExamSuggestions = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -95,14 +187,13 @@ export const fetchExamSuggestions = () => {
   });
 };
 
-// --- HÀM MỚI: Lấy chi tiết bài tập theo batchId ---
+// ... (Giữ nguyên fetchAssignmentsByBatchId cũ) ...
 export const fetchAssignmentsByBatchId = (batchId) => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
       const targetId = parseInt(batchId);
       let foundBatch = null;
 
-      // 1. Tìm batch tương ứng
       for (const lesson of EXAM_SUGGESTIONS_DATA) {
         if (lesson.assignment_batches) {
           foundBatch = lesson.assignment_batches.find(b => b.batch_id === targetId);
@@ -111,7 +202,6 @@ export const fetchAssignmentsByBatchId = (batchId) => {
       }
 
       if (foundBatch) {
-        // 2. Gom tất cả assignments từ các knowledge_components lại thành 1 mảng phẳng
         const allAssignments = [];
         if (foundBatch.knowledge_components) {
             foundBatch.knowledge_components.forEach(comp => {
@@ -120,13 +210,32 @@ export const fetchAssignmentsByBatchId = (batchId) => {
                 }
             });
         }
-        
-        // 3. Trả về dữ liệu
         resolve(JSON.parse(JSON.stringify(allAssignments)));
       } else {
-        console.warn(`Không tìm thấy batch ID: ${targetId}`);
-        resolve([]); // Trả về mảng rỗng nếu không tìm thấy
+        // Fallback data for testing if mock data is missing assignments
+        const fallbackAssignments = [];
+        for(let i=1; i<=5; i++) {
+            fallbackAssignments.push({
+                assignment_id: Date.now() + i,
+                question: `Câu hỏi mẫu số ${i} (Batch ${targetId}) - Dữ liệu fallback`,
+                answer: `Đáp án mẫu ${i}`,
+                solution_guide: `Hướng dẫn giải chi tiết cho câu ${i}`,
+                score: 2,
+                type: "Trắc nghiệm"
+            });
+        }
+        resolve(fallbackAssignments);
       }
-    }, 300); // Giả lập độ trễ 300ms
+    }, 300);
+  });
+};
+
+// --- HÀM MỚI: Lấy danh sách lớp và bài tập ---
+export const fetchClassExams = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      // Trả về dữ liệu mock
+      resolve(JSON.parse(JSON.stringify(CLASS_EXAM_DATA)));
+    }, 300); // Giả lập delay 300ms
   });
 };

@@ -1,9 +1,9 @@
 // src/pages/CreateExam.jsx
 import { useState, useEffect } from "react";
 import { fetchKnowledgeTree } from "../api/knowledgeApi";
-import FilterSection from "../components/FilterSection";
-import KnowledgeTree from "../components/KnowledgeTree";
-import MatrixTable from "../components/MatrixTable";
+import FilterSection from "../components/exam-matrix/FilterSection";
+import KnowledgeTree from "../components/exam-matrix/KnowledgeTree";
+import MatrixTable from "../components/exam-matrix/MatrixTable";
 
 export default function CreateExam() {
   const [rawKnowledgeData, setRawKnowledgeData] = useState(null);

@@ -6,8 +6,8 @@ import {
   saveSchedule,
   deleteSchedule,
 } from "../api/scheduleApi";
-import ScheduleTable from "../components/ScheduleTable";
-import ScheduleModal from "../components/ScheduleModal";
+import ScheduleTable from "../components/schedule/ScheduleTable";
+import ScheduleModal from "../components/schedule/ScheduleModal";
 
 export default function Schedule() {
   // --- 1. State Management ---
