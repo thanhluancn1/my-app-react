@@ -98,8 +98,8 @@ export default function CreateExam() {
   if (loading) return <p className="p-6">Đang tải...</p>;
 
   return (
-    <div className="p-6 bg-bg-light min-h-screen flex flex-col">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+    <div className="p-2 bg-bg-light min-h-screen flex flex-col">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
         <h1 className="text-2xl font-medium text-text-primary">
           Xây dựng Ma trận Đề thi
         </h1>
@@ -110,7 +110,7 @@ export default function CreateExam() {
         onFilterChange={handleFilterChange} 
       />
 
-      <div className="flex flex-col lg:flex-row gap-6 flex-1 mt-6">
+      <div className="flex flex-col lg:flex-row gap-2 flex-1 mt-6">
         <div className="w-full lg:w-1/3 xl:w-1/4 transition-all duration-300">
            <KnowledgeTree 
               data={displayTreeData} 

@@ -150,12 +150,12 @@ export default function Schedule() {
   const weekLabel = `${currentWeekStart.toLocaleDateString('vi-VN', {day: '2-digit', month: '2-digit'})} - ${currentWeekEnd.toLocaleDateString('vi-VN', {day: '2-digit', month: '2-digit'})}`;
 
   return (
-    <div className="p-6 bg-bg-light min-h-screen flex flex-col">
+    <div className="p-2 bg-bg-light min-h-screen flex flex-col">
       {/* Header */}
-      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-4">
         <div className="flex flex-col">
             <h1 className="text-2xl font-medium text-text-primary">
-            Quản lý lịch học
+            Quản lý lịch dạy
             </h1>
             <span className="text-sm text-text-secondary mt-1">Tuần: {weekLabel}</span>
         </div>
@@ -171,12 +171,15 @@ export default function Schedule() {
               <span className="text-lg leading-none">&laquo;</span>
               Tuần trước
             </button>
+
             <button 
                 onClick={handleToday}
-                className="px-3 py-1.5 text-text-primary font-medium hover:bg-gray-100 rounded-md transition"
+                className="flex items-center gap-1 px-3 py-1.5 rounded-md border border-border-medium bg-white text-primary hover:bg-blue-50 transition text-sm font-medium"
             >
               Tuần này
             </button>
+
+
             <button 
                 onClick={handleNextWeek}
                 className="flex items-center gap-1 px-3 py-1.5 rounded-md border border-border-medium bg-white text-primary hover:bg-blue-50 transition text-sm font-medium"

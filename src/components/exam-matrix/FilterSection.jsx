@@ -70,7 +70,7 @@ export default function FilterSection({ data, onFilterChange }) {
   };
 
   return (
-    <div className="bg-white rounded-xl border border-border-light p-6 mb-6 shadow-sm">
+    <div className="bg-white rounded-xl border border-border-light p-6 mb-2 shadow-sm">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         {/* Dropdown Khối */}

@@ -48,12 +48,6 @@ export default function Sidebar() {
           href="/knowledge"
         />
 
-        <SidebarItem
-          icon="https://unpkg.com/lucide-static/icons/star.svg"
-          label="Tạo bài tập"
-          href="/exercise"
-        />
-
         <p className="text-text-muted text-xs px-3 mb-2 pt-4">Báo cáo</p>
 
         <SidebarItem

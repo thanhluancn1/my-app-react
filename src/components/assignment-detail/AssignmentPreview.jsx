@@ -78,12 +78,12 @@ export default function AssignmentPreview({ assignments, viewSettings, batchInfo
                 optionsHtml += `<div class="grid ${gridClass} gap-4">`;
                 rowOptions.forEach(opt => {
                     const isCorrect = correctAnswers.includes(opt.label);
-                    let containerStyle = "border border-gray-200 p-3 rounded-lg flex items-start gap-2 hover:bg-gray-50 transition-colors";
-                    let labelStyle = "font-bold text-text-secondary min-w-[24px]";
+                    let containerStyle = "flex items-start gap-2";
+                    let labelStyle = "font-bold text-text-primary min-w-[24px]";
                     
                     if (showResult && isCorrect) {
-                        containerStyle = "border-2 border-primary bg-blue-50 p-3 rounded-lg flex items-start gap-2 shadow-sm";
-                        labelStyle = "font-bold text-primary min-w-[24px]";
+                        containerStyle = "flex items-start gap-2";
+                        labelStyle = "border-2 border-gray-700 rounded-full font-bold text-text-primary min-w-[24px]";
                     }
                     const contentHtml = marked.parseInline(opt.content);
                     optionsHtml += `

@@ -60,8 +60,19 @@ export default function StudentPage() {
   if (loading) return <p className="p-6 text-center">Đang tải dữ liệu...</p>;
 
   return (
-    <div className="p-6 bg-bg-light min-h-screen">
-      <h1 className="text-2xl font-medium text-text-primary mb-8">Quản lý học sinh</h1>
+    <div className="p-2 bg-bg-light min-h-screen">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+          <h2 className="text-2xl font-medium text-text-primary mb-4 sm:mb-0">Danh sách học sinh</h2>
+          <div className="flex space-x-3">
+            <button 
+              onClick={handleAdd}
+              className="flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors shadow-sm"
+            >
+              <img src="https://unpkg.com/lucide-static/icons/plus.svg" alt="Add" className="w-5 h-5 mr-2" style={{ filter: "invert(1)" }} />
+              <span className="text-sm">Thêm học sinh</span>
+            </button>
+          </div>
+        </div>
 
       <div className="bg-white rounded-xl border border-border-light p-6 mb-8">
         <div className="flex flex-col lg:flex-row lg:items-center lg:space-x-4">
@@ -86,18 +97,7 @@ export default function StudentPage() {
       </div>
 
       <div className="space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-lg font-medium text-text-primary mb-4 sm:mb-0">Danh sách học sinh</h2>
-          <div className="flex space-x-3">
-            <button 
-              onClick={handleAdd}
-              className="flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors shadow-sm"
-            >
-              <img src="https://unpkg.com/lucide-static/icons/plus.svg" alt="Add" className="w-5 h-5 mr-2" style={{ filter: "invert(1)" }} />
-              <span className="text-sm">Thêm học sinh</span>
-            </button>
-          </div>
-        </div>
+        
 
         <div className="bg-white rounded-xl border border-border-light overflow-hidden shadow-sm">
           <div className="overflow-x-auto">

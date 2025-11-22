@@ -50,15 +50,11 @@ export default function ClassPage() {
   };
 
   return (
-    <div className="p-6 bg-bg-light min-h-screen">
-      <h1 className="text-2xl font-medium text-text-primary mb-8">
-        Quản lý lớp học
-      </h1>
-
+    <div className="p-2 bg-bg-light min-h-screen">
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-lg font-medium text-text-primary mb-4 sm:mb-0">
-            Danh sách lớp
+          <h2 className="text-2xl font-medium text-text-primary mb-4 sm:mb-0">
+            Danh sách lớp học
           </h2>
 
           <div className="flex space-x-3">

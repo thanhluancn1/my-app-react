@@ -38,7 +38,7 @@ export default function ExamSuggestionPage() {
   if (loading) return <p className="p-6 text-center">Đang tải dữ liệu...</p>;
 
   return (
-    <div className="flex flex-col gap-6 items-start relative w-full p-6 bg-bg-light min-h-screen">
+    <div className="p-2 flex flex-col gap-6 items-start relative w-full bg-bg-light min-h-screen">
       
       {/* --- HEADER SECTION --- */}
       <div className="flex flex-col sm:flex-row items-center justify-between relative w-full gap-4">
