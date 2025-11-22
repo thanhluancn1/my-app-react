@@ -16,8 +16,8 @@ export default {
         'bg-light': '#f5f6fa',
       },
       fontFamily: {
-        // Thiết lập Manrope làm font mặc định (sans) cho toàn bộ ứng dụng
-        sans: ['Manrope', 'sans-serif'],
+        // Thiết lập Roboto làm font mặc định (sans) cho toàn bộ ứng dụng
+        sans: ['Roboto', 'sans-serif'],
       }
     },
   },

@@ -1,6 +1,6 @@
 // src/pages/ClassPage.jsx
 import { useState, useEffect } from "react";
-import { fetchSchoolData, saveClass } from "../api/schoolApi"; // <--- Import từ API mới
+import { fetchSchoolData, saveClass } from "../api/schoolApi";
 import ClassModal from "../components/class/ClassModal";
 
 export default function ClassPage() {
@@ -9,10 +9,11 @@ export default function ClassPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentClass, setCurrentClass] = useState(null);
 
-  // Load dữ liệu từ API hợp nhất
+  // ... (Giữ nguyên phần logic load data và handlers) ...
+  
   useEffect(() => {
     const loadData = async () => {
-      const data = await fetchSchoolData(); // Gọi hàm mới
+      const data = await fetchSchoolData();
       setClasses(data);
       setLoading(false);
     };
@@ -34,9 +35,7 @@ export default function ClassPage() {
   };
 
   const handleSaveModal = async (formData) => {
-    // Gọi API lưu (vẫn dùng hàm từ schoolApi)
     const savedClass = await saveClass(formData);
-
     setClasses((prevClasses) => {
       const exists = prevClasses.find((c) => c.class_id === savedClass.class_id);
       if (exists) {
@@ -47,7 +46,6 @@ export default function ClassPage() {
         return [...prevClasses, savedClass];
       }
     });
-
     handleCloseModal();
   };
 
@@ -72,7 +70,7 @@ export default function ClassPage() {
                 src="https://unpkg.com/lucide-static/icons/plus.svg"
                 alt="Add"
                 className="w-6 h-6 mr-2"
-                style={{ filter: "invert(1)" }} // Đảo màu icon thành trắng
+                style={{ filter: "invert(1)" }}
               />
               <span className="text-sm">Thêm lớp học</span>
             </button>
@@ -88,10 +86,7 @@ export default function ClassPage() {
                   <th className="px-6 py-4 text-left text-text-secondary text-sm">Tên lớp</th>
                   <th className="px-6 py-4 text-left text-text-secondary text-sm">Tên trường</th>
                   <th className="px-6 py-4 text-left text-text-secondary text-sm">Môn học</th>
-                  
-                  {/* CỘT MỚI: SĨ SỐ */}
                   <th className="px-6 py-4 text-left text-text-secondary text-sm">Sĩ số</th> 
-                  
                   <th className="px-6 py-4 text-left text-text-secondary text-sm">Năm bắt đầu</th>
                   <th className="px-6 py-4 text-left text-text-secondary text-sm">Năm kết thúc</th>
                   <th className="px-6 py-4 text-left text-text-secondary text-sm">Trạng thái</th>
@@ -111,33 +106,31 @@ export default function ClassPage() {
                       key={classItem.class_id}
                       className="border-b border-border-light hover:bg-gray-50 transition-colors"
                     >
-                      <td className="px-6 py-2 text-text-primary text-base font-medium">
+                      {/* ĐÃ SỬA: text-base -> text-sm */}
+                      <td className="px-6 py-2 text-text-primary text-sm">
                         {index + 1}
                       </td>
-                      <td className="px-6 py-2 text-text-primary text-base font-medium">
+                      <td className="px-6 py-2 text-text-primary text-sm">
                         {classItem.class_name}
                       </td>
-                      <td className="px-6 py-2 text-text-primary text-base font-medium">
+                      <td className="px-6 py-2 text-text-primary text-sm">
                         {classItem.school_name}
                       </td>
-                      <td className="px-6 py-2 text-text-primary text-base font-medium">
+                      <td className="px-6 py-2 text-text-primary text-sm">
                         {classItem.subject_name}
                       </td>
-                      
-                      {/* Hiển thị số lượng học sinh */}
-                      <td className="px-6 py-2 text-text-primary text-base font-medium">
+                      <td className="px-6 py-2 text-text-primary text-sm">
                         {classItem.students ? classItem.students.length : 0}
                       </td>
-
-                      <td className="px-6 py-2 text-text-primary text-base font-medium">
+                      <td className="px-6 py-2 text-text-primary text-sm">
                         {classItem.start_year}
                       </td>
-                      <td className="px-6 py-2 text-text-primary text-base font-medium">
+                      <td className="px-6 py-2 text-text-primary text-sm">
                         {classItem.end_year}
                       </td>
                       <td className="px-6 py-2">
                         <span
-                          className={`inline-flex items-center px-3 py-2 rounded-full text-sm font-medium ${
+                          className={`inline-flex items-center px-3 py-2 rounded-full text-xs ${
                             classItem.class_status === "Hoạt động"
                               ? "text-green-700 bg-green-100"
                               : "text-red-700 bg-red-100"

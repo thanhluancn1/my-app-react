@@ -1,25 +1,20 @@
 // src/pages/StudentPage.jsx
 import { useState, useEffect, useMemo } from "react";
-import { fetchSchoolData, saveStudent } from "../api/schoolApi"; // <--- IMPORT TỪ API MỚI
+import { fetchSchoolData, saveStudent } from "../api/schoolApi";
 import StudentModal from "../components/student/StudentModal";
 
 export default function StudentPage() {
-  // --- 1. State Management ---
+  // ... (Giữ nguyên phần state và logic handlers) ...
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedClassId, setSelectedClassId] = useState(""); 
-  
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingStudent, setEditingStudent] = useState(null);
 
-  // --- 2. Load Data (Dùng API Hợp nhất) ---
   useEffect(() => {
     const loadData = async () => {
-      // Gọi 1 API duy nhất lấy cả Lớp và Học sinh
       const data = await fetchSchoolData();
       setClasses(data);
-      
-      // Mặc định chọn lớp đầu tiên
       if (data.length > 0) {
         setSelectedClassId(data[0].class_id);
       }
@@ -28,64 +23,33 @@ export default function StudentPage() {
     loadData();
   }, []);
 
-  // --- 3. Computed Data (Lọc học sinh từ dữ liệu Local) ---
   const filteredStudents = useMemo(() => {
     if (!selectedClassId) return [];
     const currentClass = classes.find(c => c.class_id === parseInt(selectedClassId));
-    // Trả về mảng students có sẵn trong object Class
     return currentClass ? currentClass.students : [];
   }, [classes, selectedClassId]);
 
-  // --- 4. Handlers ---
+  const handleClassChange = (e) => setSelectedClassId(parseInt(e.target.value));
+  const handleAdd = () => { setEditingStudent(null); setIsAddModalOpen(true); };
+  const handleEdit = (student) => { setEditingStudent(student); setIsAddModalOpen(true); };
 
-  const handleClassChange = (e) => {
-    setSelectedClassId(parseInt(e.target.value));
-  };
-
-  const handleAdd = () => {
-    setEditingStudent(null);
-    setIsAddModalOpen(true);
-  };
-
-  const handleEdit = (student) => {
-    setEditingStudent(student);
-    setIsAddModalOpen(true);
-  };
-
-  // Lưu Học sinh (Gọi API mới)
   const handleSaveStudent = async (studentData) => {
     try {
-      // 1. Gọi API lưu xuống "Server"
       const savedStudent = await saveStudent(studentData);
-      
-      // 2. Cập nhật UI (Local State)
       setClasses(prevClasses => {
-        // Copy mảng classes để đảm bảo tính bất biến
-        const newClasses = prevClasses.map(cls => ({
-           ...cls, 
-           students: [...cls.students] // Copy cả mảng students con
-        }));
-
-        // Tìm lớp tương ứng
+        const newClasses = prevClasses.map(cls => ({ ...cls, students: [...cls.students] }));
         const classIndex = newClasses.findIndex(c => c.class_id === parseInt(selectedClassId));
-        
         if (classIndex > -1) {
           const targetClass = newClasses[classIndex];
-          
           if (studentData.student_id) {
-            // --- UPDATE ---
             const studentIndex = targetClass.students.findIndex(s => s.student_id === savedStudent.student_id);
-            if (studentIndex > -1) {
-              targetClass.students[studentIndex] = savedStudent;
-            }
+            if (studentIndex > -1) targetClass.students[studentIndex] = savedStudent;
           } else {
-            // --- CREATE ---
             targetClass.students.push(savedStudent);
           }
         }
         return newClasses;
       });
-
       setIsAddModalOpen(false);
     } catch (error) {
       console.error("Lỗi khi lưu học sinh:", error);
@@ -97,10 +61,8 @@ export default function StudentPage() {
 
   return (
     <div className="p-6 bg-bg-light min-h-screen">
-      {/* Title */}
       <h1 className="text-2xl font-medium text-text-primary mb-8">Quản lý học sinh</h1>
 
-      {/* Filter Section */}
       <div className="bg-white rounded-xl border border-border-light p-6 mb-8">
         <div className="flex flex-col lg:flex-row lg:items-center lg:space-x-4">
           <label className="text-text-secondary text-base mb-2 lg:mb-0 lg:w-32">Lớp học</label>
@@ -123,11 +85,9 @@ export default function StudentPage() {
         </div>
       </div>
 
-      {/* Action Header */}
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-lg font-medium text-text-primary mb-4 sm:mb-0">Danh sách học sinh</h2>
-          
           <div className="flex space-x-3">
             <button 
               onClick={handleAdd}
@@ -139,7 +99,6 @@ export default function StudentPage() {
           </div>
         </div>
 
-        {/* Table */}
         <div className="bg-white rounded-xl border border-border-light overflow-hidden shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -154,20 +113,20 @@ export default function StudentPage() {
                   <th className="px-6 py-4 text-left text-text-secondary text-sm">Sửa</th>
                 </tr>
               </thead>
-              
               <tbody>
                 {filteredStudents.length === 0 ? (
                    <tr><td colSpan="7" className="text-center p-8 text-text-muted italic">Không có học sinh nào trong lớp này.</td></tr>
                 ) : (
                   filteredStudents.map((student, index) => (
                     <tr key={student.student_id} className="border-b border-border-light hover:bg-gray-50 transition-colors">
-                      <td className="px-6 py-3 text-text-primary text-base font-medium">{index + 1}</td>
-                      <td className="px-6 py-3 text-text-primary text-base font-medium">{student.full_name}</td>
-                      <td className="px-6 py-3 text-text-primary text-base font-medium">{student.date_of_birth}</td>
-                      <td className="px-6 py-3 text-text-primary text-base font-medium">{student.email}</td>
-                      <td className="px-6 py-3 text-text-primary text-base font-medium">{student.phone_number}</td>
+                      {/* ĐÃ SỬA: text-base -> text-sm */}
+                      <td className="px-6 py-3 text-text-primary text-sm">{index + 1}</td>
+                      <td className="px-6 py-3 text-text-primary text-sm">{student.full_name}</td>
+                      <td className="px-6 py-3 text-text-primary text-sm">{student.date_of_birth}</td>
+                      <td className="px-6 py-3 text-text-primary text-sm">{student.email}</td>
+                      <td className="px-6 py-3 text-text-primary text-sm">{student.phone_number}</td>
                       <td className="px-6 py-3">
-                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${student.status === 'Hoạt động' ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-100'}`}>
+                        <span className={`inline-flex items-center px-3 py-2 rounded-full text-xs ${student.status === 'Hoạt động' ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-100'}`}>
                             {student.status}
                         </span>
                       </td>
