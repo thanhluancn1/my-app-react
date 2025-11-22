@@ -6,7 +6,7 @@ export default function SuggestionCard({ title, batch, onClick }) {
 
   // Style động: Nếu có batch thì sáng, không thì mờ và không click được
   const cardClasses = hasBatch
-    ? "bg-white border border-border-medium rounded-xl p-4 cursor-pointer transition-all hover:bg-gray-50 hover:shadow-md"
+    ? "bg-white border border-border-medium rounded-xl p-4 cursor-pointer"
     : "bg-white border border-border-medium rounded-xl p-4 opacity-60 cursor-default";
 
   const handleClick = () => {

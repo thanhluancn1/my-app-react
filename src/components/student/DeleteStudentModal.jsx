@@ -12,7 +12,7 @@ export default function DeleteStudentModal({ isOpen, onClose, onConfirm }) {
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       {/* Modal Container */}
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-sm relative animate-fade-in">
+      <div className="bg-white rounded-xl w-full max-w-sm relative animate-fade-in">
         {/* Modal Content */}
         <div className="p-6 space-y-5">
           {/* Title and Message */}

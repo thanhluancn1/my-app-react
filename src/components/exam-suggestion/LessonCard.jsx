@@ -11,7 +11,7 @@ export default function LessonCard({ lesson, onCardClick }) {
   ];
 
   return (
-    <div className="bg-white border border-border-medium rounded-xl p-6 w-full mb-6 shadow-sm">
+    <div className="bg-white border border-border-medium rounded-xl p-6 w-full mb-2">
       <div className="flex flex-col gap-4 items-start w-full">
         
         {/* Lesson Title */}

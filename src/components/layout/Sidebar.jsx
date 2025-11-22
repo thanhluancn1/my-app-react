@@ -3,7 +3,7 @@ import SidebarItem from "./SidebarItem";
 
 export default function Sidebar() {
   return (
-    <aside className="w-64 bg-white shadow-lg flex-shrink-0">
+    <aside className="w-64 bg-white flex-shrink-0">
       <div className="p-4 space-y-2">
         <SidebarItem
           icon="https://unpkg.com/lucide-static/icons/home.svg"

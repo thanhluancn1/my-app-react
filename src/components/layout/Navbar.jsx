@@ -7,7 +7,7 @@ export default function Navbar() {
   const inactiveClass = "text-blue-600 hover:underline";
 
   return (
-    <nav className="flex gap-4 p-4 bg-white shadow">
+    <nav className="flex gap-4 p-4 bg-white">
       <NavLink to="/" end className={({ isActive }) => `${base} ${isActive ? activeClass : inactiveClass}`}>
         Home
       </NavLink>

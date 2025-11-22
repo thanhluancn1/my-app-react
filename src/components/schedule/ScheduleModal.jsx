@@ -165,7 +165,7 @@ export default function ScheduleModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-md relative animate-fade-in">
+      <div className="bg-white rounded-xl w-full max-w-md relative animate-fade-in">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-border-light">
           <h2 className="text-2xl font-medium text-text-primary">
@@ -224,7 +224,7 @@ export default function ScheduleModal({
               autoComplete="off"
             />
             {showSuggestions && filteredLessons.length > 0 && (
-              <ul className="absolute z-10 w-full bg-white border border-border-medium rounded-lg mt-1 max-h-48 overflow-y-auto shadow-lg">
+              <ul className="absolute z-10 w-full bg-white border border-border-medium rounded-lg mt-1 max-h-48 overflow-y-auto">
                 {filteredLessons.map((lesson) => (
                   <li key={lesson.lesson_id} onClick={() => handleSelectLesson(lesson)} className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-sm text-text-primary">
                     {lesson.lesson_name}
@@ -234,7 +234,7 @@ export default function ScheduleModal({
             )}
              {/* Thông báo không tìm thấy */}
              {showSuggestions && filteredLessons.length === 0 && formData.lesson_name && (
-                <div className="absolute z-10 w-full bg-white border border-border-medium rounded-lg mt-1 p-2 text-sm text-text-secondary shadow-lg text-center">
+                <div className="absolute z-10 w-full bg-white border border-border-medium rounded-lg mt-1 p-2 text-sm text-text-secondary text-center">
                     Không tìm thấy bài học phù hợp trong lớp này
                 </div>
             )}

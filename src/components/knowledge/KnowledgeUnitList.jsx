@@ -27,7 +27,7 @@ export default function KnowledgeUnitList({ units = [], onUnitsChange }) {
   };
 
   return (
-    <div className="bg-white rounded-xl border border-border-light shadow-sm flex flex-col">
+    <div className="bg-white rounded-xl border border-border-light flex flex-col">
       {/* Header */}
       <div className="p-4 border-b border-border-light flex justify-between items-center bg-gray-50 rounded-t-xl">
         <h3 className="font-bold text-text-primary flex items-center gap-2 text-sm uppercase">
@@ -36,7 +36,7 @@ export default function KnowledgeUnitList({ units = [], onUnitsChange }) {
         </h3>
         <button 
           onClick={handleAdd}
-          className="flex items-center gap-1 px-3 py-1.5 bg-white border border-primary text-primary rounded-lg text-xs font-bold hover:bg-blue-50 transition-colors shadow-sm"
+          className="flex items-center gap-1 px-3 py-1.5 bg-white border border-primary text-primary rounded-lg text-xs font-bold hover:bg-blue-50 transition-colors"
         >
           <img src="https://unpkg.com/lucide-static/icons/plus.svg" className="w-3 h-3" alt="" /> 
           Thêm mới

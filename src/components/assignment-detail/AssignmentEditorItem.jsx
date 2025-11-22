@@ -28,7 +28,7 @@ export default function AssignmentEditorItem({ item, index, onUpdate, onDelete }
   };
 
   return (
-    <div className="bg-white p-4 mb-4 animate-fade-in">
+    <div className="rounded-lg border border-border-medium bg-white p-4 mb-4 animate-fade-in">
       {/* --- Toolbar (Giữ nguyên) --- */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4 border-b border-border-light pb-3">
         <div className="flex items-center gap-2">

@@ -193,7 +193,7 @@ export default function Schedule() {
         {/* Add Button */}
         <button
           onClick={handleAdd}
-          className="flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors shadow-sm"
+          className="flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors"
         >
           <img
             src="https://unpkg.com/lucide-static/icons/plus.svg"

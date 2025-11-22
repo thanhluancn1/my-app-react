@@ -16,7 +16,7 @@ export default function AssignmentEditor({
         
         {/* --- 1. KHỐI CHỈNH SỬA THÔNG TIN CHUNG (MỚI) --- */}
         {batchInfo && (
-            <div className="bg-white p-4 m-4 mb-2 rounded-lg border border-border-medium shadow-sm animate-fade-in">
+            <div className="bg-white p-4 m-2 rounded-lg border border-border-medium animate-fade-in">
                 <h3 className="font-bold text-text-primary mb-3 uppercase text-sm border-b border-border-light pb-2">
                     Thông tin đề thi
                 </h3>
@@ -50,7 +50,7 @@ export default function AssignmentEditor({
         )}
 
         {/* --- 2. DANH SÁCH CÂU HỎI (GIỮ NGUYÊN) --- */}
-        <div className="p-4 pt-0">
+        <div className="p-2">
             {assignments.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-32 text-text-secondary">
                 <p>Chưa có câu hỏi nào.</p>

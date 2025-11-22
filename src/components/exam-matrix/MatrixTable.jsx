@@ -36,7 +36,7 @@ export default function MatrixTable({ data, onUpdateItem, onSave }) {
   );
 
   return (
-    <div className="bg-white rounded-xl border border-border-light shadow-sm flex flex-col h-full">
+    <div className="bg-white rounded-xl border border-border-light flex flex-col h-full">
       <div className="p-4 border-b border-border-light">
          <h3 className="font-bold text-text-primary uppercase text-sm">Bảng Đề Xuất Đề Thi</h3>
       </div>
@@ -101,7 +101,7 @@ export default function MatrixTable({ data, onUpdateItem, onSave }) {
         <button className="px-4 py-2 border border-border-medium rounded-lg text-sm font-medium text-text-secondary hover:bg-gray-50 transition-colors">
           Hủy
         </button>
-        <button onClick={onSave} className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors shadow-sm">
+        <button onClick={onSave} className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors">
           Lưu thay đổi
         </button>
       </div>

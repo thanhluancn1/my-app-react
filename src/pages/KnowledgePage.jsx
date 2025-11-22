@@ -1,10 +1,10 @@
 // src/pages/KnowledgePage.jsx
 import { useState, useEffect } from "react";
-import { 
-  fetchKnowledgeTree, 
-  fetchLessonDetail, 
+import {
+  fetchKnowledgeTree,
+  fetchLessonDetail,
   saveLessonData,
-  renameNode, 
+  renameNode,
   addNode,
   deleteNode // <--- 1. Import thêm hàm xóa
 } from "../api/knowledgeApi";
@@ -15,7 +15,7 @@ export default function KnowledgePage() {
   // --- 1. State Management ---
   const [treeData, setTreeData] = useState(null);
   const [loading, setLoading] = useState(true);
-  
+
   const [selectedLessonId, setSelectedLessonId] = useState(null);
   const [currentLessonData, setCurrentLessonData] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -66,8 +66,8 @@ export default function KnowledgePage() {
   const handleAddRoot = async () => {
     const gradeName = prompt("Nhập tên Khối mới (Ví dụ: Khối 12):");
     if (gradeName && gradeName.trim() !== "") {
-      await addNode(null, 'root', gradeName); 
-      loadTree(); 
+      await addNode(null, 'root', gradeName);
+      loadTree();
     }
   };
 
@@ -75,11 +75,11 @@ export default function KnowledgePage() {
   const handleRenameNode = async (id, type, newName) => {
     try {
       await renameNode(id, type, newName);
-      
+
       if (type === 'lesson' && id === selectedLessonId) {
         setCurrentLessonData(prev => ({ ...prev, lesson_name: newName }));
       }
-      
+
       loadTree();
     } catch (error) {
       alert("Lỗi đổi tên: " + error.message);
@@ -110,7 +110,7 @@ export default function KnowledgePage() {
       if (type === 'lesson' && id === selectedLessonId) {
         setSelectedLessonId(null);
         setCurrentLessonData(null);
-      } 
+      }
       // (Nâng cao: Nếu xóa Chương/Sách/Môn chứa bài học đang chọn thì cũng nên reset, 
       // nhưng ở mức độ mock đơn giản ta tạm bỏ qua hoặc reset thủ công nếu cần)
 
@@ -136,7 +136,7 @@ export default function KnowledgePage() {
     try {
       await saveLessonData(currentLessonData);
       alert("Đã lưu thay đổi thành công!");
-      loadTree(); 
+      loadTree();
     } catch (error) {
       console.error("Lỗi khi lưu:", error);
       alert("Có lỗi xảy ra khi lưu.");
@@ -150,36 +150,39 @@ export default function KnowledgePage() {
   return (
     <div className="h-screen flex flex-col bg-bg-light overflow-hidden">
       {/* HEADER */}
-      <div className="bg-white border-b border-border-light h-16 flex items-center px-6 justify-between shrink-0 shadow-sm z-10">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold">A</div>
-          <span className="font-bold text-text-primary text-lg">Quản lý Nội dung Kiến thức</span>
-        </div>
-        <div className="flex gap-3">
-          <button className="px-4 py-2 bg-white border border-border-medium rounded-lg text-sm font-medium hover:bg-gray-50 text-text-secondary transition-colors">
-            Hủy
-          </button>
-          <button 
-            onClick={handleSave}
-            disabled={!currentLessonData || isSaving}
-            className={`px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium shadow-sm transition-colors flex items-center gap-2 ${(!currentLessonData || isSaving) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'}`}
-          >
-            {isSaving && (
-               <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z"></path>
-               </svg>
-            )}
-            Lưu thay đổi
-          </button>
+
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+        <h2 className="text-2xl font-medium text-text-primary sm:mb-0">
+          Nội dung kiến thức
+        </h2>
+        <div className="flex space-x-3">
+          <div className="flex gap-3">
+            <button className="px-4 py-2 bg-white border border-border-medium rounded-lg text-sm font-medium hover:bg-gray-50 text-text-secondary transition-colors">
+              Hủy
+            </button>
+            <button
+              onClick={handleSave}
+              disabled={!currentLessonData || isSaving}
+              className={`px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${(!currentLessonData || isSaving) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'}`}
+            >
+              {isSaving && (
+                <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z"></path>
+                </svg>
+              )}
+              Lưu thay đổi
+            </button>
+          </div>
         </div>
       </div>
 
+
       {/* MAIN CONTENT */}
       <div className="flex flex-1 overflow-hidden">
-        <KnowledgeTree 
-          data={treeData} 
-          selectedId={selectedLessonId} 
+        <KnowledgeTree
+          data={treeData}
+          selectedId={selectedLessonId}
           onSelect={handleSelectNode}
           onAdd={handleAddRoot}
           onRenameNode={handleRenameNode}
@@ -187,9 +190,9 @@ export default function KnowledgePage() {
           onDeleteNode={handleDeleteNode} // <--- Truyền hàm xóa xuống
         />
 
-        <LessonEditor 
-          lessonData={currentLessonData} 
-          onChange={handleLessonChange} 
+        <LessonEditor
+          lessonData={currentLessonData}
+          onChange={handleLessonChange}
         />
       </div>
     </div>

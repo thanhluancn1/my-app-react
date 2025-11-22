@@ -5,7 +5,7 @@ export default function LessonEditor({ lessonData, onChange }) {
   
   if (!lessonData) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center bg-gray-50 h-full text-text-secondary">
+      <div className="flex-1 flex flex-col items-center justify-center h-full text-text-secondary">
         <img 
           src="https://unpkg.com/lucide-static/icons/book-open.svg" 
           className="w-16 h-16 mb-4 text-gray-300" 
@@ -29,11 +29,11 @@ export default function LessonEditor({ lessonData, onChange }) {
   };
 
   return (
-    <div className="flex-1 bg-gray-50 h-full overflow-y-auto p-8 custom-scrollbar">
-      <div className="max-w-4xl mx-auto space-y-6">
+    <div className="flex-1 h-full overflow-y-auto pl-4 custom-scrollbar">
+      <div className=" mx-auto space-y-6">
         
         {/* 1. Thông tin Node */}
-        <div className="bg-white rounded-xl border border-border-light shadow-sm p-6 animate-fade-in">
+        <div className="bg-white rounded-xl border border-border-light p-6 animate-fade-in">
           <div className="flex items-center justify-between mb-6 border-b border-border-light pb-4">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-blue-50 rounded-lg text-primary border border-blue-100">

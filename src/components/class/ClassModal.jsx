@@ -62,7 +62,7 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       {/* Modal Content */}
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-md relative animate-fade-in">
+      <div className="bg-white rounded-xl w-full max-w-md relative animate-fade-in">
         {/* Modal Header */}
         <div className="flex items-center justify-between p-6 border-b border-border-light">
           <h2 className="text-2xl font-medium text-text-primary">

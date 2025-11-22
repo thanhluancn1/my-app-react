@@ -24,16 +24,15 @@ export default function AssignmentCard({ batch }) {
   const scheduleLabel = formatSchedule(batch.start_date, batch.due_date);
 
   return (
-    <div className="bg-white border border-border-light rounded-xl p-6 cursor-pointer hover:shadow-md transition-shadow h-full flex flex-col">
+    <div className="bg-white border border-border-light rounded-xl p-6 cursor-pointer h-full flex flex-col">
       <div className="space-y-4 flex-1">
         {/* Tên bài tập */}
         <div>
-          <h3 className="text-lg font-semibold text-text-primary leading-snug">
+          <h3 className="text-lg border-b pb-4 font-semibold text-text-primary leading-snug">
             {batch.batch_name}
           </h3>
         </div>
-
-        <div className="w-full h-px bg-border-light"></div>
+        
 
         {/* Thông tin chi tiết */}
         <div className="space-y-3">

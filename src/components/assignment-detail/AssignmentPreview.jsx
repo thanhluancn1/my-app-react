@@ -83,7 +83,7 @@ export default function AssignmentPreview({ assignments, viewSettings, batchInfo
                     
                     if (showResult && isCorrect) {
                         containerStyle = "flex items-start gap-2";
-                        labelStyle = "border-2 border-gray-700 rounded-full font-bold text-text-primary min-w-[24px]";
+                        labelStyle = " border-2 border-gray-700 rounded-full font-bold text-text-primary min-w-[24px]";
                     }
                     const contentHtml = marked.parseInline(opt.content);
                     optionsHtml += `

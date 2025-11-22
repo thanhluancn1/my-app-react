@@ -5,9 +5,9 @@ export default function ClassAssignmentGroup({ classData }) {
   const { class_name, assignment_batches } = classData;
 
   return (
-    <div className="w-full bg-white border border-border-light rounded-xl p-6 shadow-sm">
+    <div className="w-full bg-white border border-border-light rounded-xl p-6">
       {/* Header: Tên lớp */}
-      <div className="mb-6 border-b border-border-light pb-4">
+      <div className="mb-6 border-border-light">
         <h3 className="text-xl font-semibold text-text-primary">
           {class_name}
         </h3>

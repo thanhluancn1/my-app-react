@@ -101,7 +101,7 @@ const TreeNode = ({
         onClick={handleToggle}
         className={`group flex items-center gap-2 p-2 rounded-lg cursor-pointer transition-all duration-200 
           ${isSelected 
-            ? "bg-blue-100 text-blue-700 border border-blue-200 shadow-sm" 
+            ? "bg-blue-100 text-blue-700 border border-blue-200" 
             : "hover:bg-gray-100 text-text-secondary border border-transparent"
           }
         `}
@@ -148,7 +148,7 @@ const TreeNode = ({
             {onAdd && (
               <button 
                 onClick={startAdd}
-                className="p-1 hover:bg-white rounded shadow-sm text-blue-600 hover:text-blue-800"
+                className="p-1 hover:bg-white rounded text-blue-600 hover:text-blue-800"
                 title="Thêm mới cấp con"
               >
                 <img src="https://unpkg.com/lucide-static/icons/plus.svg" className="w-3 h-3" alt="Add" />
@@ -156,7 +156,7 @@ const TreeNode = ({
             )}
             <button 
               onClick={startRename}
-              className="p-1 hover:bg-white rounded shadow-sm text-text-secondary hover:text-text-primary"
+              className="p-1 hover:bg-white rounded text-text-secondary hover:text-text-primary"
               title="Đổi tên"
             >
               <img src="https://unpkg.com/lucide-static/icons/edit-2.svg" className="w-3 h-3" alt="Edit" />
@@ -165,7 +165,7 @@ const TreeNode = ({
             {onDelete && (
               <button 
                 onClick={handleDelete}
-                className="p-1 hover:bg-white rounded shadow-sm text-red-500 hover:text-red-700"
+                className="p-1 hover:bg-white rounded text-red-500 hover:text-red-700"
                 title="Xóa"
               >
                 <img src="https://unpkg.com/lucide-static/icons/trash-2.svg" className="w-3 h-3" alt="Delete" />
@@ -252,9 +252,9 @@ export default function KnowledgeTree({
   }
 
   return (
-    <div className="w-[30%] min-w-[300px] bg-white border-r border-border-light flex flex-col h-full">
+    <div className="w-[30%] min-w-[300px] bg-white border rounded-xl border-border-light flex flex-col h-full">
       {/* Header */}
-      <div className="p-4 border-b border-border-light bg-gray-50 flex justify-between items-center shrink-0">
+      <div className="p-4 rounded-t-xl border-b border-border-light bg-gray-50 flex justify-between items-center shrink-0">
         <h3 className="font-bold text-text-primary text-sm uppercase">Cây thư mục</h3>
         
         {/* Nút Thêm Khối Mới */}

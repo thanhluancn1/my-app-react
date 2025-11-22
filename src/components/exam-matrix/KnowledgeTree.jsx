@@ -61,7 +61,7 @@ export default function KnowledgeTree({ data, selectedItems, onItemToggle }) {
   }
 
   return (
-    <div className="bg-white rounded-xl border border-border-light h-full min-h-[600px] flex flex-col shadow-sm">
+    <div className="bg-white rounded-xl border border-border-light h-full min-h-[600px] flex flex-col">
       <div className="p-4 border-b border-border-light bg-gray-50 rounded-t-xl">
         <h3 className="font-bold text-text-primary uppercase text-sm">Nội dung kiến thức</h3>
       </div>

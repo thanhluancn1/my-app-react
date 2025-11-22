@@ -73,7 +73,7 @@ export default function ClassPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-border-light overflow-hidden shadow-sm">
+        <div className="bg-white rounded-xl border border-border-light overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-white border-b border-border-light">

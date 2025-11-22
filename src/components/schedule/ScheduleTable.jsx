@@ -31,7 +31,7 @@ export default function ScheduleTable({ schedules, onEdit }) {
   };
 
   return (
-    <div className="bg-white rounded-xl border border-border-light overflow-hidden shadow-sm">
+    <div className="bg-white rounded-xl border border-border-light overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full table-fixed border-collapse text-sm">
           {/* Định nghĩa độ rộng cột */}
@@ -85,7 +85,7 @@ export default function ScheduleTable({ schedules, onEdit }) {
                           className="border-r border-border-light p-1 align-top cursor-pointer hover:opacity-90 transition-opacity last:border-r-0"
                           onClick={() => onEdit(scheduleItem)}
                         >
-                          <div className="h-full w-full bg-blue-50 text-blue-900 p-2 rounded-md text-xs flex flex-col gap-1 border-l-4 border-blue-500 shadow-sm">
+                          <div className="h-full w-full bg-blue-50 text-blue-900 p-2 rounded-md text-xs flex flex-col gap-1 border-l-4 border-blue-500">
                             <div>
                               <span className="text-text-secondary">Lớp: </span>
                               <span className="font-bold">{scheduleItem.class_name}</span>

@@ -25,7 +25,7 @@ export default function About() {
         {data.team.map((member) => (
           <li
             key={member.id}
-            className="p-3 border rounded shadow hover:bg-gray-50 flex justify-between"
+            className="p-3 border rounded hover:bg-gray-50 flex justify-between"
           >
             <span className="font-medium">{member.name}</span>
             <span className="text-text-secondary">{member.role}</span>

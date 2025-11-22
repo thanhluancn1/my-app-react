@@ -123,7 +123,7 @@ export default function AssignmentDetailPage() {
   return (
     <div className="h-screen flex flex-col bg-bg-light overflow-hidden">
       {/* Header */}
-      <div className="bg-white border-b border-border-light z-10 shadow-sm">
+      <div className="bg-white border-b border-border-light z-10">
           <div className="h-12 px-6 flex items-center justify-between">
              <div className="flex items-center gap-2 text-sm">
                 <span className="text-text-secondary">Đề thi</span>

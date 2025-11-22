@@ -57,7 +57,7 @@ export default function StudentModal({ isOpen, onClose, onSave, studentData, cla
       className="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-md relative animate-fade-in">
+      <div className="bg-white rounded-xl w-full max-w-md relative animate-fade-in">
         
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-border-light">
