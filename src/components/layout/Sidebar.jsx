@@ -49,18 +49,12 @@ export default function Sidebar() {
         />
 
         <SidebarItem
-          icon="https://unpkg.com/lucide-static/icons/users.svg"
-          label="Quản lý kho nội dung"
-          href="/knowledge"
-        />
-
-        <SidebarItem
           icon="https://unpkg.com/lucide-static/icons/star.svg"
           label="Tạo bài tập"
           href="/exercise"
         />
 
-        <p className="text-text-muted text-xs font-inter px-3 mb-2 pt-4">Báo cáo</p>
+        <p className="text-text-muted text-xs px-3 mb-2 pt-4">Báo cáo</p>
 
         <SidebarItem
           icon="https://unpkg.com/lucide-static/icons/layout-grid.svg"
@@ -80,7 +74,7 @@ export default function Sidebar() {
           href="/student-analytics"
         />
 
-        <p className="text-text-muted text-xs font-inter px-3 mb-2 pt-4">Cài đặt</p>
+        <p className="text-text-muted text-xs px-3 mb-2 pt-4">Cài đặt</p>
 
         <SidebarItem
           icon="https://unpkg.com/lucide-static/icons/user.svg"

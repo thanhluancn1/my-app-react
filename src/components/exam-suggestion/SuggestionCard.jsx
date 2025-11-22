@@ -25,7 +25,7 @@ export default function SuggestionCard({ title, batch, onClick }) {
       <div className="flex flex-col gap-3 items-start">
         {/* Title */}
         <div className="flex flex-col gap-1">
-          <h3 className="font-inter font-medium text-base text-text-primary capitalize">
+          <h3 className="font-medium text-base text-text-primary capitalize">
             {title}
           </h3>
         </div>
@@ -34,23 +34,23 @@ export default function SuggestionCard({ title, batch, onClick }) {
         <div className="w-full h-px bg-border-light"></div>
 
         {/* Subtitle */}
-        <p className="font-inter font-medium text-sm text-text-secondary">
+        <p className="font-medium text-sm text-text-secondary">
           Số lượng bài tập
         </p>
 
         {/* Stats List */}
         <div className="w-full space-y-1">
           <div className="flex justify-between items-start w-full text-base">
-            <span className="font-inter font-normal text-text-secondary">Nhận biết:</span>
-            <span className="font-inter font-medium text-text-primary">{recognition} bài</span>
+            <span className="font-normal text-text-secondary">Nhận biết:</span>
+            <span className="font-medium text-text-primary">{recognition} bài</span>
           </div>
           <div className="flex justify-between items-start w-full text-base">
-            <span className="font-inter font-normal text-text-secondary">Thông hiểu:</span>
-            <span className="font-inter font-medium text-text-primary">{understanding} bài</span>
+            <span className="font-normal text-text-secondary">Thông hiểu:</span>
+            <span className="font-medium text-text-primary">{understanding} bài</span>
           </div>
           <div className="flex justify-between items-start w-full text-base">
-            <span className="font-inter font-normal text-text-secondary">Vận dụng:</span>
-            <span className="font-inter font-medium text-text-primary">{application} bài</span>
+            <span className="font-normal text-text-secondary">Vận dụng:</span>
+            <span className="font-medium text-text-primary">{application} bài</span>
           </div>
         </div>
       </div>

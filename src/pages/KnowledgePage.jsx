@@ -152,8 +152,8 @@ export default function KnowledgePage() {
       {/* HEADER */}
       <div className="bg-white border-b border-border-light h-16 flex items-center px-6 justify-between shrink-0 shadow-sm z-10">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold font-gilroy">A</div>
-          <span className="font-bold text-text-primary text-lg font-roboto">Quản lý Nội dung Kiến thức</span>
+          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold">A</div>
+          <span className="font-bold text-text-primary text-lg">Quản lý Nội dung Kiến thức</span>
         </div>
         <div className="flex gap-3">
           <button className="px-4 py-2 bg-white border border-border-medium rounded-lg text-sm font-medium hover:bg-gray-50 text-text-secondary transition-colors">

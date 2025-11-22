@@ -100,7 +100,7 @@ export default function CreateExam() {
   return (
     <div className="p-6 bg-bg-light min-h-screen flex flex-col">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-        <h1 className="text-2xl font-medium font-roboto text-text-primary">
+        <h1 className="text-2xl font-medium text-text-primary">
           Xây dựng Ma trận Đề thi
         </h1>
       </div>

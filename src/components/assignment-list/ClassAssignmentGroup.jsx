@@ -8,7 +8,7 @@ export default function ClassAssignmentGroup({ classData }) {
     <div className="w-full bg-white border border-border-light rounded-xl p-6 shadow-sm">
       {/* Header: Tên lớp */}
       <div className="mb-6 border-b border-border-light pb-4">
-        <h3 className="text-xl font-semibold font-inter text-text-primary">
+        <h3 className="text-xl font-semibold text-text-primary">
           {class_name}
         </h3>
         <span className="text-sm text-text-secondary">

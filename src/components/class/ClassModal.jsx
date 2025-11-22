@@ -65,7 +65,7 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
       <div className="bg-white rounded-xl shadow-2xl w-full max-w-md relative animate-fade-in">
         {/* Modal Header */}
         <div className="flex items-center justify-between p-6 border-b border-border-light">
-          <h2 className="text-2xl font-medium font-roboto text-text-primary">
+          <h2 className="text-2xl font-medium text-text-primary">
             {classData ? "Sửa thông tin lớp học" : "Thêm lớp học"}
           </h2>
           <button
@@ -84,7 +84,7 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
         <div className="p-6 space-y-6">
           {/* Tên lớp */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600 font-manrope">
+            <label className="text-sm font-medium text-gray-600">
               Tên lớp
             </label>
             <input
@@ -99,7 +99,7 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
 
           {/* Tên trường */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600 font-manrope">
+            <label className="text-sm font-medium text-gray-600">
               Tên trường
             </label>
             <input
@@ -114,7 +114,7 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
 
           {/* Môn học */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600 font-manrope">
+            <label className="text-sm font-medium text-gray-600">
               Môn Học
             </label>
             <div className="relative">
@@ -140,7 +140,7 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
 
           {/* Năm bắt đầu */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600 font-manrope">
+            <label className="text-sm font-medium text-gray-600">
               Năm bắt đầu
             </label>
             <input
@@ -155,7 +155,7 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
 
           {/* Năm kết thúc */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600 font-manrope">
+            <label className="text-sm font-medium text-gray-600">
               Năm kết thúc
             </label>
             <input
@@ -170,7 +170,7 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
 
           {/* Trạng thái */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600 font-manrope">
+            <label className="text-sm font-medium text-gray-600">
               Trạng thái
             </label>
             <div className="relative">
@@ -196,7 +196,7 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
         <div className="p-6 border-t border-border-light">
           <button
             onClick={handleSave}
-            className="w-full h-12 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors font-semibold font-inter"
+            className="w-full h-12 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors font-semibold"
           >
             Lưu
           </button>

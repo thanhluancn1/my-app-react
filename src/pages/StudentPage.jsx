@@ -98,12 +98,12 @@ export default function StudentPage() {
   return (
     <div className="p-6 bg-bg-light min-h-screen">
       {/* Title */}
-      <h1 className="text-2xl font-medium font-roboto text-text-primary mb-8">Quản lý học sinh</h1>
+      <h1 className="text-2xl font-medium text-text-primary mb-8">Quản lý học sinh</h1>
 
       {/* Filter Section */}
       <div className="bg-white rounded-xl border border-border-light p-6 mb-8">
         <div className="flex flex-col lg:flex-row lg:items-center lg:space-x-4">
-          <label className="text-text-secondary text-base font-inter mb-2 lg:mb-0 lg:w-32">Lớp học</label>
+          <label className="text-text-secondary text-base mb-2 lg:mb-0 lg:w-32">Lớp học</label>
           <div className="flex-1">
             <div className="relative">
               <select 
@@ -126,7 +126,7 @@ export default function StudentPage() {
       {/* Action Header */}
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-lg font-medium font-roboto text-text-primary mb-4 sm:mb-0">Danh sách học sinh</h2>
+          <h2 className="text-lg font-medium text-text-primary mb-4 sm:mb-0">Danh sách học sinh</h2>
           
           <div className="flex space-x-3">
             <button 
@@ -134,7 +134,7 @@ export default function StudentPage() {
               className="flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors shadow-sm"
             >
               <img src="https://unpkg.com/lucide-static/icons/plus.svg" alt="Add" className="w-5 h-5 mr-2" style={{ filter: "invert(1)" }} />
-              <span className="text-sm font-inter">Thêm học sinh</span>
+              <span className="text-sm">Thêm học sinh</span>
             </button>
           </div>
         </div>
@@ -145,13 +145,13 @@ export default function StudentPage() {
             <table className="w-full">
               <thead className="bg-white border-b border-border-light">
                 <tr>
-                  <th className="px-6 py-4 text-left text-text-secondary text-sm font-inter">STT</th>
-                  <th className="px-6 py-4 text-left text-text-secondary text-sm font-inter">Họ và tên</th>
-                  <th className="px-6 py-4 text-left text-text-secondary text-sm font-inter">Ngày sinh</th>
-                  <th className="px-6 py-4 text-left text-text-secondary text-sm font-inter">Email</th>
-                  <th className="px-6 py-4 text-left text-text-secondary text-sm font-inter">Số điện thoại</th>
-                  <th className="px-6 py-4 text-left text-text-secondary text-sm font-inter">Trạng thái</th>
-                  <th className="px-6 py-4 text-left text-text-secondary text-sm font-inter">Sửa</th>
+                  <th className="px-6 py-4 text-left text-text-secondary text-sm">STT</th>
+                  <th className="px-6 py-4 text-left text-text-secondary text-sm">Họ và tên</th>
+                  <th className="px-6 py-4 text-left text-text-secondary text-sm">Ngày sinh</th>
+                  <th className="px-6 py-4 text-left text-text-secondary text-sm">Email</th>
+                  <th className="px-6 py-4 text-left text-text-secondary text-sm">Số điện thoại</th>
+                  <th className="px-6 py-4 text-left text-text-secondary text-sm">Trạng thái</th>
+                  <th className="px-6 py-4 text-left text-text-secondary text-sm">Sửa</th>
                 </tr>
               </thead>
               
@@ -161,13 +161,13 @@ export default function StudentPage() {
                 ) : (
                   filteredStudents.map((student, index) => (
                     <tr key={student.student_id} className="border-b border-border-light hover:bg-gray-50 transition-colors">
-                      <td className="px-6 py-3 text-text-primary text-base font-medium font-inter">{index + 1}</td>
-                      <td className="px-6 py-3 text-text-primary text-base font-medium font-inter">{student.full_name}</td>
-                      <td className="px-6 py-3 text-text-primary text-base font-medium font-inter">{student.date_of_birth}</td>
-                      <td className="px-6 py-3 text-text-primary text-base font-medium font-inter">{student.email}</td>
-                      <td className="px-6 py-3 text-text-primary text-base font-medium font-inter">{student.phone_number}</td>
+                      <td className="px-6 py-3 text-text-primary text-base font-medium">{index + 1}</td>
+                      <td className="px-6 py-3 text-text-primary text-base font-medium">{student.full_name}</td>
+                      <td className="px-6 py-3 text-text-primary text-base font-medium">{student.date_of_birth}</td>
+                      <td className="px-6 py-3 text-text-primary text-base font-medium">{student.email}</td>
+                      <td className="px-6 py-3 text-text-primary text-base font-medium">{student.phone_number}</td>
                       <td className="px-6 py-3">
-                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium font-inter ${student.status === 'Hoạt động' ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-100'}`}>
+                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${student.status === 'Hoạt động' ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-100'}`}>
                             {student.status}
                         </span>
                       </td>

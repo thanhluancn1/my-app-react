@@ -12,7 +12,7 @@ export default function SidebarItem({ icon, label, href }) {
       }
     >
       <img src={icon} alt={label} className="w-6 h-6 mr-3" />
-      <span className="text-text-secondary text-sm font-inter">{label}</span>
+      <span className="text-text-secondary text-sm">{label}</span>
     </NavLink>
   );
 }

@@ -17,10 +17,10 @@ export default function DeleteStudentModal({ isOpen, onClose, onConfirm }) {
         <div className="p-6 space-y-5">
           {/* Title and Message */}
           <div className="space-y-2">
-            <h2 className="text-xl font-bold font-inter text-text-primary text-center">
+            <h2 className="text-xl font-bold text-text-primary text-center">
               Xóa học sinh
             </h2>
-            <p className="text-base font-inter text-text-primary text-center">
+            <p className="text-base text-text-primary text-center">
               Bạn có chắc chắn muốn xóa những học sinh đã chọn?
             </p>
           </div>
@@ -31,13 +31,13 @@ export default function DeleteStudentModal({ isOpen, onClose, onConfirm }) {
               onClick={onClose}
               className="flex-1 h-10 bg-white border border-border-medium rounded-lg hover:bg-gray-50 transition-colors"
             >
-              <span className="text-primary font-semibold font-inter">Hủy</span>
+              <span className="text-primary font-semibold">Hủy</span>
             </button>
             <button
               onClick={onConfirm}
               className="flex-1 h-10 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors"
             >
-              <span className="font-semibold font-inter">Xóa</span>
+              <span className="font-semibold">Xóa</span>
             </button>
           </div>
         </div>

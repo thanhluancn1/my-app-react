@@ -168,7 +168,7 @@ export default function ScheduleModal({
       <div className="bg-white rounded-xl shadow-2xl w-full max-w-md relative animate-fade-in">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-border-light">
-          <h2 className="text-2xl font-medium font-roboto text-text-primary">
+          <h2 className="text-2xl font-medium text-text-primary">
             {scheduleData ? "Chỉnh sửa lịch dạy" : "Thêm lịch dạy"}
           </h2>
           <button onClick={onClose} className="w-12 h-12 flex items-center justify-center hover:bg-gray-100 rounded-lg transition-colors">
@@ -180,7 +180,7 @@ export default function ScheduleModal({
         <div className="p-6 space-y-6">
           {/* Lớp học */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600 font-manrope">Chọn lớp học</label>
+            <label className="text-sm font-medium text-gray-600">Chọn lớp học</label>
             <div className="relative">
               <select
                 name="class_id"
@@ -201,7 +201,7 @@ export default function ScheduleModal({
 
           {/* Môn học */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600 font-manrope">Môn học</label>
+            <label className="text-sm font-medium text-gray-600">Môn học</label>
             <input
               type="text"
               value={formData.subject_name}
@@ -212,7 +212,7 @@ export default function ScheduleModal({
 
           {/* Bài học (Autocomplete) */}
           <div className="space-y-2 relative" ref={suggestionsRef}>
-            <label className="text-sm font-medium text-gray-600 font-manrope">Bài học</label>
+            <label className="text-sm font-medium text-gray-600">Bài học</label>
             <input
               type="text"
               name="lesson_name"
@@ -242,7 +242,7 @@ export default function ScheduleModal({
 
           {/* Ngày dạy */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600 font-manrope">Ngày dạy</label>
+            <label className="text-sm font-medium text-gray-600">Ngày dạy</label>
             <div className="relative">
               <input
                 name="schedule_date"
@@ -260,11 +260,11 @@ export default function ScheduleModal({
           {/* Tiết */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-600 font-manrope">Tiết bắt đầu</label>
+              <label className="text-sm font-medium text-gray-600">Tiết bắt đầu</label>
               <input name="start_period" value={formData.start_period} onChange={handleChange} type="number" min="1" max="16" className="w-full h-12 px-4 border border-border-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-text-primary" />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-600 font-manrope">Tiết kết thúc</label>
+              <label className="text-sm font-medium text-gray-600">Tiết kết thúc</label>
               <input name="end_period" value={formData.end_period} onChange={handleChange} type="number" min="1" max="16" className="w-full h-12 px-4 border border-border-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-text-primary" />
             </div>
           </div>
@@ -273,11 +273,11 @@ export default function ScheduleModal({
         {/* Footer */}
         <div className="p-6 border-t border-border-light flex justify-between gap-4">
           {scheduleData ? (
-            <button onClick={() => onDelete(scheduleData.schedule_id)} className="w-1/2 h-12 border border-red-500 text-red-500 rounded-lg hover:bg-red-50 transition-colors font-semibold font-inter">Xóa</button>
+            <button onClick={() => onDelete(scheduleData.schedule_id)} className="w-1/2 h-12 border border-red-500 text-red-500 rounded-lg hover:bg-red-50 transition-colors font-semibold">Xóa</button>
           ) : (
-            <button onClick={onClose} className="w-1/2 h-12 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-semibold font-inter">Hủy</button>
+            <button onClick={onClose} className="w-1/2 h-12 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-semibold">Hủy</button>
           )}
-          <button onClick={handleSave} className="w-1/2 h-12 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors font-semibold font-inter">Lưu</button>
+          <button onClick={handleSave} className="w-1/2 h-12 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors font-semibold">Lưu</button>
         </div>
       </div>
     </div>

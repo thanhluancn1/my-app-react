@@ -15,7 +15,7 @@ export default function LessonCard({ lesson, onCardClick }) {
       <div className="flex flex-col gap-4 items-start w-full">
         
         {/* Lesson Title */}
-        <div className="flex font-roboto font-medium gap-2 items-center text-lg text-text-primary w-full">
+        <div className="flex font-medium gap-2 items-center text-lg text-text-primary w-full">
           <span>{lesson.lesson_name}</span>
         </div>
 

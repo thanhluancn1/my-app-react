@@ -28,7 +28,7 @@ export default function AssignmentCard({ batch }) {
       <div className="space-y-4 flex-1">
         {/* Tên bài tập */}
         <div>
-          <h3 className="text-lg font-semibold font-inter text-text-secondary leading-snug">
+          <h3 className="text-lg font-semibold text-text-secondary leading-snug">
             {batch.batch_name}
           </h3>
         </div>
@@ -42,7 +42,7 @@ export default function AssignmentCard({ batch }) {
               alt="Questions" 
               className="w-5 h-5 text-gray-600 opacity-60"
             />
-            <span className="text-sm font-medium font-inter text-text-secondary">
+            <span className="text-sm font-medium text-text-secondary">
               {batch.total_questions} câu hỏi
             </span>
           </div>
@@ -54,7 +54,7 @@ export default function AssignmentCard({ batch }) {
               alt="Duration" 
               className="w-5 h-5 text-gray-600 opacity-60"
             />
-            <span className="text-sm font-medium font-inter text-text-secondary">
+            <span className="text-sm font-medium text-text-secondary">
               {durationMinutes} phút
             </span>
           </div>
@@ -66,7 +66,7 @@ export default function AssignmentCard({ batch }) {
               alt="Calendar" 
               className="w-5 h-5 text-gray-600 opacity-60"
             />
-            <span className="text-sm font-medium font-inter text-text-secondary">
+            <span className="text-sm font-medium text-text-secondary">
               {scheduleLabel}
             </span>
           </div>

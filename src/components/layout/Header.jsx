@@ -1,4 +1,4 @@
-// src/components/Header.jsx
+// src/components/layout/Header.jsx
 export default function Header() {
   return (
     <header className="bg-white shadow-sm border-b border-border-light h-16 flex items-center justify-between px-6">
@@ -9,7 +9,7 @@ export default function Header() {
             alt="Logo"
             className="w-10 h-10 mr-3 rounded"
           />
-          <span className="text-xl font-bold font-gilroy text-text-primary">AronEdu</span>
+          <span className="text-xl font-bold text-text-primary">AronEdu</span>
         </div>
       </div>
 
@@ -41,7 +41,7 @@ export default function Header() {
               className="w-9 h-9 rounded-full"
             />
           </div>
-          <span className="text-text-secondary text-sm font-inter">Thanh Luan</span>
+          <span className="text-text-secondary text-sm">Thanh Luan</span>
           <img
             src="https://unpkg.com/lucide-static/icons/chevron-down.svg"
             alt="Dropdown"

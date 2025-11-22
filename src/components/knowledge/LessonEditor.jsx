@@ -44,9 +44,6 @@ export default function LessonEditor({ lessonData, onChange }) {
                 <p className="text-xs text-text-secondary mt-0.5">ID: {lessonData.lesson_id}</p>
               </div>
             </div>
-            <span className="px-2 py-1 bg-green-50 text-green-700 border border-green-100 text-xs font-bold rounded uppercase">
-              Active
-            </span>
           </div>
 
           <div className="grid grid-cols-1 gap-5">

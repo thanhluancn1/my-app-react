@@ -154,7 +154,7 @@ export default function Schedule() {
       {/* Header */}
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
         <div className="flex flex-col">
-            <h1 className="text-2xl font-medium text-text-primary font-roboto">
+            <h1 className="text-2xl font-medium text-text-primary">
             Quản lý lịch học
             </h1>
             <span className="text-sm text-text-secondary mt-1">Tuần: {weekLabel}</span>
@@ -173,7 +173,7 @@ export default function Schedule() {
             </button>
             <button 
                 onClick={handleToday}
-                className="px-3 py-1.5 text-text-primary font-medium font-inter hover:bg-gray-100 rounded-md transition"
+                className="px-3 py-1.5 text-text-primary font-medium hover:bg-gray-100 rounded-md transition"
             >
               Tuần này
             </button>
@@ -197,7 +197,7 @@ export default function Schedule() {
             alt="Add"
             className="w-5 h-5 mr-2"
           />
-          <span className="text-sm font-inter font-semibold">Thêm lịch học</span>
+          <span className="text-sm font-semibold">Thêm lịch học</span>
         </button>
       </header>
 

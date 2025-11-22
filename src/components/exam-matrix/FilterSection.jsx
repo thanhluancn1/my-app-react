@@ -75,7 +75,7 @@ export default function FilterSection({ data, onFilterChange }) {
         
         {/* Dropdown Khối */}
         <div className="flex flex-col gap-2">
-          <label className="text-text-secondary text-sm font-inter font-medium">Khối</label>
+          <label className="text-text-secondary text-sm font-medium">Khối</label>
           <div className="relative">
             <select
               value={selectedGradeId}
@@ -99,7 +99,7 @@ export default function FilterSection({ data, onFilterChange }) {
 
         {/* Dropdown Môn học */}
         <div className="flex flex-col gap-2">
-          <label className="text-text-secondary text-sm font-inter font-medium">Môn học</label>
+          <label className="text-text-secondary text-sm font-medium">Môn học</label>
           <div className="relative">
             <select
               value={selectedSubjectId}
@@ -124,7 +124,7 @@ export default function FilterSection({ data, onFilterChange }) {
 
         {/* Dropdown Sách */}
         <div className="flex flex-col gap-2">
-          <label className="text-text-secondary text-sm font-inter font-medium">Sách</label>
+          <label className="text-text-secondary text-sm font-medium">Sách</label>
           <div className="relative">
             <select
               value={selectedBookId}

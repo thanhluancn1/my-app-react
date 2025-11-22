@@ -29,14 +29,14 @@ export default function AssignmentManagementPage() {
       
       {/* --- Header --- */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <h1 className="text-2xl font-medium font-roboto text-text-primary leading-8">
+        <h1 className="text-2xl font-medium text-text-primary leading-8">
           Quản lý bài tập
         </h1>
         
         <div className="flex gap-3">
           <button className="flex items-center gap-1 bg-primary text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
             <img src="https://unpkg.com/lucide-static/icons/plus.svg" alt="add" className="w-5 h-5" />
-            <span className="text-sm font-medium font-inter">Thêm bài tập</span>
+            <span className="text-sm font-medium">Thêm bài tập</span>
           </button>
           
           <button className="flex items-center justify-center w-10 h-10 bg-white border border-border-light rounded-lg hover:bg-gray-50 transition-colors shadow-sm">

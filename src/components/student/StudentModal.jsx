@@ -61,7 +61,7 @@ export default function StudentModal({ isOpen, onClose, onSave, studentData, cla
         
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-border-light">
-          <h2 className="text-2xl font-medium font-roboto text-text-primary">
+          <h2 className="text-2xl font-medium text-text-primary">
             {studentData ? "Sửa thông tin học sinh" : "Thêm học sinh"}
           </h2>
           <button
@@ -80,7 +80,7 @@ export default function StudentModal({ isOpen, onClose, onSave, studentData, cla
         <div className="p-6 space-y-6">
           {/* Họ tên */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600 font-manrope">
+            <label className="text-sm font-medium text-gray-600">
               Họ và tên
             </label>
             <input
@@ -95,7 +95,7 @@ export default function StudentModal({ isOpen, onClose, onSave, studentData, cla
 
           {/* Ngày sinh (Giữ nguyên style custom date picker của bạn) */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600 font-manrope">
+            <label className="text-sm font-medium text-gray-600">
               Ngày sinh
             </label>
             <div className="relative">
@@ -119,7 +119,7 @@ export default function StudentModal({ isOpen, onClose, onSave, studentData, cla
 
           {/* Email */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600 font-manrope">
+            <label className="text-sm font-medium text-gray-600">
               Email
             </label>
             <input
@@ -134,7 +134,7 @@ export default function StudentModal({ isOpen, onClose, onSave, studentData, cla
 
           {/* Số điện thoại */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600 font-manrope">
+            <label className="text-sm font-medium text-gray-600">
               Số điện thoại
             </label>
             <input
@@ -149,7 +149,7 @@ export default function StudentModal({ isOpen, onClose, onSave, studentData, cla
 
           {/* Trạng thái */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600 font-manrope">
+            <label className="text-sm font-medium text-gray-600">
               Trạng thái
             </label>
             <div className="relative">
@@ -175,7 +175,7 @@ export default function StudentModal({ isOpen, onClose, onSave, studentData, cla
         <div className="p-6 border-t border-border-light">
           <button
             onClick={handleSave}
-            className="w-full h-12 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors font-semibold font-inter"
+            className="w-full h-12 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors font-semibold"
           >
             Lưu
           </button>

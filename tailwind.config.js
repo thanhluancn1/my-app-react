@@ -1,3 +1,4 @@
+// tailwind.config.js
 export default {
   content: [
     "./index.html",
@@ -15,9 +16,8 @@ export default {
         'bg-light': '#f5f6fa',
       },
       fontFamily: {
-        roboto: ['Roboto', 'sans-serif'],
-        inter: ['Inter', 'sans-serif'],
-        manrope: ['Manrope', 'sans-serif']
+        // Thiết lập Manrope làm font mặc định (sans) cho toàn bộ ứng dụng
+        sans: ['Manrope', 'sans-serif'],
       }
     },
   },
