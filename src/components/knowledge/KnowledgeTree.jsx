@@ -102,7 +102,7 @@ const TreeNode = ({
         className={`group flex items-center gap-2 p-2 rounded-lg cursor-pointer transition-all duration-200 
           ${isSelected 
             ? "bg-blue-100 text-blue-700 border border-blue-200 shadow-sm" 
-            : "hover:bg-gray-100 text-gray-700 border border-transparent"
+            : "hover:bg-gray-100 text-text-secondary border border-transparent"
           }
         `}
       >
@@ -110,7 +110,7 @@ const TreeNode = ({
           {(hasChildren || isAdding) ? (
             <img
               src="https://unpkg.com/lucide-static/icons/chevron-down.svg"
-              className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isExpanded ? "" : "-rotate-90"}`}
+              className={`w-4 h-4 text-text-muted transition-transform duration-200 ${isExpanded ? "" : "-rotate-90"}`}
               alt="toggle"
             />
           ) : (
@@ -120,7 +120,7 @@ const TreeNode = ({
 
         <img 
           src={icon} 
-          className={`w-4 h-4 flex-shrink-0 ${isSelected ? "text-blue-600" : "text-gray-500 opacity-70"}`} 
+          className={`w-4 h-4 flex-shrink-0 ${isSelected ? "text-blue-600" : "text-text-secondary opacity-70"}`} 
           alt="icon" 
         />
 
@@ -156,7 +156,7 @@ const TreeNode = ({
             )}
             <button 
               onClick={startRename}
-              className="p-1 hover:bg-white rounded shadow-sm text-gray-500 hover:text-gray-800"
+              className="p-1 hover:bg-white rounded shadow-sm text-text-secondary hover:text-text-primary"
               title="Đổi tên"
             >
               <img src="https://unpkg.com/lucide-static/icons/edit-2.svg" className="w-3 h-3" alt="Edit" />

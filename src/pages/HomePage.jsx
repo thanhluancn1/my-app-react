@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div className="p-6 space-y-4">
       <h1 className="text-3xl font-bold text-blue-600">Home Page</h1>
-      <p className="text-gray-700">
+      <p className="text-text-secondary">
         Đây là trang Home. Bạn có thể chuyển sang trang About bằng nút dưới đây.
       </p>
 

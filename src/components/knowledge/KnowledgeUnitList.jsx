@@ -31,7 +31,7 @@ export default function KnowledgeUnitList({ units = [], onUnitsChange }) {
       {/* Header */}
       <div className="p-4 border-b border-border-light flex justify-between items-center bg-gray-50 rounded-t-xl">
         <h3 className="font-bold text-text-primary flex items-center gap-2 text-sm uppercase">
-          <img src="https://unpkg.com/lucide-static/icons/layers.svg" className="w-4 h-4 text-gray-500" alt="" />
+          <img src="https://unpkg.com/lucide-static/icons/layers.svg" className="w-4 h-4 text-text-secondary" alt="" />
           Đơn vị kiến thức (Knowledge Units)
         </h3>
         <button 
@@ -54,7 +54,7 @@ export default function KnowledgeUnitList({ units = [], onUnitsChange }) {
             <div key={index} className="p-4 hover:bg-gray-50 transition-colors group">
               <div className="flex gap-3 items-start">
                 {/* Drag Icon (Placeholder) */}
-                <div className="mt-2 text-gray-400 cursor-move" title="Sắp xếp">
+                <div className="mt-2 text-text-muted cursor-move" title="Sắp xếp">
                    <img src="https://unpkg.com/lucide-static/icons/grip-vertical.svg" className="w-4 h-4" alt="" />
                 </div>
 
@@ -84,7 +84,7 @@ export default function KnowledgeUnitList({ units = [], onUnitsChange }) {
                 {/* Delete Button */}
                 <button 
                   onClick={() => handleDelete(index)}
-                  className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
+                  className="p-2 text-text-muted hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
                   title="Xóa"
                 >
                   <img src="https://unpkg.com/lucide-static/icons/trash-2.svg" className="w-4 h-4" alt="" />

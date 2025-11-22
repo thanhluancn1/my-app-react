@@ -18,7 +18,7 @@ export default function About() {
   return (
     <div className="p-6 space-y-6">
       <h1 className="text-3xl font-bold text-blue-600">{data.title}</h1>
-      <p className="text-gray-700">{data.description}</p>
+      <p className="text-text-secondary">{data.description}</p>
 
       <h2 className="text-2xl font-semibold mt-4">Team Members</h2>
       <ul className="space-y-2">
@@ -28,7 +28,7 @@ export default function About() {
             className="p-3 border rounded shadow hover:bg-gray-50 flex justify-between"
           >
             <span className="font-medium">{member.name}</span>
-            <span className="text-gray-500">{member.role}</span>
+            <span className="text-text-secondary">{member.role}</span>
           </li>
         ))}
       </ul>

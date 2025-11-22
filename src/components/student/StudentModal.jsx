@@ -80,7 +80,7 @@ export default function StudentModal({ isOpen, onClose, onSave, studentData, cla
         <div className="p-6 space-y-6">
           {/* Họ tên */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600">
+            <label className="text-sm font-medium text-text-secondary">
               Họ và tên
             </label>
             <input
@@ -95,7 +95,7 @@ export default function StudentModal({ isOpen, onClose, onSave, studentData, cla
 
           {/* Ngày sinh (Giữ nguyên style custom date picker của bạn) */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600">
+            <label className="text-sm font-medium text-text-secondary">
               Ngày sinh
             </label>
             <div className="relative">
@@ -111,7 +111,7 @@ export default function StudentModal({ isOpen, onClose, onSave, studentData, cla
                 <img
                   src="https://unpkg.com/lucide-static/icons/calendar.svg"
                   alt="Calendar"
-                  className="w-6 h-6 text-gray-500"
+                  className="w-6 h-6 text-text-secondary"
                 />
               </div>
             </div>
@@ -119,7 +119,7 @@ export default function StudentModal({ isOpen, onClose, onSave, studentData, cla
 
           {/* Email */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600">
+            <label className="text-sm font-medium text-text-secondary">
               Email
             </label>
             <input
@@ -134,7 +134,7 @@ export default function StudentModal({ isOpen, onClose, onSave, studentData, cla
 
           {/* Số điện thoại */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600">
+            <label className="text-sm font-medium text-text-secondary">
               Số điện thoại
             </label>
             <input
@@ -149,7 +149,7 @@ export default function StudentModal({ isOpen, onClose, onSave, studentData, cla
 
           {/* Trạng thái */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600">
+            <label className="text-sm font-medium text-text-secondary">
               Trạng thái
             </label>
             <div className="relative">

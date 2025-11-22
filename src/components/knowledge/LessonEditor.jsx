@@ -12,7 +12,7 @@ export default function LessonEditor({ lessonData, onChange }) {
           alt="" 
         />
         <p className="text-lg font-medium">Vui lòng chọn một bài học để chỉnh sửa</p>
-        <p className="text-sm text-gray-400">Chọn từ cây thư mục bên trái</p>
+        <p className="text-sm text-text-muted">Chọn từ cây thư mục bên trái</p>
       </div>
     );
   }

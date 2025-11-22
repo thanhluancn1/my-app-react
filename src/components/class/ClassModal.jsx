@@ -84,7 +84,7 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
         <div className="p-6 space-y-6">
           {/* Tên lớp */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600">
+            <label className="text-sm font-medium text-text-secondary">
               Tên lớp
             </label>
             <input
@@ -99,7 +99,7 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
 
           {/* Tên trường */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600">
+            <label className="text-sm font-medium text-text-secondary">
               Tên trường
             </label>
             <input
@@ -114,7 +114,7 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
 
           {/* Môn học */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600">
+            <label className="text-sm font-medium text-text-secondary">
               Môn Học
             </label>
             <div className="relative">
@@ -140,7 +140,7 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
 
           {/* Năm bắt đầu */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600">
+            <label className="text-sm font-medium text-text-secondary">
               Năm bắt đầu
             </label>
             <input
@@ -155,7 +155,7 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
 
           {/* Năm kết thúc */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600">
+            <label className="text-sm font-medium text-text-secondary">
               Năm kết thúc
             </label>
             <input
@@ -170,7 +170,7 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
 
           {/* Trạng thái */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600">
+            <label className="text-sm font-medium text-text-secondary">
               Trạng thái
             </label>
             <div className="relative">

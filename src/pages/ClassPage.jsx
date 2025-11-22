@@ -96,7 +96,7 @@ export default function ClassPage() {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan="9" className="text-center p-6 text-gray-500">
+                    <td colSpan="9" className="text-center p-6 text-text-secondary">
                       Đang tải dữ liệu...
                     </td>
                   </tr>
@@ -147,7 +147,7 @@ export default function ClassPage() {
                           <img
                             src="https://unpkg.com/lucide-static/icons/pencil.svg"
                             alt="Edit"
-                            className="w-5 h-5 text-gray-600"
+                            className="w-5 h-5 text-text-secondary"
                           />
                         </button>
                       </td>

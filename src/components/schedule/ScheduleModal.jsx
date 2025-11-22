@@ -180,7 +180,7 @@ export default function ScheduleModal({
         <div className="p-6 space-y-6">
           {/* Lớp học */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600">Chọn lớp học</label>
+            <label className="text-sm font-medium text-text-secondary">Chọn lớp học</label>
             <div className="relative">
               <select
                 name="class_id"
@@ -201,18 +201,18 @@ export default function ScheduleModal({
 
           {/* Môn học */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600">Môn học</label>
+            <label className="text-sm font-medium text-text-secondary">Môn học</label>
             <input
               type="text"
               value={formData.subject_name}
               readOnly
-              className="w-full h-12 px-4 border border-border-medium rounded-lg bg-gray-50 text-gray-500 focus:outline-none cursor-not-allowed"
+              className="w-full h-12 px-4 border border-border-medium rounded-lg bg-gray-50 text-text-secondary focus:outline-none cursor-not-allowed"
             />
           </div>
 
           {/* Bài học (Autocomplete) */}
           <div className="space-y-2 relative" ref={suggestionsRef}>
-            <label className="text-sm font-medium text-gray-600">Bài học</label>
+            <label className="text-sm font-medium text-text-secondary">Bài học</label>
             <input
               type="text"
               name="lesson_name"
@@ -234,7 +234,7 @@ export default function ScheduleModal({
             )}
              {/* Thông báo không tìm thấy */}
              {showSuggestions && filteredLessons.length === 0 && formData.lesson_name && (
-                <div className="absolute z-10 w-full bg-white border border-border-medium rounded-lg mt-1 p-2 text-sm text-gray-500 shadow-lg text-center">
+                <div className="absolute z-10 w-full bg-white border border-border-medium rounded-lg mt-1 p-2 text-sm text-text-secondary shadow-lg text-center">
                     Không tìm thấy bài học phù hợp trong lớp này
                 </div>
             )}
@@ -242,7 +242,7 @@ export default function ScheduleModal({
 
           {/* Ngày dạy */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-600">Ngày dạy</label>
+            <label className="text-sm font-medium text-text-secondary">Ngày dạy</label>
             <div className="relative">
               <input
                 name="schedule_date"
@@ -252,7 +252,7 @@ export default function ScheduleModal({
                 className="w-full h-12 px-4 pr-12 border border-border-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-text-primary appearance-none"
               />
               <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                <img src="https://unpkg.com/lucide-static/icons/calendar.svg" alt="Calendar" className="w-6 h-6 text-gray-500" />
+                <img src="https://unpkg.com/lucide-static/icons/calendar.svg" alt="Calendar" className="w-6 h-6 text-text-secondary" />
               </div>
             </div>
           </div>
@@ -260,11 +260,11 @@ export default function ScheduleModal({
           {/* Tiết */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-600">Tiết bắt đầu</label>
+              <label className="text-sm font-medium text-text-secondary">Tiết bắt đầu</label>
               <input name="start_period" value={formData.start_period} onChange={handleChange} type="number" min="1" max="16" className="w-full h-12 px-4 border border-border-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-text-primary" />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-600">Tiết kết thúc</label>
+              <label className="text-sm font-medium text-text-secondary">Tiết kết thúc</label>
               <input name="end_period" value={formData.end_period} onChange={handleChange} type="number" min="1" max="16" className="w-full h-12 px-4 border border-border-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-text-primary" />
             </div>
           </div>
@@ -275,7 +275,7 @@ export default function ScheduleModal({
           {scheduleData ? (
             <button onClick={() => onDelete(scheduleData.schedule_id)} className="w-1/2 h-12 border border-red-500 text-red-500 rounded-lg hover:bg-red-50 transition-colors font-semibold">Xóa</button>
           ) : (
-            <button onClick={onClose} className="w-1/2 h-12 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-semibold">Hủy</button>
+            <button onClick={onClose} className="w-1/2 h-12 border border-gray-300 text-text-secondary rounded-lg hover:bg-gray-50 transition-colors font-semibold">Hủy</button>
           )}
           <button onClick={handleSave} className="w-1/2 h-12 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors font-semibold">Lưu</button>
         </div>

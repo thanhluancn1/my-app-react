@@ -33,7 +33,7 @@ export default function CropImageModal({ isOpen, imageSrc, onCancel, onSave }) {
         {/* Header */}
         <div className="p-4 border-b border-border-light flex justify-between items-center flex-shrink-0">
           <h3 className="font-bold text-lg text-text-primary">Chỉnh sửa hình ảnh</h3>
-          <button onClick={onCancel} className="text-gray-500 hover:text-gray-700">
+          <button onClick={onCancel} className="text-text-secondary hover:text-text-secondary">
             <img src="https://unpkg.com/lucide-static/icons/x.svg" className="w-6 h-6" alt="Close" />
           </button>
         </div>
@@ -73,7 +73,7 @@ export default function CropImageModal({ isOpen, imageSrc, onCancel, onSave }) {
           <div className="flex justify-end gap-3">
             <button 
               onClick={onCancel}
-              className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium"
+              className="px-4 py-2 border border-gray-300 rounded-lg text-text-secondary hover:bg-gray-50 font-medium"
             >
               Hủy bỏ
             </button>

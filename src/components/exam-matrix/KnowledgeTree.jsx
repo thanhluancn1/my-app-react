@@ -31,7 +31,7 @@ const TreeNode = ({ label, children, isLeaf, isChecked, onCheck }) => {
 
         {!isLeaf && (
           <div className="p-1">
-             <img src="https://unpkg.com/lucide-static/icons/chevron-down.svg" className={`w-4 h-4 text-gray-500 transition-transform ${isExpanded ? "rotate-180" : ""}`} alt="v" />
+             <img src="https://unpkg.com/lucide-static/icons/chevron-down.svg" className={`w-4 h-4 text-text-secondary transition-transform ${isExpanded ? "rotate-180" : ""}`} alt="v" />
           </div>
         )}
       </div>

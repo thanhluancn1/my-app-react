@@ -127,7 +127,7 @@ export default function AssignmentDetailPage() {
           <div className="h-12 px-6 flex items-center justify-between">
              <div className="flex items-center gap-2 text-sm">
                 <span className="text-text-secondary">Đề thi</span>
-                <span className="text-gray-400">/</span>
+                <span className="text-text-muted">/</span>
                 <span className="font-bold text-text-primary">
                     {/* Hiển thị tên Batch động */}
                     {batchInfo ? batchInfo.batch_name : `Batch ${batchId}`}

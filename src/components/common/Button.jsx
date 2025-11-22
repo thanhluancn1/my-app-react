@@ -15,7 +15,7 @@ export default function Button({
       typeClass = "bg-blue-500 text-white hover:bg-blue-600";
       break;
     case "secondary":
-      typeClass = "bg-gray-300 text-black hover:bg-gray-400";
+      typeClass = "bg-gray-300 text-text-primary hover:bg-gray-400";
       break;
     case "danger":
       typeClass = "bg-red-500 text-white hover:bg-red-600";

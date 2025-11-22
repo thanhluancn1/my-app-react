@@ -135,7 +135,7 @@ export default function StudentPage() {
                           onClick={() => handleEdit(student)}
                           className="flex items-center justify-center w-9 h-9 bg-white border border-border-medium rounded-lg hover:bg-gray-50 transition-colors"
                         >
-                          <img src="https://unpkg.com/lucide-static/icons/pencil.svg" alt="Edit" className="w-4 h-4 text-gray-600" />
+                          <img src="https://unpkg.com/lucide-static/icons/pencil.svg" alt="Edit" className="w-4 h-4 text-text-secondary" />
                         </button>
                       </td>
                     </tr>

@@ -87,14 +87,14 @@ export default function ScheduleTable({ schedules, onEdit }) {
                         >
                           <div className="h-full w-full bg-blue-50 text-blue-900 p-2 rounded-md text-xs flex flex-col gap-1 border-l-4 border-blue-500 shadow-sm">
                             <div>
-                              <span className="text-gray-500">Lớp: </span>
+                              <span className="text-text-secondary">Lớp: </span>
                               <span className="font-bold">{scheduleItem.class_name}</span>
                             </div>
                             <div className="font-bold text-sm text-blue-700">
                               {scheduleItem.subject_name}
                             </div>
                             <div>
-                              <span className="text-gray-500">Bài: </span>
+                              <span className="text-text-secondary">Bài: </span>
                               <span className="font-medium">{scheduleItem.lesson_name}</span>
                             </div>
                           </div>

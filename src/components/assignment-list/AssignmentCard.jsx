@@ -40,7 +40,7 @@ export default function AssignmentCard({ batch }) {
             <img 
               src="https://unpkg.com/lucide-static/icons/help-circle.svg" 
               alt="Questions" 
-              className="w-5 h-5 text-gray-600 opacity-60"
+              className="w-5 h-5 text-text-secondary opacity-60"
             />
             <span className="text-sm font-medium text-text-secondary">
               {batch.total_questions} câu hỏi
@@ -52,7 +52,7 @@ export default function AssignmentCard({ batch }) {
             <img 
               src="https://unpkg.com/lucide-static/icons/clock.svg" 
               alt="Duration" 
-              className="w-5 h-5 text-gray-600 opacity-60"
+              className="w-5 h-5 text-text-secondary opacity-60"
             />
             <span className="text-sm font-medium text-text-secondary">
               {durationMinutes} phút
@@ -64,7 +64,7 @@ export default function AssignmentCard({ batch }) {
             <img 
               src="https://unpkg.com/lucide-static/icons/calendar.svg" 
               alt="Calendar" 
-              className="w-5 h-5 text-gray-600 opacity-60"
+              className="w-5 h-5 text-text-secondary opacity-60"
             />
             <span className="text-sm font-medium text-text-secondary">
               {scheduleLabel}

@@ -92,7 +92,7 @@ export default function FilterSection({ data, onFilterChange }) {
             <img
               src="https://unpkg.com/lucide-static/icons/chevron-down.svg"
               alt="v"
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted pointer-events-none"
             />
           </div>
         </div>
@@ -105,7 +105,7 @@ export default function FilterSection({ data, onFilterChange }) {
               value={selectedSubjectId}
               onChange={handleSubjectChange}
               disabled={!selectedGradeId}
-              className="w-full h-11 px-4 pr-10 border border-border-medium rounded-lg bg-white text-text-primary focus:outline-none focus:ring-2 focus:ring-primary appearance-none disabled:bg-gray-50 disabled:text-gray-400 cursor-pointer disabled:cursor-not-allowed"
+              className="w-full h-11 px-4 pr-10 border border-border-medium rounded-lg bg-white text-text-primary focus:outline-none focus:ring-2 focus:ring-primary appearance-none disabled:bg-gray-50 disabled:text-text-muted cursor-pointer disabled:cursor-not-allowed"
             >
               <option value="">Chọn môn học</option>
               {subjects.map((s) => (
@@ -117,7 +117,7 @@ export default function FilterSection({ data, onFilterChange }) {
             <img
               src="https://unpkg.com/lucide-static/icons/chevron-down.svg"
               alt="v"
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted pointer-events-none"
             />
           </div>
         </div>
@@ -130,7 +130,7 @@ export default function FilterSection({ data, onFilterChange }) {
               value={selectedBookId}
               onChange={handleBookChange}
               disabled={!selectedSubjectId}
-              className="w-full h-11 px-4 pr-10 border border-border-medium rounded-lg bg-white text-text-primary focus:outline-none focus:ring-2 focus:ring-primary appearance-none disabled:bg-gray-50 disabled:text-gray-400 cursor-pointer disabled:cursor-not-allowed"
+              className="w-full h-11 px-4 pr-10 border border-border-medium rounded-lg bg-white text-text-primary focus:outline-none focus:ring-2 focus:ring-primary appearance-none disabled:bg-gray-50 disabled:text-text-muted cursor-pointer disabled:cursor-not-allowed"
             >
               <option value="">Chọn sách</option>
               {books.map((b) => (
@@ -142,7 +142,7 @@ export default function FilterSection({ data, onFilterChange }) {
             <img
               src="https://unpkg.com/lucide-static/icons/chevron-down.svg"
               alt="v"
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted pointer-events-none"
             />
           </div>
         </div>

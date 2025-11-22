@@ -44,7 +44,7 @@ export default function AssignmentPreview({ assignments, viewSettings, batchInfo
     let html = `
       <div class="mb-2">
         <strong class="mr-1">Câu ${index + 1}</strong> 
-        <span class="text-sm text-gray-500 font-normal">(${assign.score} điểm)</span> 
+        <span class="text-sm text-text-secondary font-normal">(${assign.score} điểm)</span> 
         <span class="inline-block">${marked.parse(questionPart)}</span>
       </div>
     `;
@@ -79,7 +79,7 @@ export default function AssignmentPreview({ assignments, viewSettings, batchInfo
                 rowOptions.forEach(opt => {
                     const isCorrect = correctAnswers.includes(opt.label);
                     let containerStyle = "border border-gray-200 p-3 rounded-lg flex items-start gap-2 hover:bg-gray-50 transition-colors";
-                    let labelStyle = "font-bold text-gray-700 min-w-[24px]";
+                    let labelStyle = "font-bold text-text-secondary min-w-[24px]";
                     
                     if (showResult && isCorrect) {
                         containerStyle = "border-2 border-primary bg-blue-50 p-3 rounded-lg flex items-start gap-2 shadow-sm";
@@ -112,10 +112,10 @@ export default function AssignmentPreview({ assignments, viewSettings, batchInfo
         <div className="space-y-8 max-w-4xl mx-auto">
             {/* --- HEADER ĐỘNG: Lấy từ batchInfo --- */}
             <div className="text-center border-b-2 border-gray-800 pb-6 mb-8">
-                <h2 className="text-2xl font-bold uppercase tracking-wide text-gray-900">
+                <h2 className="text-2xl font-bold uppercase tracking-wide text-text-primary">
                     {batchInfo?.batch_name || "Đề thi tham khảo"}
                 </h2>
-                <div className="flex justify-center gap-8 mt-2 text-sm text-gray-600 font-medium">
+                <div className="flex justify-center gap-8 mt-2 text-sm text-text-secondary font-medium">
                     <span>Môn: {batchInfo?.subject_name || "..."}</span>
                     <span>Thời gian: {batchInfo?.duration || 0} phút</span>
                 </div>
@@ -139,7 +139,7 @@ export default function AssignmentPreview({ assignments, viewSettings, batchInfo
 
                     {/* Hướng dẫn giải */}
                     {!viewSettings.hideSolutions && assign.solution_guide && (
-                        <div className="mt-4 p-4 bg-green-50 rounded-lg border-l-4 border-green-500 text-sm text-gray-800 animate-fade-in">
+                        <div className="mt-4 p-4 bg-green-50 rounded-lg border-l-4 border-green-500 text-sm text-text-primary animate-fade-in">
                             <strong className="text-green-700 block mb-2 uppercase text-xs tracking-wider">Hướng dẫn giải:</strong>
                             <div className="prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: marked.parse(assign.solution_guide) }} />
                         </div>
@@ -148,7 +148,7 @@ export default function AssignmentPreview({ assignments, viewSettings, batchInfo
                 </div>
             ))}
             
-            <div className="text-center text-gray-400 text-sm border-t border-gray-200 mt-12 pt-6">
+            <div className="text-center text-text-muted text-sm border-t border-gray-200 mt-12 pt-6">
                 --- HẾT ---
             </div>
         </div>
