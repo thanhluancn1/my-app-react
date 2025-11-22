@@ -4,9 +4,9 @@ import { useParams } from "react-router-dom";
 import { useReactToPrint } from "react-to-print"; // <--- IMPORT MỚI
 
 import { fetchAssignmentsByBatchId } from "../api/examApi";
-import AssignmentEditor from "../components/assignment/AssignmentEditor";
-import AssignmentPreview from "../components/assignment/AssignmentPreview";
-import AssignmentToolbar from "../components/assignment/AssignmentToolbar";
+import AssignmentEditor from "../components/assignment-detail/AssignmentEditor";
+import AssignmentPreview from "../components/assignment-detail/AssignmentPreview";
+import AssignmentToolbar from "../components/assignment-detail/AssignmentToolbar";
 import CropImageModal from "../components/common/CropImageModal";
 
 export default function AssignmentDetailPage() {

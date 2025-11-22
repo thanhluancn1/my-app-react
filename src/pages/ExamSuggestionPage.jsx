@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchExamSuggestions } from "../api/examApi";
-import LessonCard from "../components/LessonCard";
+import LessonCard from "../components/exam-suggestion/LessonCard";
 
 export default function ExamSuggestionPage() {
   const [lessons, setLessons] = useState([]);

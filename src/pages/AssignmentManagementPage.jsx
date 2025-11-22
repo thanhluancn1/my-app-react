@@ -1,7 +1,7 @@
 // src/pages/AssignmentManagementPage.jsx
 import { useState, useEffect } from "react";
 import { fetchClassExams } from "../api/examApi";
-import ClassAssignmentGroup from "../components/ClassAssignmentGroup";
+import ClassAssignmentGroup from "../components/assignment-list/ClassAssignmentGroup";
 
 export default function AssignmentManagementPage() {
   const [classes, setClasses] = useState([]);
