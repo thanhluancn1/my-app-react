@@ -1,25 +1,25 @@
-// src/pages/Student.jsx
+// src/pages/StudentPage.jsx
 import { useState, useEffect, useMemo } from "react";
-import { fetchClasses, saveStudent } from "../api/studentApi";
+import { fetchSchoolData, saveStudent } from "../api/schoolApi"; // <--- IMPORT TỪ API MỚI
 import StudentModal from "../components/student/StudentModal";
 
-export default function Student() {
+export default function StudentPage() {
   // --- 1. State Management ---
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedClassId, setSelectedClassId] = useState(""); // ID lớp đang chọn
+  const [selectedClassId, setSelectedClassId] = useState(""); 
   
-  // State cho Modal Thêm/Sửa
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [editingStudent, setEditingStudent] = useState(null); // Học sinh đang sửa (null = thêm mới)
+  const [editingStudent, setEditingStudent] = useState(null);
 
-  // --- 2. Load Data ---
+  // --- 2. Load Data (Dùng API Hợp nhất) ---
   useEffect(() => {
     const loadData = async () => {
-      const data = await fetchClasses();
+      // Gọi 1 API duy nhất lấy cả Lớp và Học sinh
+      const data = await fetchSchoolData();
       setClasses(data);
       
-      // Mặc định chọn lớp đầu tiên nếu có dữ liệu
+      // Mặc định chọn lớp đầu tiên
       if (data.length > 0) {
         setSelectedClassId(data[0].class_id);
       }
@@ -28,64 +28,72 @@ export default function Student() {
     loadData();
   }, []);
 
-  // --- 3. Computed Data (Lọc học sinh theo lớp đang chọn) ---
+  // --- 3. Computed Data (Lọc học sinh từ dữ liệu Local) ---
   const filteredStudents = useMemo(() => {
     if (!selectedClassId) return [];
-    const currentClass = classes.find(c => c.class_id == selectedClassId);
+    const currentClass = classes.find(c => c.class_id === parseInt(selectedClassId));
+    // Trả về mảng students có sẵn trong object Class
     return currentClass ? currentClass.students : [];
   }, [classes, selectedClassId]);
 
-  // --- 4. Handlers (Xử lý sự kiện) ---
+  // --- 4. Handlers ---
 
-  // Đổi lớp trong dropdown
   const handleClassChange = (e) => {
     setSelectedClassId(parseInt(e.target.value));
   };
 
-  // Mở Modal Thêm
   const handleAdd = () => {
     setEditingStudent(null);
     setIsAddModalOpen(true);
   };
 
-  // Mở Modal Sửa
   const handleEdit = (student) => {
     setEditingStudent(student);
     setIsAddModalOpen(true);
   };
 
-  // Lưu Học sinh (Thêm/Sửa)
+  // Lưu Học sinh (Gọi API mới)
   const handleSaveStudent = async (studentData) => {
-    // Gọi API
-    const savedStudent = await saveStudent(studentData);
-    
-    // Cập nhật UI Client-side
-    setClasses(prevClasses => {
-      const newClasses = [...prevClasses];
-      const classIndex = newClasses.findIndex(c => c.class_id == selectedClassId);
+    try {
+      // 1. Gọi API lưu xuống "Server"
+      const savedStudent = await saveStudent(studentData);
       
-      if (classIndex > -1) {
-        const students = newClasses[classIndex].students;
-        
-        if (studentData.student_id) {
-          // Update
-          const studentIndex = students.findIndex(s => s.student_id === studentData.student_id);
-          if (studentIndex > -1) {
-            students[studentIndex] = savedStudent;
-          }
-        } else {
-          // Create
-          students.push(savedStudent);
-        }
-      }
-      return newClasses;
-    });
+      // 2. Cập nhật UI (Local State)
+      setClasses(prevClasses => {
+        // Copy mảng classes để đảm bảo tính bất biến
+        const newClasses = prevClasses.map(cls => ({
+           ...cls, 
+           students: [...cls.students] // Copy cả mảng students con
+        }));
 
-    setIsAddModalOpen(false);
+        // Tìm lớp tương ứng
+        const classIndex = newClasses.findIndex(c => c.class_id === parseInt(selectedClassId));
+        
+        if (classIndex > -1) {
+          const targetClass = newClasses[classIndex];
+          
+          if (studentData.student_id) {
+            // --- UPDATE ---
+            const studentIndex = targetClass.students.findIndex(s => s.student_id === savedStudent.student_id);
+            if (studentIndex > -1) {
+              targetClass.students[studentIndex] = savedStudent;
+            }
+          } else {
+            // --- CREATE ---
+            targetClass.students.push(savedStudent);
+          }
+        }
+        return newClasses;
+      });
+
+      setIsAddModalOpen(false);
+    } catch (error) {
+      console.error("Lỗi khi lưu học sinh:", error);
+      alert("Có lỗi xảy ra, vui lòng thử lại.");
+    }
   };
 
-  // --- 5. Render ---
-  if (loading) return <p className="p-6">Đang tải dữ liệu...</p>;
+  if (loading) return <p className="p-6 text-center">Đang tải dữ liệu...</p>;
 
   return (
     <div className="p-6 bg-bg-light min-h-screen">
@@ -101,7 +109,7 @@ export default function Student() {
               <select 
                 value={selectedClassId}
                 onChange={handleClassChange}
-                className="w-full h-12 px-4 pr-10 border border-border-medium rounded-lg bg-white text-text-primary focus:outline-none focus:ring-2 focus:ring-primary appearance-none"
+                className="w-full h-12 px-4 pr-10 border border-border-medium rounded-lg bg-white text-text-primary focus:outline-none focus:ring-2 focus:ring-primary appearance-none cursor-pointer"
               >
                 {classes.map(cls => (
                   <option key={cls.class_id} value={cls.class_id}>
@@ -123,16 +131,16 @@ export default function Student() {
           <div className="flex space-x-3">
             <button 
               onClick={handleAdd}
-              className="flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors"
+              className="flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors shadow-sm"
             >
-              <img src="https://unpkg.com/lucide-static/icons/plus.svg" alt="Add" className="w-6 h-6 mr-2" />
+              <img src="https://unpkg.com/lucide-static/icons/plus.svg" alt="Add" className="w-5 h-5 mr-2" style={{ filter: "invert(1)" }} />
               <span className="text-sm font-inter">Thêm học sinh</span>
             </button>
           </div>
         </div>
 
         {/* Table */}
-        <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+        <div className="bg-white rounded-xl border border-border-light overflow-hidden shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-white border-b border-border-light">
@@ -149,26 +157,26 @@ export default function Student() {
               
               <tbody>
                 {filteredStudents.length === 0 ? (
-                   <tr><td colSpan="7" className="text-center p-6 text-gray-500">Không có học sinh nào trong lớp này.</td></tr>
+                   <tr><td colSpan="7" className="text-center p-8 text-text-muted italic">Không có học sinh nào trong lớp này.</td></tr>
                 ) : (
                   filteredStudents.map((student, index) => (
-                    <tr key={student.student_id} className="border-b border-border-light hover:bg-gray-50">
-                      <td className="px-6 py-2 text-text-primary text-base font-medium font-inter">{index + 1}</td>
-                      <td className="px-6 py-2 text-text-primary text-base font-medium font-inter">{student.full_name}</td>
-                      <td className="px-6 py-2 text-text-primary text-base font-medium font-inter">{student.date_of_birth}</td>
-                      <td className="px-6 py-2 text-text-primary text-base font-medium font-inter">{student.email}</td>
-                      <td className="px-6 py-2 text-text-primary text-base font-medium font-inter">{student.phone_number}</td>
-                      <td className="px-6 py-2">
-                        <span className={`inline-flex items-center px-3 py-2 rounded-full text-sm font-medium font-inter ${student.status === 'active' ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-100'}`}>
-                            {student.status === 'active' ? 'Hoạt động' : 'Không hoạt động'}
+                    <tr key={student.student_id} className="border-b border-border-light hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-3 text-text-primary text-base font-medium font-inter">{index + 1}</td>
+                      <td className="px-6 py-3 text-text-primary text-base font-medium font-inter">{student.full_name}</td>
+                      <td className="px-6 py-3 text-text-primary text-base font-medium font-inter">{student.date_of_birth}</td>
+                      <td className="px-6 py-3 text-text-primary text-base font-medium font-inter">{student.email}</td>
+                      <td className="px-6 py-3 text-text-primary text-base font-medium font-inter">{student.phone_number}</td>
+                      <td className="px-6 py-3">
+                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium font-inter ${student.status === 'Hoạt động' ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-100'}`}>
+                            {student.status}
                         </span>
                       </td>
-                      <td className="px-6 py-2">
+                      <td className="px-6 py-3">
                         <button 
                           onClick={() => handleEdit(student)}
-                          className="flex items-center justify-center w-10 h-10 bg-white border border-border-medium rounded-lg hover:bg-gray-50 transition-colors"
+                          className="flex items-center justify-center w-9 h-9 bg-white border border-border-medium rounded-lg hover:bg-gray-50 transition-colors"
                         >
-                          <img src="https://unpkg.com/lucide-static/icons/pencil.svg" alt="Edit" className="w-6 h-6 text-gray-600" />
+                          <img src="https://unpkg.com/lucide-static/icons/pencil.svg" alt="Edit" className="w-4 h-4 text-gray-600" />
                         </button>
                       </td>
                     </tr>
@@ -180,7 +188,6 @@ export default function Student() {
         </div>
       </div>
 
-      {/* Modal (Chỉ còn modal Thêm/Sửa) */}
       <StudentModal 
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}

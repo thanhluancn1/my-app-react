@@ -19,6 +19,8 @@ const EXAM_SUGGESTIONS_DATA = [
         "fill_in_blank": 0,
         "total_questions": 10,
         "total_points": 100,
+        "duration": 45,
+        "subject_name":"Toán",
         "batch_status": "Đang diễn ra",
         "start_date": "2025-10-25T10:00:00Z",
         "due_date": "2025-10-25T10:30:00Z",
@@ -73,6 +75,8 @@ const EXAM_SUGGESTIONS_DATA = [
         "fill_in_blank": 0,
         "total_questions": 8,
         "total_points": 100,
+        "duration": 45,
+        "subject_name":"Toán",
         "batch_status": "Đang diễn ra",
         "knowledge_components": [
             {
@@ -101,6 +105,7 @@ const CLASS_EXAM_DATA = [
         "target_student": "học sinh cả lớp",
         "total_questions": 10,
         "total_points": 100,
+        "duration": 45,
         "batch_status": "Đang diễn ra",
         "start_date": "2025-10-25T10:00:00Z",
         "due_date": "2025-10-25T10:30:00Z"
@@ -111,6 +116,7 @@ const CLASS_EXAM_DATA = [
         "target_student": "học sinh giỏi",
         "total_questions": 8,
         "total_points": 100,
+        "duration": 45,
         "batch_status": "Đang diễn ra",
         "start_date": "2025-10-25T10:00:00Z",
         "due_date": "2025-10-25T10:30:00Z"
@@ -121,6 +127,7 @@ const CLASS_EXAM_DATA = [
         "target_student": "học sinh giỏi",
         "total_questions": 8,
         "total_points": 100,
+        "duration": 45,
         "batch_status": "Đang diễn ra",
         "start_date": "2025-10-25T10:00:00Z",
         "due_date": "2025-10-25T10:30:00Z"
@@ -131,6 +138,7 @@ const CLASS_EXAM_DATA = [
         "target_student": "học sinh giỏi",
         "total_questions": 8,
         "total_points": 100,
+        "duration": 45,
         "batch_status": "Đang diễn ra",
         "start_date": "2025-10-25T10:00:00Z",
         "due_date": "2025-10-25T10:30:00Z"
@@ -150,6 +158,7 @@ const CLASS_EXAM_DATA = [
         "target_student": "học sinh cả lớp",
         "total_questions": 10,
         "total_points": 100,
+        "duration": 45,
         "batch_status": "Đang diễn ra",
         "start_date": "2025-10-25T10:00:00Z",
         "due_date": "2025-10-25T10:30:00Z"
@@ -160,6 +169,7 @@ const CLASS_EXAM_DATA = [
         "target_student": "học sinh giỏi",
         "total_questions": 8,
         "total_points": 100,
+        "duration": 45,
         "batch_status": "Đang diễn ra",
         "start_date": "2025-10-25T10:00:00Z",
         "due_date": "2025-10-25T10:30:00Z"
@@ -170,6 +180,7 @@ const CLASS_EXAM_DATA = [
         "target_student": "học sinh giỏi",
         "total_questions": 8,
         "total_points": 100,
+        "duration": 45,
         "batch_status": "Đang diễn ra",
         "start_date": "2025-10-25T10:00:00Z",
         "due_date": "2025-10-25T10:30:00Z"
@@ -188,12 +199,61 @@ export const fetchExamSuggestions = () => {
 };
 
 // ... (Giữ nguyên fetchAssignmentsByBatchId cũ) ...
+// export const fetchAssignmentsByBatchId = (batchId) => {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       const targetId = parseInt(batchId);
+//       let foundBatch = null;
+
+//       for (const lesson of EXAM_SUGGESTIONS_DATA) {
+//         if (lesson.assignment_batches) {
+//           foundBatch = lesson.assignment_batches.find(b => b.batch_id === targetId);
+//           if (foundBatch) break;
+//         }
+//       }
+
+//       if (foundBatch) {
+//         const allAssignments = [];
+//         if (foundBatch.knowledge_components) {
+//             foundBatch.knowledge_components.forEach(comp => {
+//                 if (comp.assignments) {
+//                     allAssignments.push(...comp.assignments);
+//                 }
+//             });
+//         }
+//         resolve(JSON.parse(JSON.stringify(allAssignments)));
+//       } else {
+//         // Fallback data for testing if mock data is missing assignments
+//         const fallbackAssignments = [];
+//         for(let i=1; i<=5; i++) {
+//             fallbackAssignments.push({
+//                 assignment_id: Date.now() + i,
+//                 question: `Câu hỏi mẫu số ${i} (Batch ${targetId}) - Dữ liệu fallback`,
+//                 answer: `Đáp án mẫu ${i}`,
+//                 solution_guide: `Hướng dẫn giải chi tiết cho câu ${i}`,
+//                 score: 2,
+//                 type: "Trắc nghiệm"
+//             });
+//         }
+//         resolve(fallbackAssignments);
+//       }
+//     }, 300);
+//   });
+// };
+
+
+// src/api/examApi.js
+
+// ... (Giữ nguyên phần Data ở trên)
+
+// --- HÀM MỚI: Lấy chi tiết Batch + Assignments ---
 export const fetchAssignmentsByBatchId = (batchId) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       const targetId = parseInt(batchId);
       let foundBatch = null;
 
+      // 1. Tìm batch tương ứng
       for (const lesson of EXAM_SUGGESTIONS_DATA) {
         if (lesson.assignment_batches) {
           foundBatch = lesson.assignment_batches.find(b => b.batch_id === targetId);
@@ -202,6 +262,7 @@ export const fetchAssignmentsByBatchId = (batchId) => {
       }
 
       if (foundBatch) {
+        // 2. Gom tất cả assignments từ knowledge_components thành 1 mảng phẳng
         const allAssignments = [];
         if (foundBatch.knowledge_components) {
             foundBatch.knowledge_components.forEach(comp => {
@@ -210,21 +271,20 @@ export const fetchAssignmentsByBatchId = (batchId) => {
                 }
             });
         }
-        resolve(JSON.parse(JSON.stringify(allAssignments)));
+        
+        // 3. Tạo đối tượng kết quả theo đúng Format yêu cầu
+        // Copy batch info nhưng loại bỏ knowledge_components (vì đã gom ra ngoài)
+        const { knowledge_components, ...batchInfo } = foundBatch;
+        
+        const result = {
+            ...batchInfo,       // Gồm: batch_id, batch_name, duration, subject_name...
+            assignments: allAssignments // Mảng câu hỏi
+        };
+
+        resolve(JSON.parse(JSON.stringify(result)));
       } else {
-        // Fallback data for testing if mock data is missing assignments
-        const fallbackAssignments = [];
-        for(let i=1; i<=5; i++) {
-            fallbackAssignments.push({
-                assignment_id: Date.now() + i,
-                question: `Câu hỏi mẫu số ${i} (Batch ${targetId}) - Dữ liệu fallback`,
-                answer: `Đáp án mẫu ${i}`,
-                solution_guide: `Hướng dẫn giải chi tiết cho câu ${i}`,
-                score: 2,
-                type: "Trắc nghiệm"
-            });
-        }
-        resolve(fallbackAssignments);
+        console.warn(`Không tìm thấy batch ID: ${targetId}`);
+        resolve(null);
       }
     }, 300);
   });

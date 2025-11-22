@@ -1,7 +1,7 @@
 // src/pages/AssignmentDetailPage.jsx
-import { useState, useEffect, useRef } from "react"; // Thêm useRef
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { useReactToPrint } from "react-to-print"; // <--- IMPORT MỚI
+import { useReactToPrint } from "react-to-print";
 
 import { fetchAssignmentsByBatchId } from "../api/examApi";
 import AssignmentEditor from "../components/assignment-detail/AssignmentEditor";
@@ -11,11 +11,12 @@ import CropImageModal from "../components/common/CropImageModal";
 
 export default function AssignmentDetailPage() {
   const { batchId } = useParams();
+  
   const [assignments, setAssignments] = useState([]);
+  const [batchInfo, setBatchInfo] = useState(null); // State lưu thông tin chung
+  
   const [loading, setLoading] = useState(true);
-
-  // Ref tham chiếu đến vùng cần in (Cột trái)
-  const componentRef = useRef(null); // <--- REF MỚI
+  const componentRef = useRef(null);
 
   const [viewSettings, setViewSettings] = useState({
     hideAnswers: false,
@@ -23,17 +24,19 @@ export default function AssignmentDetailPage() {
   });
 
   const [cropState, setCropState] = useState({
-    isOpen: false,
-    imageSrc: null,
-    assignmentId: null,
-    imageKey: null
+    isOpen: false, imageSrc: null, assignmentId: null, imageKey: null
   });
 
+  // Load dữ liệu
   useEffect(() => {
     const loadData = async () => {
       try {
         const data = await fetchAssignmentsByBatchId(batchId);
-        setAssignments(data);
+        if (data) {
+          const { assignments: loadedAssignments, ...info } = data;
+          setAssignments(loadedAssignments);
+          setBatchInfo(info);
+        }
       } catch (error) {
         console.error("Lỗi tải bài tập:", error);
       } finally {
@@ -43,8 +46,15 @@ export default function AssignmentDetailPage() {
     if (batchId) loadData();
   }, [batchId]);
 
-  // ... (Giữ nguyên các hàm handleUpdateAssignment, handleDeleteAssignment, handleAddAssignment, handleSplitScore, handleSaveExam) ...
-  // (Để ngắn gọn, tôi ẩn các hàm logic cũ không đổi, bạn giữ nguyên chúng nhé)
+  // --- HÀM MỚI: Xử lý thay đổi thông tin chung ---
+  const handleInfoChange = (field, value) => {
+    setBatchInfo(prev => ({
+        ...prev,
+        [field]: value
+    }));
+  };
+
+  // ... (Giữ nguyên các hàm handleUpdateAssignment, handleDeleteAssignment, handleAddAssignment, handleSplitScore, handleSaveExam...)
   const handleUpdateAssignment = (id, field, value) => {
       setAssignments(prev => prev.map(item => item.assignment_id === id ? { ...item, [field]: value } : item));
   };
@@ -57,25 +67,35 @@ export default function AssignmentDetailPage() {
   const handleSplitScore = () => {
       if(assignments.length > 0) setAssignments(prev => prev.map(item => ({ ...item, score: parseFloat((10/assignments.length).toFixed(2)) })));
   };
-  const handleSaveExam = () => alert("Đã lưu!");
+  
+  // Cập nhật hàm Save để log ra đúng thông tin mới
+  const handleSaveExam = () => {
+    if (!batchInfo) return;
+    
+    let stats = {
+        total_questions: assignments.length,
+        total_points: 0,
+        multiple_choice: 0, essay: 0, true_false: 0, fill_in_blank: 0,
+    };
+    assignments.forEach(q => {
+        stats.total_points += (parseFloat(q.score) || 0);
+        if (q.type === "Trắc nghiệm") stats.multiple_choice++;
+        else if (q.type === "Tự luận") stats.essay++;
+        else if (q.type === "Đúng/Sai") stats.true_false++;
+        else stats.fill_in_blank++;
+    });
 
-  // --- HÀM IN MỚI (Thay thế handleDownloadPDF cũ) ---
-  const handlePrint = useReactToPrint({
-    contentRef: componentRef, // Tham chiếu đến ref cần in
-    documentTitle: `De_thi_Batch_${batchId}`,
-    // Tùy chọn: Ẩn/Hiện header/footer mặc định của trình duyệt
-    pageStyle: `
-      @page {
-        size: A4;
-        margin: 20mm;
-      }
-      @media print {
-        body { -webkit-print-color-adjust: exact; }
-      }
-    `
-  });
+    const finalData = {
+        ...batchInfo, // Thông tin đã chỉnh sửa (name, duration) sẽ nằm ở đây
+        ...stats,
+        assignments: assignments
+    };
 
-  // ... (Giữ nguyên handlePreviewImageClick, handleSaveCrop) ...
+    console.log(">>> DỮ LIỆU SAVE:", JSON.stringify(finalData, null, 2));
+    alert("Đã lưu! Kiểm tra Console.");
+  };
+
+  const handlePrint = useReactToPrint({ contentRef: componentRef });
   const handlePreviewImageClick = (e) => {
       if (e.target.tagName === 'IMG') {
           const img = e.target;
@@ -102,48 +122,45 @@ export default function AssignmentDetailPage() {
 
   return (
     <div className="h-screen flex flex-col bg-bg-light overflow-hidden">
-      
       {/* Header */}
       <div className="bg-white border-b border-border-light z-10 shadow-sm">
           <div className="h-12 px-6 flex items-center justify-between">
              <div className="flex items-center gap-2 text-sm">
                 <span className="text-text-secondary">Đề thi</span>
                 <span className="text-gray-400">/</span>
-                <span className="font-bold text-text-primary">Chi tiết (Batch {batchId})</span>
+                <span className="font-bold text-text-primary">
+                    {/* Hiển thị tên Batch động */}
+                    {batchInfo ? batchInfo.batch_name : `Batch ${batchId}`}
+                </span>
              </div>
           </div>
           
-          {/* Toolbar */}
           <AssignmentToolbar 
             viewSettings={viewSettings}
             onToggleSetting={(key, val) => setViewSettings(prev => ({...prev, [key]: val}))}
             onSplitScore={handleSplitScore}
-            onDownload={handlePrint} // <--- Gắn hàm in mới vào nút Tải xuống
+            onDownload={handlePrint}
             onSave={handleSaveExam}
           />
       </div>
 
       {/* Main Content */}
       <div className="flex-1 flex overflow-hidden">
-        
-        {/* Cột Trái: Preview */}
-        <div 
-            className="w-1/2 bg-white border-r border-border-light relative"
-            onClick={handlePreviewImageClick} 
-        >
-            {/* Gắn REF vào thẻ div bao ngoài nội dung Preview */}
+        <div className="w-1/2 bg-white border-r border-border-light relative" onClick={handlePreviewImageClick}>
             <div ref={componentRef} className="h-full">
                 <AssignmentPreview 
-                    assignments={assignments}
+                    assignments={assignments} 
                     viewSettings={viewSettings}
+                    batchInfo={batchInfo} // Truyền info xuống để Preview hiển thị Header
                 />
             </div>
         </div>
 
-        {/* Cột Phải: Editor */}
         <div className="w-1/2 bg-gray-50">
             <AssignmentEditor 
                 assignments={assignments}
+                batchInfo={batchInfo}      // <--- Truyền Info
+                onInfoChange={handleInfoChange} // <--- Truyền hàm sửa Info
                 onUpdate={handleUpdateAssignment}
                 onDelete={handleDeleteAssignment}
                 onAdd={handleAddAssignment}
@@ -151,14 +168,7 @@ export default function AssignmentDetailPage() {
         </div>
       </div>
 
-      {/* Modal Crop Ảnh */}
-      <CropImageModal 
-        isOpen={cropState.isOpen}
-        imageSrc={cropState.imageSrc}
-        onCancel={() => setCropState({ ...cropState, isOpen: false })}
-        onSave={handleSaveCrop}
-      />
-
+      <CropImageModal isOpen={cropState.isOpen} imageSrc={cropState.imageSrc} onCancel={() => setCropState({ ...cropState, isOpen: false })} onSave={handleSaveCrop} />
     </div>
   );
 }

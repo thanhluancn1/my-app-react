@@ -9,7 +9,7 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
     subject_name: "Toán", // Giá trị mặc định
     start_year: "",
     end_year: "",
-    class_status: "active", // Giá trị mặc định
+    class_status: "Hoạt động", // Giá trị mặc định
   });
 
   // useEffect: Theo dõi sự thay đổi của classData
@@ -23,7 +23,7 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
         subject_name: classData.subject_name || "Toán",
         start_year: classData.start_year || "",
         end_year: classData.end_year || "",
-        class_status: classData.class_status || "active",
+        class_status: classData.class_status || "Hoạt động",
         class_id: classData.class_id, // Giữ lại ID để biết là đang update
       });
     } else {
@@ -33,7 +33,7 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
         subject_name: "Toán",
         start_year: "",
         end_year: "",
-        class_status: "active",
+        class_status: "Hoạt động",
       });
     }
   }, [classData, isOpen]); // Chạy lại khi mở modal hoặc đổi data
@@ -180,8 +180,8 @@ export default function ClassModal({ isOpen, onClose, onSave, classData }) {
                 onChange={handleChange}
                 className="w-full h-12 px-4 pr-12 border border-border-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-text-primary appearance-none bg-white"
               >
-                <option value="active">Hoạt động</option>
-                <option value="inactive">Không hoạt động</option>
+                <option value="Hoạt động">Hoạt động</option>
+                <option value="Không hoạt động">Không hoạt động</option>
               </select>
               <img
                 src="https://unpkg.com/lucide-static/icons/chevron-down.svg"

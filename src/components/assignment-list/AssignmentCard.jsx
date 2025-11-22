@@ -1,15 +1,16 @@
-// src/components/AssignmentCard.jsx
+// src/components/assignment-list/AssignmentCard.jsx
 import React from "react";
 
 export default function AssignmentCard({ batch }) {
-  // 1. Tính toán thời gian làm bài (phút)
-  const startDateObj = new Date(batch.start_date);
-  const endDateObj = new Date(batch.due_date);
-  const diffMs = endDateObj - startDateObj;
-  const durationMinutes = Math.round(diffMs / 60000);
+  // 1. Lấy thời gian làm bài trực tiếp từ API (Thay vì tính toán)
+  // Sử dụng tên trường 'duration' như đã thêm vào API
+  const durationMinutes = batch.duration || 0; 
 
-  // 2. Hàm format hiển thị lịch (HH:mm - HH:mm dd/MM/yyyy)
-  const formatSchedule = (start, end) => {
+  // 2. Hàm format hiển thị lịch (vẫn giữ để hiển thị ngày giờ)
+  const formatSchedule = (startStr, endStr) => {
+    const start = new Date(startStr);
+    const end = new Date(endStr);
+
     const optionsTime = { hour: '2-digit', minute: '2-digit' };
     const optionsDate = { day: '2-digit', month: '2-digit', year: 'numeric' };
     
@@ -20,7 +21,7 @@ export default function AssignmentCard({ batch }) {
     return `${startTime} - ${endTime} ${day}`;
   };
 
-  const scheduleLabel = formatSchedule(startDateObj, endDateObj);
+  const scheduleLabel = formatSchedule(batch.start_date, batch.due_date);
 
   return (
     <div className="bg-white border border-border-light rounded-xl p-6 cursor-pointer hover:shadow-md transition-shadow h-full flex flex-col">

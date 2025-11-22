@@ -8,7 +8,7 @@ export default function StudentModal({ isOpen, onClose, onSave, studentData, cla
     date_of_birth: "",
     email: "",
     phone_number: "",
-    status: "active",
+    status: "Hoạt động",
   });
 
   // Điền dữ liệu vào form khi mở modal (hoặc khi studentData thay đổi)
@@ -20,7 +20,7 @@ export default function StudentModal({ isOpen, onClose, onSave, studentData, cla
         date_of_birth: studentData.date_of_birth || "",
         email: studentData.email || "",
         phone_number: studentData.phone_number || "",
-        status: studentData.status || "active",
+        status: studentData.status || "Hoạt động",
         student_id: studentData.student_id, // Giữ ID để biết là update
       });
     } else {
@@ -30,7 +30,7 @@ export default function StudentModal({ isOpen, onClose, onSave, studentData, cla
         date_of_birth: "",
         email: "",
         phone_number: "",
-        status: "active",
+        status: "Hoạt động",
       });
     }
   }, [studentData, isOpen]);
@@ -159,8 +159,8 @@ export default function StudentModal({ isOpen, onClose, onSave, studentData, cla
                 onChange={handleChange}
                 className="w-full h-12 px-4 pr-12 border border-border-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-text-primary appearance-none bg-white"
               >
-                <option value="active">Hoạt động</option>
-                <option value="inactive">Không hoạt động</option>
+                <option value="Hoạt động">Hoạt động</option>
+                <option value="Không hoạt động">Không hoạt động</option>
               </select>
               <img
                 src="https://unpkg.com/lucide-static/icons/chevron-down.svg"
