@@ -33,6 +33,13 @@ const EXAM_SUGGESTIONS_DATA = [
         "knowledge_components": [
             {
                 "knowledge_title": "Mệnh đề",
+                "recognition": 5,
+                "understanding": 3,
+                "application": 2,
+                "multiple_choice": 8,
+                "essay": 2,
+                "true_false": 0,
+                "fill_in_blank": 0,
                 "assignments": [
                     { 
                         "assignment_id": 101, 
@@ -54,6 +61,13 @@ const EXAM_SUGGESTIONS_DATA = [
             },
             {
                 "knowledge_title": "Tập hợp",
+                "recognition": 5,
+                "understanding": 3,
+                "application": 2,
+                "multiple_choice": 8,
+                "essay": 2,
+                "true_false": 0,
+                "fill_in_blank": 0,
                 "assignments": [
                     { 
                         "assignment_id": 103, 
@@ -90,6 +104,14 @@ const EXAM_SUGGESTIONS_DATA = [
         "minScoreToViewSolution":0,
         "knowledge_components": [
             {
+                "knowledge_title": "Hàm số",
+                "recognition": 1,
+                "understanding": 3,
+                "application": 4,
+                "multiple_choice": 4,
+                "essay": 4,
+                "true_false": 0,
+                "fill_in_blank": 0,
                 "assignments": [
                     { "assignment_id": 201, "question": "Câu 1 (Nâng cao): Chứng minh rằng...", "answer": "...", "solution_guide": "...", "score": 5, "type": "Tự luận" }
                 ]

@@ -9,40 +9,46 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Khi app vừa chạy, kiểm tra xem trong LocalStorage đã có Token chưa
+  // 1. Check Login khi tải trang
   useEffect(() => {
     const storedToken = localStorage.getItem("accessToken");
     const storedUser = localStorage.getItem("userData");
 
     if (storedToken && storedUser) {
-      // Nếu có token -> coi như đã đăng nhập
       setIsAuthenticated(true);
       setUser(JSON.parse(storedUser));
     }
     setIsLoading(false);
   }, []);
 
-  // Hàm Đăng nhập
+  // 2. Hàm Login (Gọi API thật)
   const login = async (username, password) => {
     try {
-      // 1. Gọi API
+      // Gọi API
       const data = await loginApi(username, password);
       
-      // 2. Nếu thành công, lưu Token & User
-      if (data.success) {
-        localStorage.setItem("accessToken", data.token);
+      // Backend trả về: { access_token, token_type, user }
+      if (data.access_token) {
+        // Lưu vào Storage
+        localStorage.setItem("accessToken", data.access_token);
         localStorage.setItem("userData", JSON.stringify(data.user));
         
+        // Cập nhật State
         setUser(data.user);
         setIsAuthenticated(true);
         return { success: true };
+      } else {
+        return { success: false, message: "Không nhận được token từ server" };
       }
+
     } catch (error) {
+      console.error("Login Error:", error);
+      // Trả về thông báo lỗi từ backend (ví dụ: "Mật khẩu không chính xác")
       return { success: false, message: error.message };
     }
   };
 
-  // Hàm Đăng xuất
+  // 3. Hàm Logout
   const logout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("userData");
@@ -57,5 +63,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Hook custom để các component con gọi nhanh: const { login, user } = useAuth();
 export const useAuth = () => useContext(AuthContext);
