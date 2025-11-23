@@ -2,9 +2,10 @@
 import { useState, useEffect, useMemo } from "react";
 import { fetchSchoolData, saveStudent } from "../api/schoolApi";
 import StudentModal from "../components/student/StudentModal";
+import { useAuth } from "../context/AuthContext";
 
 export default function StudentPage() {
-  // ... (Giữ nguyên phần state và logic handlers) ...
+  const { user } = useAuth();
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedClassId, setSelectedClassId] = useState(""); 
@@ -13,15 +14,28 @@ export default function StudentPage() {
 
   useEffect(() => {
     const loadData = async () => {
-      const data = await fetchSchoolData();
-      setClasses(data);
-      if (data.length > 0) {
-        setSelectedClassId(data[0].class_id);
+      // Vẫn kiểm tra user để đảm bảo đã đăng nhập, nhưng không cần lấy ID để gọi API
+      if (user) {
+        setLoading(true);
+        try {
+          const data = await fetchSchoolData(); // <--- KHÔNG truyền user.id
+          setClasses(data);
+          
+          if (data.length > 0 && !selectedClassId) {
+            setSelectedClassId(data[0].class_id);
+          } else if (data.length > 0) {
+             const exists = data.find(c => c.class_id === parseInt(selectedClassId));
+             if (!exists) setSelectedClassId(data[0].class_id);
+          }
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setLoading(false);
+        }
       }
-      setLoading(false);
     };
     loadData();
-  }, []);
+  }, [user]);
 
   const filteredStudents = useMemo(() => {
     if (!selectedClassId) return [];

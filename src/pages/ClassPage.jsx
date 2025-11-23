@@ -2,8 +2,10 @@
 import { useState, useEffect } from "react";
 import { fetchSchoolData, saveClass } from "../api/schoolApi";
 import ClassModal from "../components/class/ClassModal";
+import { useAuth } from "../context/AuthContext";
 
 export default function ClassPage() {
+  const { user } = useAuth();
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,12 +15,20 @@ export default function ClassPage() {
   
   useEffect(() => {
     const loadData = async () => {
-      const data = await fetchSchoolData();
-      setClasses(data);
-      setLoading(false);
+      if (user) { 
+        setLoading(true);
+        try {
+          const data = await fetchSchoolData(); // <--- KHÔNG truyền user.id
+          setClasses(data);
+        } catch (error) {
+          console.error("Lỗi load lớp:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
     };
     loadData();
-  }, []);
+  }, [user]);
 
   const handleAddNew = () => {
     setCurrentClass(null);
