@@ -24,7 +24,7 @@ export default function LessonCard({ lesson, onCardClick }) {
           {studentTypes.map((type) => {
             // Tìm batch tương ứng với đối tượng học sinh (So sánh chữ thường để chính xác)
             const matchingBatch = lesson.assignment_batches.find(batch => 
-              batch.target_student.toLowerCase() === type.toLowerCase()
+              batch.suggest_student.toLowerCase() === type.toLowerCase()
             );
 
             return (

@@ -9,7 +9,7 @@ const EXAM_SUGGESTIONS_DATA = [
       {
         "batch_id": 1,
         "batch_name": "Ôn tập Chương 1 (Cơ bản)",
-        "target_student": "học sinh cả lớp", // Lưu ý: data gốc là chữ thường
+        "suggest_student": "học sinh cả lớp", // Lưu ý: data gốc là chữ thường
         "recognition": 5,
         "understanding": 3,
         "application": 2,
@@ -24,6 +24,11 @@ const EXAM_SUGGESTIONS_DATA = [
         "batch_status": "Đang diễn ra",
         "start_date": "2025-10-25T10:00:00Z",
         "due_date": "2025-10-25T10:30:00Z",
+        "target_students":["học sinh cả lớp", "học sinh giỏi", "học sinh khá", "học sinh trung bình"],
+        "target_classes":["10A1", "10A2", "10B1", "10B2"],
+        "allowViewScore":"",
+        "allowViewSolution":"",
+        "minScoreToViewSolution":0,
         // Dữ liệu chi tiết câu hỏi (Mô phỏng cấu trúc lồng nhau từ mock_data_central.js)
         "knowledge_components": [
             {
@@ -65,7 +70,7 @@ const EXAM_SUGGESTIONS_DATA = [
       {
         "batch_id": 2,
         "batch_name": "Chuyên đề Hàm số và Vector (Nâng cao)",
-        "target_student": "học sinh giỏi",
+        "suggest_student": "học sinh giỏi",
         "recognition": 1,
         "understanding": 3,
         "application": 4,
@@ -78,92 +83,11 @@ const EXAM_SUGGESTIONS_DATA = [
         "duration": 45,
         "subject_name":"Toán",
         "batch_status": "Đang diễn ra",
-        "knowledge_components": [
-            {
-                "assignments": [
-                    { "assignment_id": 201, "question": "Câu 1 (Nâng cao): Chứng minh rằng...", "answer": "...", "solution_guide": "...", "score": 5, "type": "Tự luận" }
-                ]
-            }
-        ]
-      }
-    ]
-  },
-  {
-    "lesson_id": 1, 
-    "lesson_name": "Bài học tổng hợp về Mệnh đề, Tập hợp, Hàm số và Vector",
-    "assignment_batches": [
-      {
-        "batch_id": 1,
-        "batch_name": "Ôn tập Chương 1 (Cơ bản)",
-        "target_student": "học sinh cả lớp", // Lưu ý: data gốc là chữ thường
-        "recognition": 5,
-        "understanding": 3,
-        "application": 2,
-        "multiple_choice": 8,
-        "essay": 2,
-        "true_false": 0,
-        "fill_in_blank": 0,
-        "total_questions": 10,
-        "total_points": 100,
-        "duration": 45,
-        "subject_name":"Toán",
-        "batch_status": "Đang diễn ra",
-        "start_date": "2025-10-25T10:00:00Z",
-        "due_date": "2025-10-25T10:30:00Z",
-        // Dữ liệu chi tiết câu hỏi (Mô phỏng cấu trúc lồng nhau từ mock_data_central.js)
-        "knowledge_components": [
-            {
-                "knowledge_title": "Mệnh đề",
-                "assignments": [
-                    { 
-                        "assignment_id": 101, 
-                        "question": "Câu 1: Mệnh đề nào sau đây là đúng?\n A. $\\pi$ là số hữu tỉ.\n B. Tổng hai cạnh của một tam giác lớn hơn cạnh thứ ba.\n C. Bạn có chăm học không?\n D. Con mèo này đẹp quá!", 
-                        "answer": "B", 
-                        "solution_guide": "**Giải thích:**\n- Câu A sai vì $\\pi$ là số vô tỉ.\n- Câu B đúng (Bất đẳng thức tam giác).\n- Câu C và D không phải là mệnh đề.", 
-                        "score": 1, 
-                        "type": "Trắc nghiệm" 
-                    },
-                    { 
-                        "assignment_id": 102, 
-                        "question": "Câu 2: Cho tập hợp $A = \\{x \\in \\mathbb{R} | x^2 - 4 = 0\\}$. Tập hợp A viết dưới dạng liệt kê là:", 
-                        "answer": "A = {-2; 2}", 
-                        "solution_guide": "Giải phương trình $x^2 - 4 = 0 \\Leftrightarrow x = \\pm 2$.", 
-                        "score": 1, 
-                        "type": "Trắc nghiệm" 
-                    }
-                ]
-            },
-            {
-                "knowledge_title": "Tập hợp",
-                "assignments": [
-                    { 
-                        "assignment_id": 103, 
-                        "question": "Câu 3: (Tự luận) Tìm tập xác định của hàm số $y = \\sqrt{x-1} + \\frac{1}{x-3}$.", 
-                        "answer": "D = [1; +∞) \\ {3}", 
-                        "solution_guide": "Điều kiện:\n1. $x - 1 \\ge 0 \\Leftrightarrow x \\ge 1$\n2. $x - 3 \\ne 0 \\Leftrightarrow x \\ne 3$\n\nVậy $D = [1; +\\infty) \\setminus \\{3\\}$.", 
-                        "score": 2, 
-                        "type": "Tự luận" 
-                    }
-                ]
-            }
-        ]
-      },
-      {
-        "batch_id": 2,
-        "batch_name": "Chuyên đề Hàm số và Vector (Nâng cao)",
-        "target_student": "học sinh giỏi",
-        "recognition": 1,
-        "understanding": 3,
-        "application": 4,
-        "multiple_choice": 4,
-        "essay": 4,
-        "true_false": 0,
-        "fill_in_blank": 0,
-        "total_questions": 8,
-        "total_points": 100,
-        "duration": 45,
-        "subject_name":"Toán",
-        "batch_status": "Đang diễn ra",
+        "target_students":["học sinh cả lớp", "học sinh giỏi", "học sinh khá", "học sinh trung bình"],
+        "target_classes":["10A1", "10A2", "10B1", "10B2"],
+        "allowViewScore":"",
+        "allowViewSolution":"",
+        "minScoreToViewSolution":0,
         "knowledge_components": [
             {
                 "assignments": [
@@ -188,7 +112,7 @@ const CLASS_EXAM_DATA = [
       {
         "batch_id": 1,
         "batch_name": "Ôn tập Chương 1 (Cơ bản)",
-        "target_student": "học sinh cả lớp",
+        "target_students": ["học sinh cả lớp"],
         "total_questions": 10,
         "total_points": 100,
         "duration": 45,
@@ -199,7 +123,7 @@ const CLASS_EXAM_DATA = [
       {
         "batch_id": 2,
         "batch_name": "Chuyên đề Hàm số và Vector (Nâng cao)",
-        "target_student": "học sinh giỏi",
+        "target_students": ["học sinh giỏi"],
         "total_questions": 8,
         "total_points": 100,
         "duration": 45,
@@ -210,7 +134,7 @@ const CLASS_EXAM_DATA = [
       {
         "batch_id": 3,
         "batch_name": "Tổng hợp Chuyên đề Hàm số và Vector (Nâng cao)",
-        "target_student": "học sinh giỏi",
+        "target_students": ["học sinh giỏi"],
         "total_questions": 8,
         "total_points": 100,
         "duration": 45,
@@ -221,7 +145,7 @@ const CLASS_EXAM_DATA = [
       {
         "batch_id": 4,
         "batch_name": "Chuyên đề Hàm số và Vector (Nâng cao)",
-        "target_student": "học sinh giỏi",
+        "target_students": ["học sinh giỏi"],
         "total_questions": 8,
         "total_points": 100,
         "duration": 45,
@@ -241,7 +165,7 @@ const CLASS_EXAM_DATA = [
       {
         "batch_id": 1,
         "batch_name": "Ôn tập Chương 1 (Cơ bản)",
-        "target_student": "học sinh cả lớp",
+        "target_students": ["học sinh cả lớp"],
         "total_questions": 10,
         "total_points": 100,
         "duration": 45,
@@ -252,7 +176,7 @@ const CLASS_EXAM_DATA = [
       {
         "batch_id": 2,
         "batch_name": "Chuyên đề Hàm số và Vector (Nâng cao)",
-        "target_student": "học sinh giỏi",
+        "target_students": ["học sinh giỏi"],
         "total_questions": 8,
         "total_points": 100,
         "duration": 45,
@@ -263,7 +187,7 @@ const CLASS_EXAM_DATA = [
       {
         "batch_id": 3,
         "batch_name": "Tổng hợp Chuyên đề Hàm số và Vector (Nâng cao)",
-        "target_student": "học sinh giỏi",
+        "target_students": ["học sinh giỏi"],
         "total_questions": 8,
         "total_points": 100,
         "duration": 45,
