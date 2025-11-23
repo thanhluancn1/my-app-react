@@ -82,10 +82,10 @@ export default function ScheduleTable({ schedules, onEdit }) {
                         <td
                           key={`${day}-${period}`}
                           rowSpan={rowSpan}
-                          className="border-r border-border-light p-1 align-top cursor-pointer hover:opacity-90 transition-opacity last:border-r-0"
+                          className="relative rounded-md bg-blue-50 p-1 cursor-pointer before:content-[''] before:absolute before:left-0 before:top-0 before:h-full before:w-1 before:bg-blue-500 before:rounded-l-md"
                           onClick={() => onEdit(scheduleItem)}
                         >
-                          <div className="h-full w-full bg-blue-50 text-blue-900 p-2 rounded-md text-xs flex flex-col gap-1 border-l-4 border-blue-500">
+                          <div className="h-full w-full text-blue-900 p-2 text-xs flex flex-col gap-1 ">
                             <div>
                               <span className="text-text-secondary">Lớp: </span>
                               <span className="font-bold">{scheduleItem.class_name}</span>

@@ -7,13 +7,10 @@ export default function ClassAssignmentGroup({ classData }) {
   return (
     <div className="w-full bg-white border border-border-light rounded-xl p-6">
       {/* Header: Tên lớp */}
-      <div className="mb-6 border-border-light">
+      <div className="mb-4 border-border-light">
         <h3 className="text-xl font-semibold text-text-primary">
           {class_name}
         </h3>
-        <span className="text-sm text-text-secondary">
-            Sĩ số: {classData.student_count} học sinh
-        </span>
       </div>
 
       {/* Grid: Danh sách bài tập */}

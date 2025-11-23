@@ -28,7 +28,7 @@ export default function AssignmentCard({ batch }) {
       <div className="space-y-4 flex-1">
         {/* Tên bài tập */}
         <div>
-          <h3 className="text-lg border-b pb-4 font-semibold text-text-primary leading-snug">
+          <h3 className="text-lg border-b pb-4 text-text-primary leading-snug">
             {batch.batch_name}
           </h3>
         </div>

@@ -249,11 +249,8 @@ export default function ScheduleModal({
                 value={formData.schedule_date}
                 onChange={handleChange}
                 type="date"
-                className="w-full h-12 px-4 pr-12 border border-border-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-text-primary appearance-none"
+                className="w-full h-12 px-4 border border-border-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-text-primary appearance-none"
               />
-              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                <img src="https://unpkg.com/lucide-static/icons/calendar.svg" alt="Calendar" className="w-6 h-6 text-text-secondary" />
-              </div>
             </div>
           </div>
 
