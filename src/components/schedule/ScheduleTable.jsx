@@ -1,4 +1,4 @@
-// src/components/ScheduleTable.jsx
+// src/components/schedule/ScheduleTable.jsx
 import React from "react";
 
 export default function ScheduleTable({ schedules, onEdit }) {
@@ -34,9 +34,9 @@ export default function ScheduleTable({ schedules, onEdit }) {
     <div className="bg-white rounded-xl border border-border-light overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full table-fixed border-collapse text-sm">
-          {/* Định nghĩa độ rộng cột */}
+          {/* Định nghĩa độ rộng cột - Đã sửa lỗi whitespace */}
           <colgroup>
-            <col className="w-[5%]" /> {/* Cột Tiết */}
+            <col className="w-[5%]" />
             {days.map((_, index) => (
               <col key={index} className="w-[13.5%]" />
             ))}

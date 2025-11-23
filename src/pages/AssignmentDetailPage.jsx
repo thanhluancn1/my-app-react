@@ -4,6 +4,11 @@ import { useParams } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 
 import { fetchAssignmentsByBatchId } from "../api/examApi";
+// --- IMPORT MỚI ---
+import { fetchSchoolData } from "../api/schoolApi";
+import AssignHomeworkModal from "../components/assignment-detail/AssignHomeworkModal";
+// -----------------
+
 import AssignmentEditor from "../components/assignment-detail/AssignmentEditor";
 import AssignmentPreview from "../components/assignment-detail/AssignmentPreview";
 import AssignmentToolbar from "../components/assignment-detail/AssignmentToolbar";
@@ -13,7 +18,7 @@ export default function AssignmentDetailPage() {
   const { batchId } = useParams();
   
   const [assignments, setAssignments] = useState([]);
-  const [batchInfo, setBatchInfo] = useState(null); // State lưu thông tin chung
+  const [batchInfo, setBatchInfo] = useState(null);
   
   const [loading, setLoading] = useState(true);
   const componentRef = useRef(null);
@@ -27,18 +32,30 @@ export default function AssignmentDetailPage() {
     isOpen: false, imageSrc: null, assignmentId: null, imageKey: null
   });
 
+  // --- STATE MỚI ---
+  const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
+  const [schoolClasses, setSchoolClasses] = useState([]);
+  // -----------------
+
   // Load dữ liệu
   useEffect(() => {
     const loadData = async () => {
       try {
+        // 1. Load thông tin bài tập (Giữ nguyên logic cũ)
         const data = await fetchAssignmentsByBatchId(batchId);
         if (data) {
           const { assignments: loadedAssignments, ...info } = data;
           setAssignments(loadedAssignments);
           setBatchInfo(info);
         }
+
+        // --- LOGIC MỚI: Load danh sách lớp học ---
+        const classesData = await fetchSchoolData();
+        setSchoolClasses(classesData);
+        // -------------------------------------
+
       } catch (error) {
-        console.error("Lỗi tải bài tập:", error);
+        console.error("Lỗi tải dữ liệu:", error);
       } finally {
         setLoading(false);
       }
@@ -46,7 +63,6 @@ export default function AssignmentDetailPage() {
     if (batchId) loadData();
   }, [batchId]);
 
-  // --- HÀM MỚI: Xử lý thay đổi thông tin chung ---
   const handleInfoChange = (field, value) => {
     setBatchInfo(prev => ({
         ...prev,
@@ -54,7 +70,6 @@ export default function AssignmentDetailPage() {
     }));
   };
 
-  // ... (Giữ nguyên các hàm handleUpdateAssignment, handleDeleteAssignment, handleAddAssignment, handleSplitScore, handleSaveExam...)
   const handleUpdateAssignment = (id, field, value) => {
       setAssignments(prev => prev.map(item => item.assignment_id === id ? { ...item, [field]: value } : item));
   };
@@ -68,7 +83,17 @@ export default function AssignmentDetailPage() {
       if(assignments.length > 0) setAssignments(prev => prev.map(item => ({ ...item, score: parseFloat((10/assignments.length).toFixed(2)) })));
   };
   
-  // Cập nhật hàm Save để log ra đúng thông tin mới
+  // --- HÀM MỚI: Xử lý lưu cấu hình từ Modal giao bài ---
+  const handleAssignSave = (assignedData) => {
+    setBatchInfo(prev => ({
+        ...prev,
+        ...assignedData
+    }));
+    setIsAssignModalOpen(false);
+    alert("Đã cập nhật thông tin giao bài! Hãy bấm 'Lưu đề' để ghi nhận vào hệ thống.");
+  };
+  // ----------------------------------------------------
+
   const handleSaveExam = () => {
     if (!batchInfo) return;
     
@@ -86,7 +111,7 @@ export default function AssignmentDetailPage() {
     });
 
     const finalData = {
-        ...batchInfo, // Thông tin đã chỉnh sửa (name, duration) sẽ nằm ở đây
+        ...batchInfo, // Thông tin này đã bao gồm start_date, target_classes cập nhật từ modal
         ...stats,
         assignments: assignments
     };
@@ -129,7 +154,6 @@ export default function AssignmentDetailPage() {
                 <span className="text-text-secondary">Đề thi</span>
                 <span className="text-text-muted">/</span>
                 <span className="font-bold text-text-primary">
-                    {/* Hiển thị tên Batch động */}
                     {batchInfo ? batchInfo.batch_name : `Batch ${batchId}`}
                 </span>
              </div>
@@ -141,6 +165,8 @@ export default function AssignmentDetailPage() {
             onSplitScore={handleSplitScore}
             onDownload={handlePrint}
             onSave={handleSaveExam}
+            // --- CẬP NHẬT: Truyền hàm mở modal ---
+            onOpenAssign={() => setIsAssignModalOpen(true)}
           />
       </div>
 
@@ -151,7 +177,7 @@ export default function AssignmentDetailPage() {
                 <AssignmentPreview 
                     assignments={assignments} 
                     viewSettings={viewSettings}
-                    batchInfo={batchInfo} // Truyền info xuống để Preview hiển thị Header
+                    batchInfo={batchInfo} 
                 />
             </div>
         </div>
@@ -159,8 +185,8 @@ export default function AssignmentDetailPage() {
         <div className="w-1/2 bg-gray-50">
             <AssignmentEditor 
                 assignments={assignments}
-                batchInfo={batchInfo}      // <--- Truyền Info
-                onInfoChange={handleInfoChange} // <--- Truyền hàm sửa Info
+                batchInfo={batchInfo}
+                onInfoChange={handleInfoChange}
                 onUpdate={handleUpdateAssignment}
                 onDelete={handleDeleteAssignment}
                 onAdd={handleAddAssignment}
@@ -168,7 +194,21 @@ export default function AssignmentDetailPage() {
         </div>
       </div>
 
-      <CropImageModal isOpen={cropState.isOpen} imageSrc={cropState.imageSrc} onCancel={() => setCropState({ ...cropState, isOpen: false })} onSave={handleSaveCrop} />
+      <CropImageModal 
+        isOpen={cropState.isOpen} 
+        imageSrc={cropState.imageSrc} 
+        onCancel={() => setCropState({ ...cropState, isOpen: false })} 
+        onSave={handleSaveCrop} 
+      />
+
+      {/* --- MODAL GIAO BÀI (MỚI) --- */}
+      <AssignHomeworkModal 
+        isOpen={isAssignModalOpen}
+        onClose={() => setIsAssignModalOpen(false)}
+        onSave={handleAssignSave}
+        initialData={batchInfo}
+        availableClasses={schoolClasses}
+      />
     </div>
   );
 }

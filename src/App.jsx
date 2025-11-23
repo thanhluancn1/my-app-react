@@ -1,8 +1,10 @@
 // src/App.jsx
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
+import ProtectedRoute from "./components/common/ProtectedRoute";
 
-// --- IMPORT MỚI (Đã đổi tên) ---
+// Pages
+import LoginPage from "./pages/LoginPage"; // <--- Import mới
 import HomePage from "./pages/HomePage";
 import ClassPage from "./pages/ClassPage";
 import StudentPage from "./pages/StudentPage";
@@ -13,28 +15,33 @@ import AssignmentListPage from "./pages/AssignmentListPage";
 import AssignmentDetailPage from "./pages/AssignmentDetailPage";
 import KnowledgePage from "./pages/KnowledgePage";
 
-
 export default function App() {
   return (
-    <MainLayout>
-      <Routes>
-        {/* Trang chung */}
-        <Route path="/" element={<HomePage />} />
+    <Routes>
+      {/* 1. Route Public: Trang Login (Không có Sidebar/Header) */}
+      <Route path="/login" element={<LoginPage />} />
 
-        {/* Quản lý danh mục */}
-        <Route path="/classes" element={<ClassPage />} />
-        <Route path="/students" element={<StudentPage />} />
-        <Route path="/schedules" element={<SchedulePage />} />
-
-        {/* Module Đề thi & Bài tập */}
-        <Route path="/exam" element={<ExamMatrixPage />} />
-        <Route path="/exam-suggestions" element={<ExamSuggestionPage />} />
-        <Route path="/assignment-management" element={<AssignmentListPage />} />
-        <Route path="/assignment-detail/:batchId" element={<AssignmentDetailPage />} />
-        
-        {/* Module Kiến thức */}
-        <Route path="/knowledge" element={<KnowledgePage />} />
-      </Routes>
-    </MainLayout>
+      {/* 2. Route Private: Các trang nội bộ (Có Sidebar/Header) */}
+      <Route
+        path="/*"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/classes" element={<ClassPage />} />
+                <Route path="/students" element={<StudentPage />} />
+                <Route path="/schedules" element={<SchedulePage />} />
+                <Route path="/exam" element={<ExamMatrixPage />} />
+                <Route path="/exam-suggestions" element={<ExamSuggestionPage />} />
+                <Route path="/assignment-management" element={<AssignmentListPage />} />
+                <Route path="/assignment-detail/:batchId" element={<AssignmentDetailPage />} />
+                <Route path="/knowledge" element={<KnowledgePage />} />
+              </Routes>
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
   );
 }

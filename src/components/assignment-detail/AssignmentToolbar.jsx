@@ -1,4 +1,4 @@
-// src/components/AssignmentToolbar.jsx
+// src/components/assignment-detail/AssignmentToolbar.jsx
 import React from "react";
 
 export default function AssignmentToolbar({ 
@@ -6,7 +6,8 @@ export default function AssignmentToolbar({
   onToggleSetting, 
   onSplitScore, 
   onDownload, 
-  onSave 
+  onSave,
+  onOpenAssign // <--- Prop mới nhận hàm mở modal
 }) {
   return (
     <div className="flex items-center gap-4 bg-white py-2 px-4 rounded-lg border border-border-light mx-6 my-2">
@@ -56,11 +57,20 @@ export default function AssignmentToolbar({
         Tải PDF
       </button>
 
+      {/* --- NÚT MỚI: CẤU HÌNH GIAO BÀI --- */}
+      <button 
+        onClick={onOpenAssign}
+        className="flex items-center gap-1 px-3 py-2 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 text-sm font-medium transition-colors border border-green-200"
+      >
+        <img src="https://unpkg.com/lucide-static/icons/send.svg" className="w-4 h-4" alt="" />
+        Cấu hình giao bài
+      </button>
+
       <button 
         onClick={onSave}
         className="flex items-center gap-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 text-sm font-medium transition-colors"
       >
-        <img src="https://unpkg.com/lucide-static/icons/save.svg" className="w-4 h-4" alt="" />
+        <img src="https://unpkg.com/lucide-static/icons/save.svg" className="w-4 h-4" alt="" style={{ filter: "invert(1)" }} />
         Lưu đề
       </button>
     </div>
