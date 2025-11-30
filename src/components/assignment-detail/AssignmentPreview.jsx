@@ -117,7 +117,7 @@ export default function AssignmentPreview({ assignments, viewSettings, batchInfo
                 </h2>
                 <div className="flex justify-center gap-8 mt-2 text-sm text-text-secondary font-medium">
                     <span>Môn: {batchInfo?.subject_name || "..."}</span>
-                    <span>Thời gian: {batchInfo?.duration || 0} phút</span>
+                    <span>Thời gian: {batchInfo?.duration_minutes || 0} phút</span>
                 </div>
             </div>
 

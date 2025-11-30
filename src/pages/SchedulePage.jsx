@@ -1,4 +1,4 @@
-// src/pages/Schedule.jsx
+// src/pages/SchedulePage.jsx
 import { useState, useEffect, useMemo } from "react";
 import {
   fetchSchedules,
@@ -8,10 +8,13 @@ import {
 } from "../api/scheduleApi";
 import ScheduleTable from "../components/schedule/ScheduleTable";
 import ScheduleModal from "../components/schedule/ScheduleModal";
+import { useAuth } from "../context/AuthContext"; // Import Auth để lấy user hiện tại
 
-export default function Schedule() {
+export default function SchedulePage() {
+  const { user } = useAuth();
+
   // --- 1. State Management ---
-  const [allSchedules, setAllSchedules] = useState([]); // Kho chứa dữ liệu 5 tuần
+  const [schedules, setSchedules] = useState([]); // Dữ liệu lịch của tuần hiện tại
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -28,7 +31,7 @@ export default function Schedule() {
   const getStartOfWeek = (date) => {
     const d = new Date(date);
     const day = d.getDay(); // 0 (CN) -> 6 (T7)
-    // Nếu là CN (0) thì trừ 6 ngày, ngược lại trừ (day - 1)
+    // Nếu là CN (0) thì trừ 6 ngày, ngược lại trừ (day - 1) để về Thứ 2
     const diff = d.getDate() - day + (day === 0 ? -6 : 1);
     const monday = new Date(d.setDate(diff));
     monday.setHours(0, 0, 0, 0);
@@ -44,49 +47,76 @@ export default function Schedule() {
     return sunday;
   };
 
-  // Format date YYYY-MM-DD để so sánh với data API
-  const formatDateStr = (date) => {
-    const offset = date.getTimezoneOffset();
-    const d = new Date(date.getTime() - (offset*60*1000));
-    return d.toISOString().split('T')[0];
-  };
-
-  // --- 3. Load Data ---
-  useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      try {
-        const [schedulesData, classesData] = await Promise.all([
-          fetchSchedules(),
-          fetchClasses(),
-        ]);
-        setAllSchedules(schedulesData);
-        setClasses(classesData);
-      } catch (error) {
-        console.error("Failed to load schedule data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadData();
-  }, []);
-
-  // --- 4. Computed Data (Lọc dữ liệu theo tuần) ---
-  
+  // Tính toán ngày bắt đầu và kết thúc của tuần hiện tại
   const currentWeekStart = useMemo(() => getStartOfWeek(currentDate), [currentDate]);
   const currentWeekEnd = useMemo(() => getEndOfWeek(currentDate), [currentDate]);
 
-  const filteredSchedules = useMemo(() => {
-    // Chuẩn hóa chuỗi ngày để so sánh
-    const startStr = formatDateStr(currentWeekStart);
-    const endStr = formatDateStr(currentWeekEnd);
+  // --- 3. Load Data ---
 
-    return allSchedules.filter((s) => {
-      return s.schedule_date >= startStr && s.schedule_date <= endStr;
-    });
-  }, [allSchedules, currentWeekStart, currentWeekEnd]);
+  // Effect 1: Load danh sách lớp (Chạy 1 lần khi mount hoặc khi user thay đổi)
+  useEffect(() => {
+    const loadClasses = async () => {
+      if (user) {
+        try {
+          const data = await fetchClasses();
+          setClasses(data);
+        } catch (error) {
+          console.error("Lỗi tải danh sách lớp:", error);
+        }
+      }
+    };
+    loadClasses();
+  }, [user]);
 
-  // --- 5. Handlers ---
+  // Effect 2: Load lịch dạy (Chạy mỗi khi đổi tuần)
+  useEffect(() => {
+    const loadSchedules = async () => {
+      if (user) {
+        setLoading(true);
+        try {
+          // Gọi API với ngày bắt đầu và kết thúc của tuần
+          const data = await fetchSchedules(currentWeekStart, currentWeekEnd);
+          setSchedules(data);
+        } catch (error) {
+          console.error("Lỗi tải lịch dạy:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    loadSchedules();
+  }, [user, currentWeekStart, currentWeekEnd]); // Dependency: Chạy lại khi user hoặc tuần thay đổi
+
+  const weekDates = useMemo(() => {
+    const dates = [];
+    const tempDate = new Date(currentWeekStart);
+    
+    // Tạo mảng 7 ngày từ Thứ 2 đến Chủ Nhật
+    for (let i = 0; i < 7; i++) {
+      const dayName = i === 6 ? "Chủ Nhật" : `Thứ ${i + 2}`;
+      
+      // Format hiển thị: "30-11"
+      const displayDate = tempDate.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' });
+      
+      // Format đầy đủ để so sánh logic: "YYYY-MM-DD"
+      // Lưu ý: Cần điều chỉnh múi giờ để tránh lệch ngày khi toISOString
+      const offset = tempDate.getTimezoneOffset();
+      const d = new Date(tempDate.getTime() - (offset*60*1000));
+      const fullDate = d.toISOString().split('T')[0];
+
+      dates.push({
+        dayName,
+        displayDate,
+        fullDate
+      });
+
+      // Tăng thêm 1 ngày
+      tempDate.setDate(tempDate.getDate() + 1);
+    }
+    return dates;
+  }, [currentWeekStart]);
+
+  // --- 4. Handlers ---
 
   // Điều hướng tuần
   const handlePrevWeek = () => {
@@ -121,31 +151,47 @@ export default function Schedule() {
   };
 
   const handleSave = async (formData) => {
-    const savedItem = await saveSchedule(formData);
-    setAllSchedules((prev) => {
-      const index = prev.findIndex((s) => s.schedule_id === savedItem.schedule_id);
-      if (index !== -1) {
-        const newSchedules = [...prev];
-        newSchedules[index] = savedItem;
-        return newSchedules;
-      } else {
-        return [...prev, savedItem];
-      }
-    });
-    setIsModalOpen(false);
+    try {
+      const savedItem = await saveSchedule(formData);
+      
+      setSchedules((prev) => {
+        const index = prev.findIndex((s) => s.schedule_id === savedItem.schedule_id);
+        if (index !== -1) {
+          const newSchedules = [...prev];
+          newSchedules[index] = savedItem;
+          return newSchedules;
+        } else {
+          // THAY ĐỔI Ở ĐÂY: savedItem.date -> savedItem.schedule_date
+          const scheduleDate = new Date(savedItem.schedule_date);
+          if (scheduleDate >= currentWeekStart && scheduleDate <= currentWeekEnd) {
+             return [...prev, savedItem];
+          }
+          return prev;
+        }
+      });
+      
+      setIsModalOpen(false);
+      alert("Lưu lịch thành công!");
+
+    } catch (error) {
+      alert("Lỗi: " + error.message);
+    }
   };
 
   const handleDelete = async (scheduleId) => {
     if (window.confirm("Bạn có chắc chắn muốn xóa lịch dạy này?")) {
-      await deleteSchedule(scheduleId);
-      setAllSchedules((prev) => prev.filter((s) => s.schedule_id !== scheduleId));
-      setIsModalOpen(false);
+      try {
+        await deleteSchedule(scheduleId);
+        setSchedules((prev) => prev.filter((s) => s.schedule_id !== scheduleId));
+        setIsModalOpen(false);
+      } catch (error) {
+        alert("Lỗi khi xóa: " + error.message);
+      }
     }
   };
 
-  // --- 6. Render ---
-  if (loading) return <p className="p-6 text-center">Đang tải dữ liệu...</p>;
-
+  // --- 5. Render ---
+  
   // Format hiển thị khoảng thời gian (Ví dụ: 23/10 - 29/10)
   const weekLabel = `${currentWeekStart.toLocaleDateString('vi-VN', {day: '2-digit', month: '2-digit'})} - ${currentWeekEnd.toLocaleDateString('vi-VN', {day: '2-digit', month: '2-digit'})}`;
 
@@ -205,9 +251,18 @@ export default function Schedule() {
       </header>
 
       {/* Main Content: Table */}
-      <div className="flex-1">
-        {/* Truyền danh sách đã lọc xuống bảng */}
-        <ScheduleTable schedules={filteredSchedules} onEdit={handleEdit} />
+      <div className="flex-1 relative min-h-[400px]">
+        {loading ? (
+           <div className="absolute inset-0 flex items-center justify-center bg-white/50 z-10">
+              <svg className="animate-spin h-8 w-8 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z"></path>
+              </svg>
+           </div>
+        ) : null}
+        
+        {/* Truyền trực tiếp schedules (đã lọc theo tuần từ API) xuống bảng */}
+        <ScheduleTable schedules={schedules} onEdit={handleEdit} weekDates={weekDates}/>
       </div>
 
       {/* Modal */}

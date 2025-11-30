@@ -40,8 +40,8 @@ export default function AssignmentEditor({
                             type="number"
                             min="0"
                             className="w-full p-2.5 border border-border-medium rounded-lg text-sm focus:ring-2 focus:ring-primary outline-none font-medium text-center"
-                            value={batchInfo.duration || ""}
-                            onChange={(e) => onInfoChange("duration", e.target.value)}
+                            value={batchInfo.duration_minutes || ""}
+                            onChange={(e) => onInfoChange("duration_minutes", e.target.value)}
                             placeholder="0"
                         />
                     </div>

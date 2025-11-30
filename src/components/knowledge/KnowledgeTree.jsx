@@ -276,7 +276,7 @@ export default function KnowledgeTree({
             key={`grade-${grade.grade_level_id}`}
             label={grade.grade_level_name}
             icon="https://unpkg.com/lucide-static/icons/folder.svg"
-            defaultExpanded={true}
+            defaultExpanded={false}
             onRename={(newName) => onRenameNode(grade.grade_level_id, 'grade', newName)}
             onAdd={(childName) => onAddNode(grade.grade_level_id, 'grade', childName)}
             // TRUYỀN PLACEHOLDER CHO CẤP CON (MÔN HỌC)

@@ -2,23 +2,22 @@
 import { useState, useEffect } from "react";
 import { fetchSchoolData, saveClass } from "../api/schoolApi";
 import ClassModal from "../components/class/ClassModal";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext"; 
 
 export default function ClassPage() {
-  const { user } = useAuth();
+  const { user } = useAuth(); 
+  
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentClass, setCurrentClass] = useState(null);
 
-  // ... (Giữ nguyên phần logic load data và handlers) ...
-  
   useEffect(() => {
     const loadData = async () => {
       if (user) { 
         setLoading(true);
         try {
-          const data = await fetchSchoolData(); // <--- KHÔNG truyền user.id
+          const data = await fetchSchoolData(); 
           setClasses(data);
         } catch (error) {
           console.error("Lỗi load lớp:", error);
@@ -28,7 +27,7 @@ export default function ClassPage() {
       }
     };
     loadData();
-  }, [user]);
+  }, [user]); 
 
   const handleAddNew = () => {
     setCurrentClass(null);
@@ -45,18 +44,25 @@ export default function ClassPage() {
   };
 
   const handleSaveModal = async (formData) => {
-    const savedClass = await saveClass(formData);
-    setClasses((prevClasses) => {
-      const exists = prevClasses.find((c) => c.class_id === savedClass.class_id);
-      if (exists) {
-        return prevClasses.map((c) =>
-          c.class_id === savedClass.class_id ? savedClass : c
-        );
-      } else {
-        return [...prevClasses, savedClass];
-      }
-    });
-    handleCloseModal();
+    try {
+      const savedClass = await saveClass(formData);
+      setClasses((prevClasses) => {
+        // Sử dụng class_id để so sánh
+        const exists = prevClasses.find((c) => c.class_id === savedClass.class_id);
+        if (exists) {
+          return prevClasses.map((c) =>
+            c.class_id === savedClass.class_id 
+              ? { ...savedClass, students: c.students } 
+              : c
+          );
+        } else {
+          return [savedClass, ...prevClasses];
+        }
+      });
+      handleCloseModal();
+    } catch (error) {
+      alert("Lỗi khi lưu lớp học: " + error.message);
+    }
   };
 
   return (
@@ -90,11 +96,12 @@ export default function ClassPage() {
                 <tr>
                   <th className="px-6 py-4 text-left text-text-secondary text-sm">STT</th>
                   <th className="px-6 py-4 text-left text-text-secondary text-sm">Tên lớp</th>
+                  {/* CỘT MỚI */}
+                  <th className="px-6 py-4 text-left text-text-secondary text-sm">Khối</th> 
                   <th className="px-6 py-4 text-left text-text-secondary text-sm">Tên trường</th>
                   <th className="px-6 py-4 text-left text-text-secondary text-sm">Môn học</th>
                   <th className="px-6 py-4 text-left text-text-secondary text-sm">Sĩ số</th> 
-                  <th className="px-6 py-4 text-left text-text-secondary text-sm">Năm bắt đầu</th>
-                  <th className="px-6 py-4 text-left text-text-secondary text-sm">Năm kết thúc</th>
+                  <th className="px-6 py-4 text-left text-text-secondary text-sm">Năm học</th>
                   <th className="px-6 py-4 text-left text-text-secondary text-sm">Trạng thái</th>
                   <th className="px-6 py-4 text-left text-text-secondary text-sm">Sửa</th>
                 </tr>
@@ -102,22 +109,31 @@ export default function ClassPage() {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan="9" className="text-center p-6 text-text-secondary">
+                    <td colSpan="10" className="text-center p-6 text-text-secondary">
                       Đang tải dữ liệu...
+                    </td>
+                  </tr>
+                ) : classes.length === 0 ? (
+                  <tr>
+                    <td colSpan="10" className="text-center p-6 text-text-secondary italic">
+                      Chưa có lớp học nào. Hãy tạo lớp mới!
                     </td>
                   </tr>
                 ) : (
                   classes.map((classItem, index) => (
                     <tr
-                      key={classItem.class_id}
+                      key={classItem.class_id} // Sử dụng class_id làm key
                       className="border-b border-border-light hover:bg-gray-50 transition-colors"
                     >
-                      {/* ĐÃ SỬA: text-base -> text-sm */}
                       <td className="px-6 py-2 text-text-primary text-sm">
                         {index + 1}
                       </td>
-                      <td className="px-6 py-2 text-text-primary text-sm">
+                      <td className="px-6 py-2 text-text-primary text-sm font-medium">
                         {classItem.class_name}
+                      </td>
+                      {/* Hiển thị Khối */}
+                      <td className="px-6 py-2 text-text-primary text-sm">
+                        {classItem.grade_level ? `Khối ${classItem.grade_level}` : '-'}
                       </td>
                       <td className="px-6 py-2 text-text-primary text-sm">
                         {classItem.school_name}
@@ -129,10 +145,7 @@ export default function ClassPage() {
                         {classItem.students ? classItem.students.length : 0}
                       </td>
                       <td className="px-6 py-2 text-text-primary text-sm">
-                        {classItem.start_year}
-                      </td>
-                      <td className="px-6 py-2 text-text-primary text-sm">
-                        {classItem.end_year}
+                        {classItem.start_year} - {classItem.end_year}
                       </td>
                       <td className="px-6 py-2">
                         <span

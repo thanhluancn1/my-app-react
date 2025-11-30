@@ -134,9 +134,17 @@ export default function KnowledgePage() {
     if (!currentLessonData) return;
     setIsSaving(true);
     try {
-      await saveLessonData(currentLessonData);
+      // 1. Gọi API và NHẬN KẾT QUẢ TRẢ VỀ (chứa ID thật)
+      const updatedData = await saveLessonData(currentLessonData);
+      
+      // 2. CẬP NHẬT NGAY VÀO STATE
+      // Việc này giúp các Unit đang có ID tạm chuyển thành ID thật ngay trên giao diện
+      setCurrentLessonData(updatedData);
+
       alert("Đã lưu thay đổi thành công!");
-      loadTree();
+      
+      // 3. Load lại cây bên trái (để cập nhật tên bài học nếu có sửa)
+      loadTree(); 
     } catch (error) {
       console.error("Lỗi khi lưu:", error);
       alert("Có lỗi xảy ra khi lưu.");

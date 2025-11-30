@@ -7,7 +7,7 @@ const EXAM_SUGGESTIONS_DATA = [
     "lesson_name": "Bài học tổng hợp về Mệnh đề, Tập hợp, Hàm số và Vector",
     "assignment_batches": [
       {
-        "batch_id": 1,
+        "exam_batch_id": 1,
         "batch_name": "Ôn tập Chương 1 (Cơ bản)",
         "suggest_student": "học sinh cả lớp", // Lưu ý: data gốc là chữ thường
         "recognition": 5,
@@ -19,7 +19,7 @@ const EXAM_SUGGESTIONS_DATA = [
         "fill_in_blank": 0,
         "total_questions": 10,
         "total_points": 100,
-        "duration": 45,
+        "duration_minutes": 45,
         "subject_name":"Toán",
         "batch_status": "Đang diễn ra",
         "start_date": "2025-10-25T10:00:00Z",
@@ -82,7 +82,7 @@ const EXAM_SUGGESTIONS_DATA = [
         ]
       },
       {
-        "batch_id": 2,
+        "exam_batch_id": 2,
         "batch_name": "Chuyên đề Hàm số và Vector (Nâng cao)",
         "suggest_student": "học sinh giỏi",
         "recognition": 1,
@@ -94,7 +94,7 @@ const EXAM_SUGGESTIONS_DATA = [
         "fill_in_blank": 0,
         "total_questions": 8,
         "total_points": 100,
-        "duration": 45,
+        "duration_minutes": 45,
         "subject_name":"Toán",
         "batch_status": "Đang diễn ra",
         "target_students":["học sinh cả lớp", "học sinh giỏi", "học sinh khá", "học sinh trung bình"],
@@ -132,46 +132,46 @@ const CLASS_EXAM_DATA = [
     "student_count": 40,
     "assignment_batches": [
       {
-        "batch_id": 1,
+        "exam_batch_id": 1,
         "batch_name": "Ôn tập Chương 1 (Cơ bản)",
-        "target_students": ["học sinh cả lớp"],
+        "target_students": ["học sinh giỏi","học sinh khá","học sinh trung bình"],
         "total_questions": 10,
         "total_points": 100,
-        "duration": 45,
+        "duration_minutes": 45,
         "batch_status": "Đang diễn ra",
         "start_date": "2025-10-25T10:00:00Z",
         "due_date": "2025-10-25T10:30:00Z"
       },
       {
-        "batch_id": 2,
+        "exam_batch_id": 2,
         "batch_name": "Chuyên đề Hàm số và Vector (Nâng cao)",
         "target_students": ["học sinh giỏi"],
         "total_questions": 8,
         "total_points": 100,
-        "duration": 45,
+        "duration_minutes": 45,
         "batch_status": "Đang diễn ra",
         "start_date": "2025-10-25T10:00:00Z",
         "due_date": "2025-10-25T10:30:00Z"
       },
       {
-        "batch_id": 3,
+        "exam_batch_id": 3,
         "batch_name": "Tổng hợp Chuyên đề Hàm số và Vector (Nâng cao)",
         "target_students": ["học sinh giỏi"],
         "total_questions": 8,
         "total_points": 100,
-        "duration": 45,
-        "batch_status": "Đang diễn ra",
+        "duration_minutes": 45,
+        "batch_status": "Bản nháp",
         "start_date": "2025-10-25T10:00:00Z",
         "due_date": "2025-10-25T10:30:00Z"
       },
       {
-        "batch_id": 4,
+        "exam_batch_id": 4,
         "batch_name": "Chuyên đề Hàm số và Vector (Nâng cao)",
         "target_students": ["học sinh giỏi"],
         "total_questions": 8,
         "total_points": 100,
-        "duration": 45,
-        "batch_status": "Đang diễn ra",
+        "duration_minutes": 45,
+        "batch_status": "Đã kết thúc",
         "start_date": "2025-10-25T10:00:00Z",
         "due_date": "2025-10-25T10:30:00Z"
       }
@@ -185,34 +185,34 @@ const CLASS_EXAM_DATA = [
     "student_count": 40,
     "assignment_batches": [
       {
-        "batch_id": 1,
+        "exam_batch_id": 1,
         "batch_name": "Ôn tập Chương 1 (Cơ bản)",
         "target_students": ["học sinh cả lớp"],
         "total_questions": 10,
         "total_points": 100,
-        "duration": 45,
+        "duration_minutes": 45,
         "batch_status": "Đang diễn ra",
         "start_date": "2025-10-25T10:00:00Z",
         "due_date": "2025-10-25T10:30:00Z"
       },
       {
-        "batch_id": 2,
+        "exam_batch_id": 2,
         "batch_name": "Chuyên đề Hàm số và Vector (Nâng cao)",
         "target_students": ["học sinh giỏi"],
         "total_questions": 8,
         "total_points": 100,
-        "duration": 45,
+        "duration_minutes": 45,
         "batch_status": "Đang diễn ra",
         "start_date": "2025-10-25T10:00:00Z",
         "due_date": "2025-10-25T10:30:00Z"
       },
       {
-        "batch_id": 3,
+        "exam_batch_id": 3,
         "batch_name": "Tổng hợp Chuyên đề Hàm số và Vector (Nâng cao)",
         "target_students": ["học sinh giỏi"],
         "total_questions": 8,
         "total_points": 100,
-        "duration": 45,
+        "duration_minutes": 45,
         "batch_status": "Đang diễn ra",
         "start_date": "2025-10-25T10:00:00Z",
         "due_date": "2025-10-25T10:30:00Z"
@@ -240,7 +240,7 @@ export const fetchAssignmentsByBatchId = (batchId) => {
       // 1. Tìm batch tương ứng
       for (const lesson of EXAM_SUGGESTIONS_DATA) {
         if (lesson.assignment_batches) {
-          foundBatch = lesson.assignment_batches.find(b => b.batch_id === targetId);
+          foundBatch = lesson.assignment_batches.find(b => b.exam_batch_id === targetId);
           if (foundBatch) break;
         }
       }
@@ -261,7 +261,7 @@ export const fetchAssignmentsByBatchId = (batchId) => {
         const { knowledge_components, ...batchInfo } = foundBatch;
         
         const result = {
-            ...batchInfo,       // Gồm: batch_id, batch_name, duration, subject_name...
+            ...batchInfo,       // Gồm: exam_batch_id, batch_name, duration_minutes, subject_name...
             assignments: allAssignments // Mảng câu hỏi
         };
 

@@ -1,4 +1,4 @@
-// src/components/ClassAssignmentGroup.jsx
+// src/components/assignment-list/ClassAssignmentGroup.jsx
 import AssignmentCard from "./AssignmentCard";
 
 export default function ClassAssignmentGroup({ classData }) {
@@ -6,18 +6,17 @@ export default function ClassAssignmentGroup({ classData }) {
 
   return (
     <div className="w-full bg-white border border-border-light rounded-xl p-6">
-      {/* Header: Tên lớp */}
       <div className="mb-4 border-border-light">
         <h3 className="text-xl font-semibold text-text-primary">
           {class_name}
         </h3>
       </div>
 
-      {/* Grid: Danh sách bài tập */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {assignment_batches && assignment_batches.length > 0 ? (
           assignment_batches.map((batch) => (
-            <AssignmentCard key={batch.batch_id} batch={batch} />
+            // SỬA: key={batch.batch_id} -> key={batch.exam_batch_id}
+            <AssignmentCard key={batch.exam_batch_id} batch={batch} />
           ))
         ) : (
           <div className="col-span-full py-8 flex flex-col items-center justify-center text-text-muted border-2 border-dashed border-border-light rounded-lg">

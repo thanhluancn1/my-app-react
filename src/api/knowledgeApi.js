@@ -1,61 +1,45 @@
 // src/api/knowledgeApi.js
 
-/**
- * Dữ liệu gốc (Giả lập Database)
- */
-const KNOWLEDGE_DATA = {
-  "education_data": [
-    {
-      "grade_level_id": 1,
-      "grade_level_name": "Khối 10",
-      "grade_level": 10,
-      "subjects": [
-        {
-          "subject_id": 1,
-          "subject_name": "Toán học",
-          "books": [
-            {
-              "book_id": 1,
-              "book_name": "Toán 10 - Kết nối tri thức",
-              "chapters": [
-                {
-                  "chapter_id": 1,
-                  "chapter_number": 1,
-                  "chapter_name": "Chương 1: Mệnh đề và Tập hợp",
-                  "lessons": [
-                    {
-                      "lesson_id": 1,
-                      "lesson_number": 1,
-                      "lesson_name": "Bài 1: Mệnh đề",
-                      "description": "Bài học giới thiệu về các khái niệm cơ bản của mệnh đề toán học.",
-                      "knowledge_units": [
-                        { "knowledge_id": 1, "content": "Hiểu khái niệm mệnh đề, mệnh đề chứa biến.", "knowledge_type": "Concept" },
-                        { "knowledge_id": 2, "content": "Biết cách xác định tính đúng/sai của một mệnh đề.", "knowledge_type": "Skill" }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
+const API_BASE_URL = "http://localhost:8000/api/v1";
+
+// Helper: Lấy header có token xác thực
+const getHeaders = () => {
+  const token = localStorage.getItem("accessToken");
+  return {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${token}`
+  };
+};
+
+// ==========================================
+// 1. LẤY DỮ LIỆU CÂY (GET TREE)
+// ==========================================
+
+export const fetchKnowledgeTree = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/knowledge-tree`, {
+      method: "GET",
+      headers: getHeaders(),
+    });
+    
+    if (!response.ok) {
+        throw new Error("Lỗi tải cây kiến thức");
     }
-  ]
+    
+    const data = await response.json();
+    // Frontend mong đợi cấu trúc { education_data: [...] }
+    return { education_data: data };
+    
+  } catch (error) {
+    console.error("Fetch Tree Error:", error);
+    return { education_data: [] };
+  }
 };
 
-// --- 1. Các hàm lấy dữ liệu (GET) ---
-
-export const fetchKnowledgeTree = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(JSON.parse(JSON.stringify(KNOWLEDGE_DATA)));
-    }, 300);
-  });
-};
-
-// Helper: Tìm bài học (dùng cho editor bên phải)
+// Helper: Tìm bài học trong cây (để hiển thị chi tiết mà không cần gọi API riêng)
 const findLessonRecursive = (data, lessonId) => {
+  if (!data || !data.education_data) return null;
+  
   for (const grade of data.education_data) {
     for (const subject of grade.subjects) {
       for (const book of subject.books) {
@@ -71,200 +55,177 @@ const findLessonRecursive = (data, lessonId) => {
   return null;
 };
 
-export const fetchLessonDetail = (lessonId) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const lesson = findLessonRecursive(KNOWLEDGE_DATA, lessonId);
-      resolve(lesson ? JSON.parse(JSON.stringify(lesson)) : null);
-    }, 200);
-  });
+export const fetchLessonDetail = async (lessonId) => {
+  // Lấy toàn bộ cây về rồi lọc (đảm bảo dữ liệu mới nhất)
+  const treeData = await fetchKnowledgeTree();
+  const lesson = findLessonRecursive(treeData, lessonId);
+  return lesson || null;
 };
 
-// --- 2. Các hàm cập nhật dữ liệu (UPDATE) ---
+// ==========================================
+// 2. CẬP NHẬT BÀI HỌC (SAVE LESSON)
+// Bao gồm cả lưu danh sách Knowledge Units
+// ==========================================
 
-export const saveLessonData = (updatedLesson) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const original = findLessonRecursive(KNOWLEDGE_DATA, updatedLesson.lesson_id);
-      if (original) {
-        original.lesson_name = updatedLesson.lesson_name;
-        original.description = updatedLesson.description;
-        original.knowledge_units = updatedLesson.knowledge_units;
-        resolve(true);
-      } else {
-        reject(new Error("Không tìm thấy bài học!"));
-      }
-    }, 300);
-  });
-};
-
-// --- 3. CÁC HÀM CHO TÍNH NĂNG INLINE EDIT/ADD/DELETE ---
-
-// Helper: Tìm node bất kỳ để sửa tên
-const findNodeAndUpdate = (id, type, newName) => {
-  const targetId = parseInt(id);
+export const saveLessonData = async (updatedLesson) => {
+  // A. Cập nhật thông tin chính của bài học
+  const lessonUrl = `${API_BASE_URL}/lessons/${updatedLesson.lesson_id}`;
   
-  for (const grade of KNOWLEDGE_DATA.education_data) {
-    if (type === 'grade' && grade.grade_level_id === targetId) {
-      grade.grade_level_name = newName; return true;
-    }
-    for (const subject of grade.subjects) {
-      if (type === 'subject' && subject.subject_id === targetId) {
-        subject.subject_name = newName; return true;
-      }
-      for (const book of subject.books) {
-        if (type === 'book' && book.book_id === targetId) {
-          book.book_name = newName; return true;
-        }
-        for (const chapter of book.chapters) {
-          if (type === 'chapter' && chapter.chapter_id === targetId) {
-            chapter.chapter_name = newName; return true;
-          }
-          if (chapter.lessons) {
-            const lesson = chapter.lessons.find(l => l.lesson_id === targetId);
-            if (type === 'lesson' && lesson) {
-              lesson.lesson_name = newName; return true;
-            }
-          }
-        }
-      }
-    }
-  }
-  return false;
-};
-
-export const renameNode = (id, type, newName) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const success = findNodeAndUpdate(id, type, newName);
-      if (success) resolve(true);
-      else reject(new Error("Không tìm thấy node để đổi tên"));
-    }, 300);
-  });
-};
-
-// Helper: Tìm node cha để thêm con
-const findParentAndAddChild = (parentId, parentType, name) => {
-  const pId = parseInt(parentId);
-  const newId = Date.now(); // ID ngẫu nhiên
-
-  // 1. Thêm Khối mới (Root)
-  if (parentType === 'root') {
-    KNOWLEDGE_DATA.education_data.push({
-      grade_level_id: newId,
-      grade_level_name: name,
-      subjects: []
+  try {
+    const lessonResponse = await fetch(lessonUrl, {
+      method: "PUT",
+      headers: getHeaders(),
+      body: JSON.stringify({
+        lesson_name: updatedLesson.lesson_name,
+        description: updatedLesson.description,
+        order_number: updatedLesson.order_number
+      }),
     });
-    return true;
-  }
 
-  for (const grade of KNOWLEDGE_DATA.education_data) {
-    // 2. Cha là Khối -> Thêm Môn
-    if (parentType === 'grade' && grade.grade_level_id === pId) {
-      grade.subjects.push({ subject_id: newId, subject_name: name, books: [] });
-      return true;
-    }
-    for (const subject of grade.subjects) {
-      // 3. Cha là Môn -> Thêm Sách
-      if (parentType === 'subject' && subject.subject_id === pId) {
-        subject.books.push({ book_id: newId, book_name: name, chapters: [] });
-        return true;
-      }
-      for (const book of subject.books) {
-        // 4. Cha là Sách -> Thêm Chương
-        if (parentType === 'book' && book.book_id === pId) {
-          book.chapters.push({ chapter_id: newId, chapter_name: name, lessons: [] });
-          return true;
-        }
-        for (const chapter of book.chapters) {
-          // 5. Cha là Chương -> Thêm Bài
-          if (parentType === 'chapter' && chapter.chapter_id === pId) {
-            if (!chapter.lessons) chapter.lessons = [];
-            chapter.lessons.push({ 
-              lesson_id: newId, 
-              lesson_name: name, 
-              knowledge_units: [] 
-            });
-            return true;
-          }
-        }
-      }
-    }
-  }
-  return false;
-};
+    if (!lessonResponse.ok) throw new Error("Lỗi lưu thông tin bài học");
 
-export const addNode = (parentId, parentType, name) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const success = findParentAndAddChild(parentId, parentType, name);
-      if (success) resolve(true);
-      else reject(new Error("Không tìm thấy cha để thêm con"));
-    }, 300);
-  });
-};
+    // B. Xử lý danh sách Knowledge Units
+    let newKnowledgeUnits = [];
 
-// Helper: Tìm node cha để xóa con (MỚI)
-const findParentAndDeleteChild = (id, type) => {
-  const targetId = parseInt(id);
+    if (updatedLesson.knowledge_units && updatedLesson.knowledge_units.length > 0) {
+        
+        // Dùng Promise.all để lấy lại kết quả trả về từ Backend
+        newKnowledgeUnits = await Promise.all(updatedLesson.knowledge_units.map(async (unit) => {
+            
+            // Logic check ID thật
+            const isRealId = unit.knowledge_unit_id && unit.knowledge_unit_id < 1000000000000;
 
-  // 1. Xóa Khối (Root)
-  if (type === 'grade') {
-    const initialLen = KNOWLEDGE_DATA.education_data.length;
-    KNOWLEDGE_DATA.education_data = KNOWLEDGE_DATA.education_data.filter(g => g.grade_level_id !== targetId);
-    return KNOWLEDGE_DATA.education_data.length < initialLen;
-  }
-
-  for (const grade of KNOWLEDGE_DATA.education_data) {
-    // 2. Xóa Môn
-    if (type === 'subject') {
-      const idx = grade.subjects.findIndex(s => s.subject_id === targetId);
-      if (idx !== -1) {
-        grade.subjects.splice(idx, 1);
-        return true;
-      }
-    }
-    for (const subject of grade.subjects) {
-      // 3. Xóa Sách
-      if (type === 'book') {
-        const idx = subject.books.findIndex(b => b.book_id === targetId);
-        if (idx !== -1) {
-          subject.books.splice(idx, 1);
-          return true;
-        }
-      }
-      for (const book of subject.books) {
-        // 4. Xóa Chương
-        if (type === 'chapter') {
-          const idx = book.chapters.findIndex(c => c.chapter_id === targetId);
-          if (idx !== -1) {
-            book.chapters.splice(idx, 1);
-            return true;
-          }
-        }
-        for (const chapter of book.chapters) {
-          // 5. Xóa Bài
-          if (type === 'lesson' && chapter.lessons) {
-            const idx = chapter.lessons.findIndex(l => l.lesson_id === targetId);
-            if (idx !== -1) {
-              chapter.lessons.splice(idx, 1);
-              return true;
+            if (isRealId) { 
+                // UPDATE
+                const res = await fetch(`${API_BASE_URL}/knowledge-units/${unit.knowledge_unit_id}`, {
+                    method: "PUT",
+                    headers: getHeaders(),
+                    body: JSON.stringify({
+                        content: unit.content,
+                        knowledge_type: unit.knowledge_type
+                    })
+                });
+                return await res.json(); // Trả về unit đã update từ Server
+            } 
+            else {
+                // CREATE
+                const res = await fetch(`${API_BASE_URL}/knowledge-units`, {
+                    method: "POST",
+                    headers: getHeaders(),
+                    body: JSON.stringify({
+                        content: unit.content,
+                        knowledge_type: unit.knowledge_type || 'Khái niệm',
+                        lesson_id: updatedLesson.lesson_id
+                    })
+                });
+                return await res.json(); // Trả về unit mới tạo (có ID thật) từ Server
             }
-          }
-        }
-      }
+        }));
     }
+
+    // C. Trả về object Lesson hoàn chỉnh với danh sách Units mới nhất (đã có ID thật)
+    return {
+        ...updatedLesson,
+        knowledge_units: newKnowledgeUnits
+    };
+
+  } catch (error) {
+    console.error("Save Lesson Error:", error);
+    throw error;
   }
-  return false;
 };
 
-// API: Xóa Node (MỚI)
-export const deleteNode = (id, type) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const success = findParentAndDeleteChild(id, type);
-      if (success) resolve(true);
-      else reject(new Error("Không tìm thấy node để xóa"));
-    }, 300);
-  });
+// ==========================================
+// 3. CÁC HÀM CRUD NODE (ADD/RENAME/DELETE)
+// ==========================================
+
+// Map 'type' sang cấu hình API
+const getNodeConfig = (type) => {
+  switch (type) {
+    case 'grade': return { endpoint: 'grades', nameField: 'grade_level_name', idField: 'grade_level_id' };
+    case 'subject': return { endpoint: 'subjects', nameField: 'subject_name', idField: 'subject_id' };
+    case 'book': return { endpoint: 'books', nameField: 'book_name', idField: 'book_id' };
+    case 'chapter': return { endpoint: 'chapters', nameField: 'chapter_name', idField: 'chapter_id' };
+    case 'lesson': return { endpoint: 'lessons', nameField: 'lesson_name', idField: 'lesson_id' };
+    case 'knowledge_unit': return { endpoint: 'knowledge-units', nameField: 'content', idField: 'knowledge_unit_id' };
+    default: return null;
+  }
+};
+
+export const renameNode = async (id, type, newName) => {
+  const config = getNodeConfig(type);
+  if (!config) throw new Error("Loại node không hợp lệ");
+
+  const url = `${API_BASE_URL}/${config.endpoint}/${id}`;
+  const body = { [config.nameField]: newName };
+
+  try {
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: getHeaders(),
+      body: JSON.stringify(body),
+    });
+    if (!response.ok) throw new Error("Lỗi đổi tên");
+    return true;
+  } catch (error) {
+    console.error("Rename Error:", error);
+    throw error;
+  }
+};
+
+export const addNode = async (parentId, parentType, name) => {
+  let childType = '';
+  let parentField = '';
+  
+  if (parentType === 'root') { childType = 'grade'; parentField = ''; }
+  else if (parentType === 'grade') { childType = 'subject'; parentField = 'grade_level_id'; }
+  else if (parentType === 'subject') { childType = 'book'; parentField = 'subject_id'; }
+  else if (parentType === 'book') { childType = 'chapter'; parentField = 'book_id'; }
+  else if (parentType === 'chapter') { childType = 'lesson'; parentField = 'chapter_id'; }
+  else { throw new Error("Không thể thêm node con cho loại này"); }
+
+  const config = getNodeConfig(childType);
+  const url = `${API_BASE_URL}/${config.endpoint}`;
+  
+  const body = { [config.nameField]: name };
+  if (parentField) {
+    body[parentField] = parseInt(parentId);
+  }
+  // Riêng grade cần value
+  if (childType === 'grade') {
+      const match = name.match(/\d+/);
+      body['value'] = match ? parseInt(match[0]) : 0;
+  }
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: getHeaders(),
+      body: JSON.stringify(body),
+    });
+    if (!response.ok) throw new Error("Lỗi thêm mới");
+    return true;
+  } catch (error) {
+    console.error("Add Error:", error);
+    throw error;
+  }
+};
+
+export const deleteNode = async (id, type) => {
+  const config = getNodeConfig(type);
+  if (!config) throw new Error("Loại node không hợp lệ");
+
+  const url = `${API_BASE_URL}/${config.endpoint}/${id}`;
+
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: getHeaders(),
+    });
+    if (!response.ok) throw new Error("Lỗi xóa node");
+    return true;
+  } catch (error) {
+    console.error("Delete Error:", error);
+    throw error;
+  }
 };
